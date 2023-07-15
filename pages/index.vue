@@ -1,5 +1,5 @@
 <template>
-  <main class="container mx-auto xl:px-40 md:px-10 px-5 pb-10">
+  <main class="container mx-auto xl:px-20 md:px-10 px-5 pb-10">
     <section>
       <div class="filter flex sm:gap-7 gap-4 py-3 border-b-2">
         <select class="pr-2 border-none rounded-xl">

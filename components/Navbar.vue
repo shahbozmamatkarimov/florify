@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar container mx-auto xl:px-40 md:px-10 px-5 mt-[70px]">
+  <div class="navbar container mx-auto xl:px-20 md:px-10 px-5 mt-[70px]">
     <div class="grid grid-cols-5 sm:py-5 py-3 sm:gap-6 gap-2">
       <form class="items-center grid md:grid-cols-3 grid-cols-5 sm:gap-6 gap-2 relative md:col-span-3 col-span-5">
         <div class="flex items-center relative md:col-span-2 col-span-4">

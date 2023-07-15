@@ -1,4 +1,3 @@
-
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   app: {
@@ -23,7 +22,7 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
-  modules: ['@element-plus/nuxt'],
+  modules: ["@element-plus/nuxt", "@ant-design-vue/nuxt"],
   // modules: [
   //   [
   //     "nuxt-i18n",
