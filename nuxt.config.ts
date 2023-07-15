@@ -1,3 +1,4 @@
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   app: {
@@ -22,4 +23,44 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
+  modules: ['@element-plus/nuxt'],
+  // modules: [
+  //   [
+  //     "nuxt-i18n",
+  //     {
+  //       locales: [
+  //         {
+  //           code: "es",
+  //           iso: "en-ES",
+  //           name: "Español",
+  //         },
+  //         {
+  //           code: "en",
+  //           iso: "en-US",
+  //           name: "English",
+  //         },
+  //         {
+  //           code: "ca",
+  //           iso: "ca-ES",
+  //           name: "Català",
+  //         },
+  //         {
+  //           code: "fr",
+  //           iso: "fr-FR",
+  //           name: "Français",
+  //         },
+  //       ],
+  //       defaultLocale: "en",
+  //       noPrefixDefaultLocale: true,
+  //       vueI18n: {
+  //         fallbackLocale: "en",
+  //         // messages: {
+  //         //   en: require("./lang/en.json"),
+  //         //   es: require("./lang/ru.json"),
+  //         //   fr: require("./lang/uz.json"),
+  //         // },
+  //       },
+  //     },
+  //   ],
+  // ],
 });

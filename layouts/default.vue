@@ -1,8 +1,11 @@
 <template>
-    <div>
+    <div class="bg-[#F9F9F9]">
         <header>
-            <Navbar />
+            <Header />
         </header>
+        <nav>
+            <Navbar />
+        </nav>
         <slot />
     </div>
 </template>
