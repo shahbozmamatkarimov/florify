@@ -185,7 +185,7 @@
           <!-- Item 5 -->
           <div class="hidden duration-700 ease-in-out" data-carousel-item>
             <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR05bovLI8g1mwnXHlQJNUmav019opSfL3RzMBuf5cry1MDI2euTbtMHWheIL6YImEwSx8&usqp=CAU"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlTqqkbhwlLsU7hGXovehpKdH5XVJxzZx-YzcS2BZcfTaYz-_wLOseXtp0cL_Hk8o7sNs&usqp=CAU"
               class="absolute block w-full h-full object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
               alt="..."
             />
