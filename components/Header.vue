@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed shadow-md shadow-black top-0 z-50 w-full">
+  <div class="fixed top-0 z-50 w-full">
     <div class="flex flex-wrap h-[70px]">
       <section class="relative mx-auto">
         <!-- navbar -->
@@ -9,7 +9,7 @@
           <div
             class="container mx-auto xl:px-20 md:px-10 px-5 py-6 flex w-full items-center justify-between"
           >
-            <img class="logo cursor-pointer" src="../public/logo.png" alt="logo" />
+            <img class="logo cursor-pointer" src="../public/logo.svg" alt="logo" />
             <!-- Nav Links -->
             <ul
               class="hidden lg:flex px-4 mx-auto font-semibold font-heading space-x-12"
