@@ -1,3 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: 'QuantaGroteskPro';
+    src: url('./QuantaGroteskPro.otf') format('truetype');
+}
+
+@font-face {
+    font-family: 'HarmoniaSansProCyr';
+    src: url('./HarmoniaSansProCyr.ttf') format('truetype');
+}
+
+/* body {
+    font-family: 'HarmoniaSansProCyr', sans-serif;
+} */
+
+/* .quanta{
+    font-family: 'QuantaGroteskPro', sans-serif;
+} */
+
+input {
+    outline: none;
+    outline: 0;
+}

@@ -10,7 +10,7 @@ export default defineNuxtConfig({
         },
         {
           rel: "icon",
-          href: "https://i.ibb.co/09P9Jp0/icon.jpg",
+          href: "https://i.ibb.co/dQfTqMw/icon-1.png",
         },
       ],
     },

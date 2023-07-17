@@ -6,7 +6,10 @@
         <nav>
             <Navbar />
         </nav>
-        <slot />
+        <div>
+            <slot />
+        </div>
+        <Footer />
     </div>
 </template>
 

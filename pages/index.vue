@@ -1,30 +1,30 @@
 <template>
   <main class="container mx-auto xl:px-20 md:px-10 px-5 pb-10">
     <section>
-      <div class="filter flex sm:gap-7 gap-4 py-3 border-b-2">
-        <select class="pr-2 border-none rounded-xl">
+      <div class="filter font-medium text-[#454545cf] flex sm:md:gap-7 gap-5  gap-4 py-3 border-b-2">
+        <select class="pr-2 -ml-3 bg-transparent border-none rounded-xl">
           <option value="1">Kому</option>
           <option value="1">Kому</option>
           <option value="1">Kому</option>
         </select>
-        <select class="pr-2 border-none rounded-xl">
+        <select class="pr-2 bg-transparent border-none rounded-xl">
           <option value="1">Повод</option>
           <option value="1">Повод</option>
           <option value="1">Повод</option>
         </select>
-        <select class="pr-2 border-none rounded-xl">
+        <select class="pr-2 bg-transparent border-none rounded-xl">
           <option value="1">Цвет</option>
           <option value="1">Цвет</option>
           <option value="1">Цвет</option>
         </select>
-        <select class="pr-2 border-none rounded-xl">
+        <select class="pr-2 bg-transparent border-none rounded-xl">
           <option value="1">Цена</option>
           <option value="1">Цена</option>
           <option value="1">Цена</option>
         </select>
       </div>
     </section>
-    <section class="flex gap-5 sm:py-10 py-5">
+    <section class="flex md:gap-7 gap-5  sm:py-10 py-5">
       <div
         id="default-carousel"
         class="relative sm:w-[65%] w-full"
@@ -331,18 +331,18 @@
     <!-------------------------------- section 1 -------------------------------->
 
     <section>
-      <h1 class="sm:text-2xl text-lg font-medium">Готовые букеты</h1>
-      <p class="sm:text-lg text-xs">
+      <h1 class="sm:text-3xl text-lg text-[#242424]">Готовые букеты</h1>
+      <p class="sm:text-lg text-sm text-[#242424]">
         Собраны сегодня. Букет уже готов к доставке.
       </p>
-      <div class="grid lg:grid-cols-4 grid-cols-3 cards my-5 gap-5">
+      <div class="grid lg:grid-cols-4 grid-cols-3 cards my-5 md:gap-7 gap-5 ">
         <div
           v-for="i in store.data"
           :key="i"
           class="card max-w-sm hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
         >
           <img
-            class="img rounded-t-lg 2xl:h-72 xl:h-64 md:h-52 sm:h-44 h-44 w-full object-cover"
+            class="img rounded-t-lg 2xl:h-80 xl:h-64 md:h-52 sm:h-44 h-44 w-full object-cover"
             src="../assets/image/image6.png"
             alt=""
           />
@@ -353,14 +353,13 @@
               Фрида Кало
             </h5>
             <div class="flex justify-between items-center">
-              <p class="sm:text-md text-xs whitespace-nowrap">
-                <span class="md:inline-block hidden">от</span> 1 350 000
+              <p class="font-semibold sm:text-lg text-xs whitespace-nowrap">
+                <span class="md:inline-block hidden pr-1">от</span> 350 000
                 <span class="sm:inline hidden">сум</span>
               </p>
               <div class="flex items-center sm:gap-3 gap-1">
-                <i
-                  class="bx bx-heart cursor-pointer sm:text-lg text-xs font-medium text-[#FF6161]"
-                ></i>
+                <img src="../assets/svg/heart.svg" alt="" />
+
                 <img
                   class="cursor-pointer sm:h-5 sm:w-5 h-3 w-3"
                   src="../assets/svg/cart.svg"
@@ -372,7 +371,7 @@
         </div>
       </div>
       <button
-        class="w-full lg:h-14 h-10 border-2 rounded-xl border-[#5C0099] text-[#5C0099] hover:bg-[#5C0099] duration-500 hover:text-white"
+        class="w-full font-semibold lg:h-14 h-10 border-2 rounded-xl border-[#5C0099] text-[#5C0099] hover:bg-[#5C0099] duration-500 hover:text-white"
       >
         Показать больше
       </button>
@@ -381,10 +380,10 @@
     <!-------------------------------- section 2 -------------------------------->
 
     <section>
-      <h1 class="sm:text-2xl sm:pt-7 pt-4 sm:pb-2 pb-0 text-md font-medium">
+      <h1 class="sm:text-3xl sm:pt-7 pt-4 sm:pb-2 pb-0 text-md">
         Яркие букетики
       </h1>
-      <div class="grid lg:grid-cols-4 grid-cols-3 cards my-5 gap-5">
+      <div class="grid lg:grid-cols-4 grid-cols-3 cards my-5 md:gap-7 gap-5 ">
         <div
           v-for="i in store.data"
           :key="i"
@@ -402,14 +401,12 @@
               Фрида Кало
             </h5>
             <div class="flex justify-between items-center">
-              <p class="sm:text-md text-xs whitespace-nowrap">
-                <span class="md:inline-block hidden">от</span> 1 350 000
+              <p class="font-semibold sm:text-lg text-xs whitespace-nowrap">
+                <span class="md:inline-block hidden pr-1">от</span> 350 000
                 <span class="sm:inline hidden">сум</span>
               </p>
               <div class="flex items-center sm:gap-3 gap-1">
-                <i
-                  class="bx bx-heart cursor-pointer sm:text-lg text-xs font-medium text-[#FF6161]"
-                ></i>
+                <img src="../assets/svg/heart.svg" alt="" />`
                 <img
                   class="cursor-pointer sm:h-5 sm:w-5 h-3 w-3"
                   src="../assets/svg/cart.svg"
@@ -421,7 +418,7 @@
         </div>
       </div>
       <button
-        class="w-full lg:h-14 h-10 border-2 rounded-xl border-[#5C0099] text-[#5C0099] hover:bg-[#5C0099] duration-500 hover:text-white"
+        class="w-full font-semibold lg:h-14 h-10 border-2 rounded-xl border-[#5C0099] text-[#5C0099] hover:bg-[#5C0099] duration-500 hover:text-white"
       >
         Показать больше
       </button>
@@ -430,10 +427,10 @@
     <!-------------------------------- section 3 -------------------------------->
 
     <section>
-      <h1 class="sm:text-2xl sm:pt-7 pt-4 sm:pb-2 pb-0 text-md font-medium">
+      <h1 class="sm:text-3xl sm:pt-7 pt-4 sm:pb-2 pb-0 text-md">
         Розы Pink O'Hara
       </h1>
-      <div class="grid lg:grid-cols-4 grid-cols-3 cards my-5 gap-5">
+      <div class="grid lg:grid-cols-4 grid-cols-3 cards my-5 md:gap-7 gap-5 ">
         <div
           v-for="i in store.data"
           :key="i"
@@ -451,14 +448,13 @@
               Фрида Кало
             </h5>
             <div class="flex justify-between items-center">
-              <p class="sm:text-md text-xs whitespace-nowrap">
-                <span class="md:inline-block hidden">от</span> 1 350 000
+              <p class="font-semibold sm:text-lg text-xs whitespace-nowrap">
+                <span class="md:inline-block hidden pr-1">от</span> 1 350 000
                 <span class="sm:inline hidden">сум</span>
               </p>
               <div class="flex items-center sm:gap-3 gap-1">
-                <i
-                  class="bx bx-heart cursor-pointer sm:text-lg text-xs font-medium text-[#FF6161]"
-                ></i>
+                <img src="../assets/svg/heart.svg" alt="" />
+
                 <img
                   class="cursor-pointer sm:h-5 sm:w-5 h-3 w-3"
                   src="../assets/svg/cart.svg"
@@ -470,7 +466,7 @@
         </div>
       </div>
       <button
-        class="w-full lg:h-14 h-10 border-2 rounded-xl border-[#5C0099] text-[#5C0099] hover:bg-[#5C0099] duration-500 hover:text-white"
+        class="w-full font-semibold lg:h-14 h-10 border-2 rounded-xl border-[#5C0099] text-[#5C0099] hover:bg-[#5C0099] duration-500 hover:text-white"
       >
         Показать больше
       </button>
@@ -479,12 +475,12 @@
     <!-------------------------------- section 4 -------------------------------->
 
     <section>
-      <h1 class="sm:text-2xl sm:pt-7 pt-4 sm:pb-2 pb-0 text-md font-medium">
+      <h1 class="sm:text-3xl sm:pt-7 pt-4 sm:pb-2 pb-0 text-md">
         Махровые эустомы
       </h1>
-      <div class="grid lg:grid-cols-4 grid-cols-3 cards my-5 gap-5">
+      <div class="grid lg:grid-cols-4 grid-cols-3 cards my-5 md:gap-7 gap-5 ">
         <div
-          v-for="i in store.data/2"
+          v-for="i in store.data / 2"
           :key="i"
           class="card max-w-sm hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
         >
@@ -500,14 +496,13 @@
               Фрида Кало
             </h5>
             <div class="flex justify-between items-center">
-              <p class="sm:text-md text-xs whitespace-nowrap">
-                <span class="md:inline-block hidden">от</span> 1 350 000
+              <p class="font-semibold sm:text-lg text-xs whitespace-nowrap">
+                <span class="md:inline-block hidden pr-1">от</span> 1 350 000
                 <span class="sm:inline hidden">сум</span>
               </p>
               <div class="flex items-center sm:gap-3 gap-1">
-                <i
-                  class="bx bx-heart cursor-pointer sm:text-lg text-xs font-medium text-[#FF6161]"
-                ></i>
+                <img src="../assets/svg/heart.svg" alt="" />
+
                 <img
                   class="cursor-pointer sm:h-5 sm:w-5 h-3 w-3"
                   src="../assets/svg/cart.svg"
@@ -519,7 +514,7 @@
         </div>
       </div>
       <button
-        class="w-full lg:h-14 h-10 border-2 rounded-xl border-[#5C0099] text-[#5C0099] hover:bg-[#5C0099] duration-500 hover:text-white"
+        class="w-full font-semibold lg:h-14 h-10 border-2 rounded-xl border-[#5C0099] text-[#5C0099] hover:bg-[#5C0099] duration-500 hover:text-white"
       >
         Показать больше
       </button>
