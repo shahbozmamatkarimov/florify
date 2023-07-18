@@ -1,7 +1,7 @@
 <template>
   <footer class="bg-[#FFFFFF] pt-20">
     <div
-      class="footer grid grid-cols-6 container mx-auto xl:px-28 md:px-10 px-5"
+      class="footer grid lg:grid-cols-6 grid-cols-5 overflow-hidden container mx-auto xl:px-28 md:px-10 px-5"
     >
       <div>
         <img src="../assets/svg/footerLogo.svg" alt="logo" />
@@ -26,7 +26,7 @@
         <li>Партнёрство</li>
         <li>Корпоративным клиентам</li>
       </ul>
-      <div></div>
+      <div class="lg:block hidden"></div>
       <ul class="text-end contact">
         <li>Свяжитесь с нами</li>
         <li>+998 (88) 111 02 11</li>
@@ -34,7 +34,7 @@
         <li>customercare@florify.com</li>
       </ul>
     </div>
-    <div class="container mx-auto xl:px-28 md:px-10 px-5">
+    <div class="container mx-auto overflow-hidden xl:px-28 md:px-10 px-5">
       <p class="flex justify-between items-center">
         <span></span>
         <span class="font-bold pt-10 text-end">
@@ -62,12 +62,12 @@
       </div>
       <hr class="w-full" />
       <p class="text-end py-5 font-bold">Заказывайте через приложение</p>
-      <div class="flex justify-between items-center pb-10">
+      <div class="flex lg:flex-row flex-col lg:gap-0 gap-5 justify-between items-center pb-10">
         <ul class="flex gap-10">
-          <li class="underline">Персональные данные</li>
-          <li class="underline">Политика конфиденциальности</li>
-          <li class="underline">Публичная оферта</li>
-          <li class="underline">Согласие пользователя</li>
+          <li class="underline whitespace-nowrap">Персональные данные</li>
+          <li class="underline whitespace-nowrap">Политика конфиденциальности</li>
+          <li class="underline whitespace-nowrap">Публичная оферта</li>
+          <li class="underline whitespace-nowrap">Согласие пользователя</li>
         </ul>
         <div class="flex items-center gap-5">
           <img src="../assets/svg/appstore.svg" alt="app store" />
@@ -100,3 +100,21 @@
     text-decoration: none !important;
 }
 </style>
+
+
+<!--
+home page
+O нас
+Оплата и доставка
+Гарантия качества
+Контакты
+
+покупка
+Оформление заказа -->
+https://florify.vercel.app
+https://florify.vercel.app/about
+https://florify.vercel.app/buy_and_order
+https://florify.vercel.app/quality_assurance
+https://florify.vercel.app/contact
+https://florify.vercel.app/фрида_кало
+https://florify.vercel.app/order

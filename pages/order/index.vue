@@ -160,23 +160,27 @@
           </li>
           <li v-show="store.for == 2">
             <div class="flex items-center gap-5">
-              <h1 class="text-xl font-semibold py-2 mb-1">Бесплатная открытка</h1>
+              <h1 class="text-xl font-semibold py-2 mb-1">
+                Бесплатная открытка
+              </h1>
 
               <label class="relative inline-flex items-center cursor-pointer">
-                <input type="checkbox" value="" class="sr-only peer" />
+                <input type="checkbox" v-model="store.is_message" class="sr-only peer" />
                 <div
                   class="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#5C0099]"
                 ></div>
               </label>
             </div>
-            <label for="convert" class="text-gray-700 py-2"
-              >Текст открытки…</label
-            >
-            <textarea
-              id="convert"
-              class="h-20 bg-transparent w-full rounded border-2 border-[#D9D9D9]"
-              placeholder="Мой дорогой..."
-            ></textarea>
+            <div v-show="store.is_message">
+              <label for="convert" class="text-gray-700 py-2"
+                >Текст открытки…</label
+              >
+              <textarea
+                id="convert"
+                class="h-20 bg-transparent w-full rounded border-2 border-[#D9D9D9]"
+                placeholder="Мой дорогой..."
+              ></textarea>
+            </div>
           </li>
           <li>
             <h1 class="font-semibold text-xl pt-7">Дата и время доставки</h1>
@@ -325,6 +329,7 @@
 const store = reactive({
   payment: 0,
   for: 1,
+  is_message: false,
 });
 </script>
 

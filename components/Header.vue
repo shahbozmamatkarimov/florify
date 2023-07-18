@@ -18,7 +18,7 @@
             </router-link>
             <!-- Nav Links -->
             <ul
-              class="hidden lg:flex px-4 text-lg mx-auto font-semibold font-heading space-x-12"
+              class="hidden xl:flex px-4 text-lg mx-auto font-semibold font-heading space-x-12"
             >
               <li>
                 <router-link class="hover:text-gray-200" to="/about"
@@ -71,7 +71,7 @@
                 </span> -->
                 <p class="font-semibold hover:text-gray-200  sm:block hidden">Корзина</p>
               </div>
-              <div class="sm:flex hidden items-center gap-2 mr-10 hover:text-gray-200 cursor-pointer">
+              <div class="sm:flex hidden items-center gap-2 xl:mr-0 mr-10 hover:text-gray-200 cursor-pointer">
                 <img src="../assets/svg/user.svg" alt="" />
                 <p class="font-semibold sm:block hidden">Войти</p>
               </div>
@@ -82,13 +82,13 @@
                     store.toggle = !store.toggle;
                     store.lang = false;
                   "
-                  class="navbar-burger hover:text-gray-200 text-3xl pt-2 cursor-pointer self-center lg:hidden"
+                  class="navbar-burger hover:text-gray-200 text-3xl pt-2 cursor-pointer self-center xl:hidden"
                 >
                   <i class="bx bx-menu"></i>
                 </p>
                 <ul
                   :class="store.toggle ? 'h-0' : 'h-56'"
-                  class="overflow-hidden duration-500 container lg:hidden flex flex-col w-full right-0 left-0 top-[70px] bg-white text-gray-700 shadow-md rounded z-50 absolute mx-auto font-semibold font-heading"
+                  class="overflow-hidden duration-500 container xl:hidden flex flex-col w-full right-0 left-0 top-[70px] bg-white text-gray-700 shadow-md rounded z-50 absolute mx-auto font-semibold font-heading"
                 >
                   <li class="flex justify-between font-semibold items-center">
                     <router-link

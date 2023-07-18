@@ -577,9 +577,6 @@ onMounted(() => {
   .carousel {
     height: 10rem;
   }
-}
-
-@media (max-width: 500px) {
   .filter {
     gap: 1.4rem;
   }
@@ -587,6 +584,10 @@ onMounted(() => {
     font-size: 16px;
     padding: 0 30px 0 5px;
     border-radius: 5px;
+  }
+
+  .filter select:first-child {
+    padding-left: 10px;
   }
 }
 

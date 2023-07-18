@@ -9,7 +9,7 @@
         <div>
             <slot />
         </div>
-        <Footer />
+        <Footer class="md:block hidden"/>
     </div>
 </template>
 
