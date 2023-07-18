@@ -21,7 +21,7 @@
     <!----------------------- Breadcrumb end---------------------------->
 
     <!----------------------- section 1 ----------------------------->
-    <section class="w-[65%]">
+    <section class="main lg:w-[848px] w-full">
       <h1 class="header">О компании</h1>
       <p>
         Международный магазин цветов с доставкой флорифай.уз был основан в 2023
@@ -38,7 +38,11 @@
         11, +998 (95) 888 58 58, в сотнях цветочных магазинах-партнёрах по
         Узбекистан.
       </p>
-      <img class="mt-5 w-full object-cover rounded-xl h-[460px] overflow-hidden" src="../../assets/about/image1.png" alt="img" />
+      <img
+        class="img1 mt-5 w-full object-cover rounded-xl lg:h-[460px] md:h-[400px] sm:h-[350px] h-[300px] overflow-hidden"
+        src="../../assets/about/image1.png"
+        alt="img"
+      />
       <h1>Наш ассортимент: цветы...</h1>
       <p>
         В нашем ассортименте — букеты и цветочные композиции, приуроченные к
@@ -48,9 +52,17 @@
         иначе связанное с живыми цветами: от доставки букетов до флористического
         оформления любых интерьеров и разработки цветочного стиля компании.
       </p>
-      <div class="grid grid-cols-2 overflow-hidden h-[320px] gap-5 mt-5">
-        <img class="h-full w-full object-cover rounded-xl" src="../../assets/about/image2.png" alt="img" />
-        <img class="h-full w-full object-cover rounded-xl" src="../../assets/about/image3.png" alt="img" />
+      <div class="img2 grid grid-cols-2 sm:gap-5 gap-2 mt-5">
+        <img
+          class="lg:h-[320px] md:h-[260px] sm:h-[200px] h-[180px] w-full object-cover rounded-xl"
+          src="../../assets/about/image2.png"
+          alt="img"
+        />
+        <img
+          class="lg:h-[320px] md:h-[260px] sm:h-[200px] h-[180px] w-full object-cover rounded-xl"
+          src="../../assets/about/image3.png"
+          alt="img"
+        />
       </div>
       <h1>Заказывать у нас безопасно</h1>
       <p>
@@ -61,16 +73,30 @@
         уверены в абсолютной безопасности и конфиденциальности, ведь мы сделали
         для этого всё необходимое.
       </p>
-      <img class="mt-5 w-full object-cover rounded-xl h-[460px] overflow-hidden" src="../../assets/about/image4.png" alt="img">
+      <img
+        class="img1 mt-5 w-full object-cover rounded-xl lg:h-[460px] md:h-[400px] sm:h-[350px] h-[300px] overflow-hidden"
+        src="../../assets/about/image4.png"
+        alt="img"
+      />
 
       <div class="pb-20">
         <h1>Мaгaзинaм</h1>
-        <div class="grid grid-cols-3 px-10 border border-[#D9D9D9] rounded-xl h-[130px] items-center">
-            <ul class="leading-10 col-span-2">
-                <li class="text-[#242424] font-semibold text-xl">Пoлучaйтe нoвых клиeнтoв бeз влoжeний!</li>
-                <li class="text-[#242424]">Бecплaтнaя рeгиcтрaция и рaзмeщeниe тoвaрoв</li>
-            </ul>
-            <button class="h-16 w-[244px] border border-[#242424] rounded-xl text-[#242424]">Пoпрoбoвaть бecплaтнo</button>
+        <div
+          class="shop grid grid-cols-3 md:px-10 px-5 border border-[#D9D9D9] rounded-xl lg:h-[130px] h-[100px] items-center"
+        >
+          <ul class="leading-10 col-span-2">
+            <li class="text-[#242424] font-semibold lg:text-xl">
+              Пoлучaйтe нoвых клиeнтoв бeз влoжeний!
+            </li>
+            <li class="text-[#242424] lg:text-md text-sm">
+              Бecплaтнaя рeгиcтрaция и рaзмeщeниe тoвaрoв
+            </li>
+          </ul>
+          <button
+            class="lg:h-16 sm:h-12 h-10 lg:text-md text-sm lg:w-[244px] w-[190px] border border-[#242424] rounded-xl text-[#242424]"
+          >
+            Пoпрoбoвaть бecплaтнo
+          </button>
         </div>
       </div>
     </section>
@@ -80,14 +106,94 @@
 <script setup></script>
 
 <style lang="scss" scoped>
-h1{
-    font-weight: 600;
-    font-size: 24px;
-    margin: 20px 0
+h1 {
+  font-weight: 600;
+  font-size: 24px;
+  margin: 20px 0;
 }
 
-.header{
-    font-size: 32px;
-    margin-top: -10px;
+.main p,
+.main h1 {
+  color: #242424;
+}
+
+.header {
+  font-size: 32px;
+  margin-top: -10px;
+}
+
+@media (max-width: 650px) {
+  .shop ul {
+    grid-column: span 3 / span 3;
+  }
+
+  .shop {
+    height: 180px;
+    width: 416px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    font-size: 25px;
+  }
+
+  h1 {
+    font-size: 18px;
+    margin: 15px 0;
+  }
+
+  p {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 500px) {
+  .shop {
+    height: 180px;
+    width: 100%;
+    padding: 0 10px;
+  }
+
+  .shop li,
+  .shop button {
+    font-size: 13px;
+  }
+
+  .img1 {
+    height: 250px;
+  }
+
+  .img2 img {
+    height: 150px;
+  }
+}
+
+@media (max-width: 400px) {
+  .img1 {
+    height: 200px;
+  }
+
+  .img2 img {
+    height: 120px;
+  }
+}
+
+@media (max-width: 320px) {
+  .shop ul {
+    line-height: normal;
+  }
+
+  .shop li:nth-child(1) {
+    margin-bottom: 10px;
+  }
+
+  .img1 {
+    height: 200px;
+  }
+
+  .img2 img {
+    height: 100px;
+  }
 }
 </style>

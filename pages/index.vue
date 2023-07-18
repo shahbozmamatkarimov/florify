@@ -1,7 +1,9 @@
 <template>
-  <main class="container mx-auto xl:px-20 md:px-10 px-5 pb-10">
+  <main class="container mx-auto xl:px-20 md:px-10 px-5 pb-5">
     <section>
-      <div class="filter font-medium text-[#454545cf] flex sm:md:gap-7 gap-5  gap-4 py-3 border-b-2">
+      <div
+        class="filter font-medium text-[#454545cf] flex sm:md:gap-7 gap-5 py-3 border-b-2"
+      >
         <select class="pr-2 -ml-3 bg-transparent border-none rounded-xl">
           <option value="1">Kому</option>
           <option value="1">Kому</option>
@@ -24,7 +26,7 @@
         </select>
       </div>
     </section>
-    <section class="flex md:gap-7 gap-5  sm:py-10 py-5">
+    <section class="flex md:gap-7 gap-5 sm:py-10 py-5">
       <div
         id="default-carousel"
         class="relative sm:w-[65%] w-full"
@@ -32,7 +34,7 @@
       >
         <!-- Carousel wrapper -->
         <div
-          class="carousel relative lg:h-80 md:h-60 sm:h-48 h-52 overflow-hidden rounded-xl"
+          class="carousel relative lg:h-[300px] md:h-60 sm:h-48 h-52 overflow-hidden rounded-xl"
         >
           <!-- Item 1 -->
           <div class="hidden duration-700 ease-in-out" data-carousel-item>
@@ -314,7 +316,9 @@
           </span>
         </button>
       </div>
-      <div class="relative w-[35%] lg:h-80 md:h-60 sm:h-48 sm:block hidden">
+      <div
+        class="relative w-[35%] lg:h-[300px] md:h-60 sm:h-48 sm:block hidden"
+      >
         <p
           class="absolute right-0 px-4 py-2 bg-[#FFA500] rounded-es-xl rounded-se-xl"
         >
@@ -331,18 +335,20 @@
     <!-------------------------------- section 1 -------------------------------->
 
     <section>
-      <h1 class="sm:text-3xl text-lg text-[#242424]">Готовые букеты</h1>
+      <h1 class="sm:text-3xl text-lg -mt-2 pb-1 text-[#242424]">
+        Готовые букеты
+      </h1>
       <p class="sm:text-lg text-sm text-[#242424]">
         Собраны сегодня. Букет уже готов к доставке.
       </p>
-      <div class="grid lg:grid-cols-4 grid-cols-3 cards my-5 md:gap-7 gap-5 ">
+      <div class="grid lg:grid-cols-4 grid-cols-3 cards my-5 md:gap-7 gap-5">
         <div
           v-for="i in store.data"
           :key="i"
           class="card max-w-sm hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
         >
-          <img
-            class="img rounded-t-lg 2xl:h-80 xl:h-64 md:h-52 sm:h-44 h-44 w-full object-cover"
+          <img @click="$router.push('./фрида_кало')"
+            class="img rounded-t-lg 2xl:h-80 xl:h-64 cursor-pointer md:h-52 sm:h-44 h-44 w-full object-cover"
             src="../assets/image/image6.png"
             alt=""
           />
@@ -358,7 +364,7 @@
                 <span class="sm:inline hidden">сум</span>
               </p>
               <div class="flex items-center sm:gap-3 gap-1">
-                <img src="../assets/svg/heart.svg" alt="" />
+                <img class="cursor-pointer" src="../assets/svg/heart.svg" alt="" />
 
                 <img
                   class="cursor-pointer sm:h-5 sm:w-5 h-3 w-3"
@@ -383,14 +389,14 @@
       <h1 class="sm:text-3xl sm:pt-7 pt-4 sm:pb-2 pb-0 text-md">
         Яркие букетики
       </h1>
-      <div class="grid lg:grid-cols-4 grid-cols-3 cards my-5 md:gap-7 gap-5 ">
+      <div class="grid lg:grid-cols-4 grid-cols-3 cards my-5 md:gap-7 gap-5">
         <div
           v-for="i in store.data"
           :key="i"
           class="card max-w-sm hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
         >
-          <img
-            class="img rounded-t-lg 2xl:h-72 xl:h-64 md:h-52 sm:h-44 h-44 w-full object-cover"
+          <img @click="$router.push('./фрида_кало')"
+            class="img rounded-t-lg 2xl:h-72 xl:h-64 cursor-pointer md:h-52 sm:h-44 h-44 w-full object-cover"
             src="../assets/image/image1.png"
             alt=""
           />
@@ -406,7 +412,7 @@
                 <span class="sm:inline hidden">сум</span>
               </p>
               <div class="flex items-center sm:gap-3 gap-1">
-                <img src="../assets/svg/heart.svg" alt="" />`
+                <img class="cursor-pointer" src="../assets/svg/heart.svg" alt="" />
                 <img
                   class="cursor-pointer sm:h-5 sm:w-5 h-3 w-3"
                   src="../assets/svg/cart.svg"
@@ -430,14 +436,14 @@
       <h1 class="sm:text-3xl sm:pt-7 pt-4 sm:pb-2 pb-0 text-md">
         Розы Pink O'Hara
       </h1>
-      <div class="grid lg:grid-cols-4 grid-cols-3 cards my-5 md:gap-7 gap-5 ">
+      <div class="grid lg:grid-cols-4 grid-cols-3 cards my-5 md:gap-7 gap-5">
         <div
           v-for="i in store.data"
           :key="i"
           class="card max-w-sm hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
         >
-          <img
-            class="img rounded-t-lg 2xl:h-72 xl:h-64 md:h-52 sm:h-44 h-44 w-full object-cover"
+          <img @click="$router.push('./фрида_кало')"
+            class="img rounded-t-lg 2xl:h-72 xl:h-64 cursor-pointer md:h-52 sm:h-44 h-44 w-full object-cover"
             src="../assets/image/image3.png"
             alt=""
           />
@@ -453,7 +459,7 @@
                 <span class="sm:inline hidden">сум</span>
               </p>
               <div class="flex items-center sm:gap-3 gap-1">
-                <img src="../assets/svg/heart.svg" alt="" />
+                <img class="cursor-pointer" src="../assets/svg/heart.svg" alt="" />
 
                 <img
                   class="cursor-pointer sm:h-5 sm:w-5 h-3 w-3"
@@ -478,14 +484,14 @@
       <h1 class="sm:text-3xl sm:pt-7 pt-4 sm:pb-2 pb-0 text-md">
         Махровые эустомы
       </h1>
-      <div class="grid lg:grid-cols-4 grid-cols-3 cards my-5 md:gap-7 gap-5 ">
+      <div class="grid lg:grid-cols-4 grid-cols-3 cards my-5 md:gap-7 gap-5">
         <div
           v-for="i in store.data / 2"
           :key="i"
           class="card max-w-sm hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
         >
-          <img
-            class="img rounded-t-lg 2xl:h-72 xl:h-64 md:h-52 sm:h-44 h-44 w-full object-cover"
+          <img @click="$router.push('./фрида_кало')"
+            class="img rounded-t-lg 2xl:h-72 xl:h-64 cursor-pointer md:h-52 sm:h-44 h-44 w-full object-cover"
             src="../assets/image/image2.png"
             alt=""
           />
@@ -501,7 +507,7 @@
                 <span class="sm:inline hidden">сум</span>
               </p>
               <div class="flex items-center sm:gap-3 gap-1">
-                <img src="../assets/svg/heart.svg" alt="" />
+                <img class="cursor-pointer" src="../assets/svg/heart.svg" alt="" />
 
                 <img
                   class="cursor-pointer sm:h-5 sm:w-5 h-3 w-3"

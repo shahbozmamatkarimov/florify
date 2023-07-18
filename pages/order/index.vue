@@ -2,21 +2,39 @@
   <main class="container mx-auto xl:px-20 md:px-10 px-5 pb-[15rem]">
     <section class="grid xl:grid-cols-2 gap-16">
       <div>
-        <h1 class="font-semibold sm:text-2xl text-xl py-5">Оформление заказа</h1>
+        <h1 class="font-semibold sm:text-2xl text-xl py-5">
+          Оформление заказа
+        </h1>
         <ul class="leading-10">
           <li>
-            <p class="font-semibold sm:text-2xl text-xl sm:py-5 py-3">Кто получит букет?</p>
+            <p class="font-semibold sm:text-2xl text-xl sm:py-5 py-3">
+              Кто получит букет?
+            </p>
             <div class="grid grid-cols-2 gap-5 sm:h-[53px]">
-              <button class="h-full border-2 border-[#D9D9D9] rounded">
+              <button
+                @click="store.for = 2"
+                :class="
+                  store.for == 2 ? 'border-[#5C0099]' : 'border-[#D9D9D9]'
+                "
+                class="h-full border-2 rounded"
+              >
                 Другой человек
               </button>
-              <button class="h-full border-2 border-[#5C0099] rounded">
+              <button
+                @click="store.for = 1"
+                :class="
+                  store.for == 1 ? 'border-[#5C0099]' : 'border-[#D9D9D9]'
+                "
+                class="h-full border-2 rounded"
+              >
                 Я сам
               </button>
             </div>
           </li>
           <li>
-            <h1 class="font-semibold sm:text-2xl text-xl pt-7 pb-1">Ваши контакты</h1>
+            <h1 class="font-semibold sm:text-2xl text-xl pt-7 pb-1">
+              Ваши контакты
+            </h1>
             <div class="grid grid-cols-2 gap-5">
               <p>Фамилия *</p>
               <p>Имя *</p>
@@ -26,7 +44,7 @@
         <div class="grid grid-cols-2 gap-5 sm:h-[53px]">
           <input
             type="text"
-            class="h-full bg-transparent border-2 border-[#5C0099] rounded"
+            class="h-full bg-transparent border-2 border-[#D9D9D9] rounded"
             placeholder="Введите фамилия"
             required
           />
@@ -42,15 +60,41 @@
           Мы пришлем уведомление о статусе заказа на указанный вами телефон.
           Курьер свяжется с вами по телефону для уточнения времени доставки.
         </p>
-        <h1 class="py-2">Номер телефона *</h1>
+        <h1 class="pt-2 pb-4">Номер телефона *</h1>
         <div class="grid sm:grid-cols-2 gap-5 sm:h-[53px]">
           <input
             type="tel"
-            value="+998 "
             class="h-full bg-transparent border-2 border-[#D9D9D9] rounded"
-            placeholder="Введите фамилия"
+            placeholder="+998 __ ___-__-__"
             required
           />
+        </div>
+
+        <div v-show="store.for == 2">
+          <div>
+            <h1 class="font-semibold sm:text-xl text-xl py-5">
+              Контакты получателя
+            </h1>
+          </div>
+          <div class="grid grid-cols-2 pb-2 gap-5">
+            <p>Имя *</p>
+            <p>Номер телефона *</p>
+          </div>
+
+          <div class="grid grid-cols-2 gap-5 sm:h-[53px]">
+            <input
+              type="text"
+              class="h-full bg-transparent border-2 border-[#D9D9D9] rounded"
+              placeholder="Введите имя"
+              required
+            />
+            <input
+              type="tel"
+              class="h-full bg-transparent border-2 border-[#D9D9D9] rounded"
+              placeholder="+998 __ ___-__-__"
+              required
+            />
+          </div>
         </div>
         <hr class="my-5" />
 
@@ -79,12 +123,16 @@
             <p class="text-[#5C0099] pl-4 pb-4">Укажите, пожалуйста, фамилия</p>
             <div>
               <ul>
-                <li class="grid sm:grid-cols-3 grid-cols-2 ext-gray-700 h-14 -my-3 gap-5">
+                <li
+                  class="grid sm:grid-cols-3 grid-cols-2 ext-gray-700 h-14 -my-3 gap-5"
+                >
                   <p>Квартира/офис</p>
                   <p>Подъезд</p>
                   <p class="sm:pt-0 pt-5">Этаж</p>
                 </li>
-                <li class="grid sm:grid-cols-3 grid-cols-2 sm:pb-0 pb-24 md:h-14 h-10 gap-5">
+                <li
+                  class="grid sm:grid-cols-3 grid-cols-2 sm:pb-0 pb-24 md:h-14 h-10 gap-5"
+                >
                   <input
                     class="h-full col-span-1 bg-transparent w-full rounded border-2 border-[#D9D9D9]"
                     type="text"
@@ -110,6 +158,26 @@
               Например, куда именно привезти заказ, ближайший адрес или ориентир
             </p>
           </li>
+          <li v-show="store.for == 2">
+            <div class="flex items-center gap-5">
+              <h1 class="text-xl font-semibold py-2 mb-1">Бесплатная открытка</h1>
+
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" value="" class="sr-only peer" />
+                <div
+                  class="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#5C0099]"
+                ></div>
+              </label>
+            </div>
+            <label for="convert" class="text-gray-700 py-2"
+              >Текст открытки…</label
+            >
+            <textarea
+              id="convert"
+              class="h-20 bg-transparent w-full rounded border-2 border-[#D9D9D9]"
+              placeholder="Мой дорогой..."
+            ></textarea>
+          </li>
           <li>
             <h1 class="font-semibold text-xl pt-7">Дата и время доставки</h1>
             <div class="grid sm:grid-cols-2 gap-5 my-5 sm:h-14">
@@ -130,7 +198,8 @@
             <p
               class="flex items-center text-lg gap-5 px-5 my-5 rounded text-[#45D469] bg-green-100 h-16"
             >
-              <svg class="sm:scale-0 scale-150"
+              <svg
+                class="sm:scale-0 scale-150"
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
@@ -201,7 +270,9 @@
                 />
                 <div class="pl relative pl-3 w-full">
                   <div class="flex w-full items-start justify-between">
-                    <h1 class="sm:font-bold font-semibold lg:text-md sm:text-lg text-sm xl:w-[70%] w-[90  %] overflow-hidden">
+                    <h1
+                      class="sm:font-bold font-semibold lg:text-md sm:text-lg text-sm xl:w-[70%] w-[90 %] overflow-hidden"
+                    >
                       Букет из "9 кустовых хризантем с эвкалиптом 😍
                     </h1>
                     <img
@@ -210,8 +281,14 @@
                       alt="x"
                     />
                   </div>
-                  <p class="price pb-5 font-normal sm:text-md text-xs text-gray-500 sm:pt-2 py-2">Cтандартний</p>
-                  <p class="flex justify-between sm:text-md text-sm w-full absolute bottom-0">
+                  <p
+                    class="price pb-5 font-normal sm:text-md text-xs text-gray-500 sm:pt-2 py-2"
+                  >
+                    Cтандартний
+                  </p>
+                  <p
+                    class="flex justify-between sm:text-md text-sm w-full absolute bottom-0"
+                  >
                     <span class="font-normal">1 шт.</span
                     ><span class="font-semibold pr-3">800 000 сум</span>
                   </p>
@@ -247,6 +324,7 @@
 <script setup>
 const store = reactive({
   payment: 0,
+  for: 1,
 });
 </script>
 
@@ -256,20 +334,18 @@ const store = reactive({
     display: block;
   }
 
-  .img{
+  .img {
     height: 150px;
     width: 100%;
   }
 
-  .pl{
+  .pl {
     padding-left: 0;
     padding-top: 7px;
   }
-  .price{
+  .price {
     padding-bottom: 25px;
     padding-top: 5px;
   }
 }
-
-
 </style>

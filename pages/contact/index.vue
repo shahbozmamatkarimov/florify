@@ -22,35 +22,51 @@
 
     <section>
       <h1 class="text-3xl font-semibold pb-10 text-[#212121]">Контакты</h1>
-      <div class="grid grid-cols-2">
+      <div class="grid md:grid-cols-2">
         <img
-          class="h-[490px] w-full object-cover"
+          class="w-full object-cover"
           src="../../assets/svg/map.svg"
           alt="map"
         />
-        <div class="px-10 py-5 border-y">
-          <h1 class="text-2xl text-[#242424] font-semibold">
+        <div class="xl:px-10 px-5 pt-5 border-y">
+          <h1
+            class="2xl:text-2xl lg:text-xl sm:text-lg text-md text-[#242424] font-semibold"
+          >
             Мы работаем 24 часа в сутки, без выходных
           </h1>
-          <div class="grid grid-cols-2 py-10">
+          <div
+            class="grid grid-cols-2 lg:-mb-5 md:-mb-40 sm:gap-0 gap-2 2xl:text-lg lg:text-md sm:text-sm text-xs lg:py-10 py-5"
+          >
             <ul>
-              <li class="mb-7 h-16 text-lg overflow-hidden">
+              <li
+                class="2xl:mb-7 lg:mb-5 sm:mb-1 sm:min-h-[4rem] min-h-[3.5rem]"
+              >
                 Юридический адрес
               </li>
-              <li class="mb-7 h-16 text-lg overflow-hidden">Номер телефона</li>
-              <li class="mb-7 h-16 text-lg overflow-hidden">
+              <li
+                class="2xl:mb-7 lg:mb-5 sm:mb-1 sm:min-h-[4rem] min-h-[3.5rem]"
+              >
+                Номер телефона
+              </li>
+              <li
+                class="2xl:mb-7 lg:mb-5 sm:mb-1 sm:min-h-[4rem] min-h-[3.5rem]"
+              >
                 Электронная почта
               </li>
             </ul>
             <ul>
-              <li class="h-16 mb-7 text-lg overflow-hidden">
+              <li
+                class="sm:min-h-[4rem] min-h-[3.5rem] 2xl:mb-7 lg:mb-5 sm:mb-1"
+              >
                 123376, г. Ташкент, ул. Каримова, 1
               </li>
-              <li class="h-16 mb-7 text-lg overflow-hidden">
+              <li
+                class="sm:min-h-[4rem] min-h-[3.5rem] 2xl:mb-7 lg:mb-5 sm:mb-1"
+              >
                 <p>+998 (88) 111 02 11</p>
                 <p>+998 (95) 888 58 58</p>
               </li>
-              <li class="h-16 mb-7 text-lg overflow-hidden">
+              <li class="sm:h-16 h-14 2xl:mb-7 lg:mb-5 sm:mb-1">
                 customercare@florify.com
               </li>
             </ul>

@@ -31,8 +31,8 @@
                 >
               </li>
               <li>
-                <router-link class="hover:text-gray-200" to="/developing..."
-                  >Категории</router-link
+                <router-link class="hover:text-gray-200" to="/quality_assurance"
+                  >Гарантия качества</router-link
                 >
               </li>
               <li>
@@ -69,11 +69,11 @@
                   >9+
                   </span>
                 </span> -->
-                <p class="font-semibold hover:text-gray-200">Корзина</p>
+                <p class="font-semibold hover:text-gray-200  sm:block hidden">Корзина</p>
               </div>
-              <div class="flex items-center gap-2 hover:text-gray-200 cursor-pointer">
+              <div class="sm:flex hidden items-center gap-2 mr-10 hover:text-gray-200 cursor-pointer">
                 <img src="../assets/svg/user.svg" alt="" />
-                <p class="font-semibold">Войти</p>
+                <p class="font-semibold sm:block hidden">Войти</p>
               </div>
               <div>
                 <!-- Responsive navbar -->
@@ -82,7 +82,7 @@
                     store.toggle = !store.toggle;
                     store.lang = false;
                   "
-                  class="navbar-burger hover:text-gray-200 text-3xl pt-1 cursor-pointer self-center lg:hidden"
+                  class="navbar-burger hover:text-gray-200 text-3xl pt-2 cursor-pointer self-center lg:hidden"
                 >
                   <i class="bx bx-menu"></i>
                 </p>
@@ -94,36 +94,15 @@
                     <router-link
                       @click="store.toggle = true"
                       class="w-full hover:bg-gray-200 p-3 rounded-md inline-block"
-                      to="/"
+                      to="/about"
                       >O нас</router-link
                     >
-                    <div class="absolute right-5">
-                      <i
-                        @click="store.lang = !store.lang"
-                        class="cursor-pointer bx bx-globe"
-                      ></i>
-                      <ul
-                        @click="store.lang = false"
-                        v-show="store.lang"
-                        class="absolute text-[17px] text-black bg-white z-20 rounded border shadow overflow-hidden top-[40px] right-0"
-                      >
-                        <li class="px-2 hover:bg-gray-200 cursor-pointer">
-                          Узбекский
-                        </li>
-                        <li class="px-2 hover:bg-gray-200 cursor-pointer">
-                          Английский
-                        </li>
-                        <li class="px-2 hover:bg-gray-200 cursor-pointer">
-                          Русский
-                        </li>
-                      </ul>
-                    </div>
                   </li>
                   <li>
                     <router-link
                       @click="store.toggle = true"
                       class="w-full hover:bg-gray-200 p-3 rounded-md inline-block"
-                      to="/"
+                      to="/buy_and_order"
                       >Оплата и доставка</router-link
                     >
                   </li>
@@ -131,15 +110,15 @@
                     <router-link
                       @click="store.toggle = true"
                       class="w-full hover:bg-gray-200 p-3 rounded-md inline-block"
-                      to="/"
-                      >Категории</router-link
+                      to="/quality_assurance"
+                      >Гарантия качества</router-link
                     >
                   </li>
                   <li>
                     <router-link
                       @click="store.toggle = true"
                       class="w-full hover:bg-gray-200 p-3 rounded-md inline-block"
-                      to="/"
+                      to="/contact"
                       >Контакты</router-link
                     >
                   </li>

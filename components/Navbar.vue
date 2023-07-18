@@ -38,7 +38,7 @@
       </form>
     </div>
     <div>
-      <ul class="flex gap-6 font-medium text-gray-600 py-3 md:pr-0 pr-10 overflow-hidden overflow-x-auto">
+      <ul class="flex gap-6 font-medium text-gray-600 py-1 md:pr-0 pr-10 overflow-hidden overflow-x-auto">
         <li
           class="font-bold text-[#5C0099] cursor-pointer hover:text-[#5C0099]"
         >

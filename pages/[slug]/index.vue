@@ -40,10 +40,10 @@
         dots-class="slick-dots slick-thumb"
       >
         <template #customPaging="props">
-          <img class="rounded-md cursor-pointer" :src="getImgUrl(props.i)" />
+          <img class="h-full w-full object-cover rounded-md cursor-pointer" :src="getImgUrl(props.i)" />
         </template>
         <div class="py-2" v-for="item in 4" :key="item">
-          <img class="rounded-xl" :src="getImgUrl(item - 1)" />
+          <img class="rounded-xl border h-full w-full object-cover" :src="getImgUrl(item - 1)" />
         </div>
       </a-carousel>
 
@@ -115,12 +115,12 @@
         </ul>
         <div class="grid grid-cols-2 gap-5 my-5">
           <button
-            class="md:text-md text-sm h-16 bg-[#5C0099] active:opacity-50 text-white font-semibold rounded-xl border border-[#5C0099]"
+            class="md:text-md text-sm sm:h-16 h-12 bg-[#5C0099] active:opacity-50 text-white font-semibold rounded-xl border border-[#5C0099]"
           >
             Добавить в корзину
           </button>
-          <button
-            class="md:text-md text-sm h-16 text-[#5C0099] active:opacity-50 rounded-xl font-semibold border border-[#5C0099]"
+          <button @click="$router.push('/order')"
+            class="md:text-md text-sm sm:h-16 h-12 text-[#5C0099] active:opacity-50 rounded-xl font-semibold border border-[#5C0099]"
           >
             Купить в 1 клик
           </button>
@@ -168,9 +168,7 @@
                 <span class="sm:inline hidden">сум</span>
               </p>
               <div class="flex items-center sm:gap-3 gap-1">
-                <i
-                  class="bx bx-heart cursor-pointer sm:text-lg text-xs font-medium text-[#FF6161]"
-                ></i>
+                <img class="cursor-pointer" src="../../assets/svg/heart.svg" alt="" />
                 <img
                   class="cursor-pointer sm:h-5 sm:w-5 h-3 w-3"
                   src="../../assets/svg/cart.svg"
@@ -209,9 +207,8 @@
                 <span class="sm:inline hidden">сум</span>
               </p>
               <div class="flex items-center sm:gap-3 gap-1">
-                <i
-                  class="bx bx-heart cursor-pointer sm:text-lg text-xs font-medium text-[#FF6161]"
-                ></i>
+                <img class="cursor-pointer" src="../../assets/svg/heart.svg" alt="" />
+
                 <img
                   class="cursor-pointer sm:h-5 sm:w-5 h-3 w-3"
                   src="../../assets/svg/cart.svg"
@@ -285,10 +282,6 @@ input:focus {
   list-style-type: disc;
 }
 
-/*.container {
-  width: 100%;
-}
-*/
 @media (min-width: 0) {
   :deep(.slick-slide img) {
     width: 100%;
@@ -315,7 +308,7 @@ input:focus {
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 768px) and (max-width: 12px) {
   :deep(.slick-slide img) {
     width: 25rem;
     height: 25rem;
