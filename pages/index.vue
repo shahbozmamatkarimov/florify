@@ -1,5 +1,14 @@
 <template>
   <main class="container mx-auto xl:px-28 md:px-10 px-5 pb-5">
+    <h1>{{ $t("hello") }}</h1>
+    <form>
+      <label for="locale-select">{{ $t("language") }}: </label>
+      <select id="locale-select" v-model="$i18n.locale">
+        <option value="uz">uz</option>
+        <option value="ru">ru</option>
+        <option value="en">en</option>
+      </select>
+    </form>
     <section>
       <div
         class="filter font-medium text-[#454545cf] flex sm:md:gap-7 gap-5 py-3 border-b-2"
@@ -27,11 +36,7 @@
       </div>
     </section>
     <section class="flex md:gap-7 gap-5 sm:py-10 py-5">
-      <div
-        id="default-carousel"
-        class="relative w-full"
-        data-carousel="slide"
-      >
+      <div id="default-carousel" class="relative w-full" data-carousel="slide">
         <!-- Carousel wrapper -->
         <div
           class="carousel relative lg:h-[300px] md:h-60 sm:h-48 h-52 overflow-hidden rounded-xl"
@@ -347,7 +352,8 @@
           :key="i"
           class="card max-w-sm hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
         >
-          <img @click="$router.push('./фрида_кало')"
+          <img
+            @click="$router.push('./фрида_кало')"
             class="img rounded-t-lg 2xl:h-80 xl:h-64 cursor-pointer md:h-52 sm:h-44 h-44 w-full object-cover"
             src="../assets/image/image6.png"
             alt=""
@@ -364,7 +370,11 @@
                 <span class="sm:inline hidden">сум</span>
               </p>
               <div class="flex items-center sm:gap-3 gap-1">
-                <img class="cursor-pointer" src="../assets/svg/heart.svg" alt="" />
+                <img
+                  class="cursor-pointer"
+                  src="../assets/svg/heart.svg"
+                  alt=""
+                />
 
                 <img
                   class="cursor-pointer sm:h-5 sm:w-5 h-3 w-3"
@@ -395,7 +405,8 @@
           :key="i"
           class="card max-w-sm hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
         >
-          <img @click="$router.push('./фрида_кало')"
+          <img
+            @click="$router.push('./фрида_кало')"
             class="img rounded-t-lg 2xl:h-72 xl:h-64 cursor-pointer md:h-52 sm:h-44 h-44 w-full object-cover"
             src="../assets/image/image1.png"
             alt=""
@@ -412,7 +423,11 @@
                 <span class="sm:inline hidden">сум</span>
               </p>
               <div class="flex items-center sm:gap-3 gap-1">
-                <img class="cursor-pointer" src="../assets/svg/heart.svg" alt="" />
+                <img
+                  class="cursor-pointer"
+                  src="../assets/svg/heart.svg"
+                  alt=""
+                />
                 <img
                   class="cursor-pointer sm:h-5 sm:w-5 h-3 w-3"
                   src="../assets/svg/cart.svg"
@@ -442,7 +457,8 @@
           :key="i"
           class="card max-w-sm hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
         >
-          <img @click="$router.push('./фрида_кало')"
+          <img
+            @click="$router.push('./фрида_кало')"
             class="img rounded-t-lg 2xl:h-72 xl:h-64 cursor-pointer md:h-52 sm:h-44 h-44 w-full object-cover"
             src="../assets/image/image3.png"
             alt=""
@@ -459,7 +475,11 @@
                 <span class="sm:inline hidden">сум</span>
               </p>
               <div class="flex items-center sm:gap-3 gap-1">
-                <img class="cursor-pointer" src="../assets/svg/heart.svg" alt="" />
+                <img
+                  class="cursor-pointer"
+                  src="../assets/svg/heart.svg"
+                  alt=""
+                />
 
                 <img
                   class="cursor-pointer sm:h-5 sm:w-5 h-3 w-3"
@@ -490,7 +510,8 @@
           :key="i"
           class="card max-w-sm hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
         >
-          <img @click="$router.push('./фрида_кало')"
+          <img
+            @click="$router.push('./фрида_кало')"
             class="img rounded-t-lg 2xl:h-72 xl:h-64 cursor-pointer md:h-52 sm:h-44 h-44 w-full object-cover"
             src="../assets/image/image2.png"
             alt=""
@@ -507,7 +528,11 @@
                 <span class="sm:inline hidden">сум</span>
               </p>
               <div class="flex items-center sm:gap-3 gap-1">
-                <img class="cursor-pointer" src="../assets/svg/heart.svg" alt="" />
+                <img
+                  class="cursor-pointer"
+                  src="../assets/svg/heart.svg"
+                  alt=""
+                />
 
                 <img
                   class="cursor-pointer sm:h-5 sm:w-5 h-3 w-3"

@@ -22,44 +22,42 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
-  modules: ["@element-plus/nuxt", "@ant-design-vue/nuxt"],
-  // modules: [
-  //   [
-  //     "nuxt-i18n",
-  //     {
-  //       locales: [
-  //         {
-  //           code: "es",
-  //           iso: "en-ES",
-  //           name: "Español",
-  //         },
-  //         {
-  //           code: "en",
-  //           iso: "en-US",
-  //           name: "English",
-  //         },
-  //         {
-  //           code: "ca",
-  //           iso: "ca-ES",
-  //           name: "Català",
-  //         },
-  //         {
-  //           code: "fr",
-  //           iso: "fr-FR",
-  //           name: "Français",
-  //         },
-  //       ],
-  //       defaultLocale: "en",
-  //       noPrefixDefaultLocale: true,
-  //       vueI18n: {
-  //         fallbackLocale: "en",
-  //         // messages: {
-  //         //   en: require("./lang/en.json"),
-  //         //   es: require("./lang/ru.json"),
-  //         //   fr: require("./lang/uz.json"),
-  //         // },
+  modules: [
+    "@element-plus/nuxt",
+    "@ant-design-vue/nuxt",
+    // "@nuxtjs/i18n",
+    // {
+    //   locales: ['en', 'es'],
+    //   defaultLocale: 'en',
+    //   vueI18n: {
+    //     fallbackLocale: 'en',
+    //     messages: {
+    //       en: {
+    //         greeting: 'Hello world!'
+    //       },
+    //       es: {
+    //         greeting: '¡Hola mundo!'
+    //       }
+    //     }
+    //   }
+    // }
+  ],
+  // i18n: {
+  //   locales: ["en", "fr", "es"],
+  //   defaultLocale: "en",
+  //   vueI18n: {
+  //     fallbackLocale: "en",
+  //     messages: {
+  //       en: {
+  //         welcome: "Welcome",
+  //       },
+  //       fr: {
+  //         welcome: "Bienvenue",
+  //       },
+  //       es: {
+  //         welcome: "Bienvenido",
   //       },
   //     },
-  //   ],
-  // ],
+  //   },
+  // },
 });

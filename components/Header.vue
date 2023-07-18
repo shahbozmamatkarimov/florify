@@ -21,31 +21,31 @@
               class="hidden xl:flex px-4 text-lg mx-auto font-semibold font-heading space-x-12"
             >
               <li>
-                <router-link class="hover:text-gray-200" to="/about"
-                  >O нас</router-link
+                <router-link class="hover:text-gray-200" to="/about">{{
+                  $t("about")
+                }}</router-link>
+              </li>
+              <li>
+                <router-link class="hover:text-gray-200" to="/buy_and_order">{{
+                  $t("payment_and_delivery")
+                }}</router-link>
+              </li>
+              <li>
+                <router-link
+                  class="hover:text-gray-200"
+                  to="/quality_assurance"
+                  >{{ $t("quality_assurance") }}</router-link
                 >
               </li>
               <li>
-                <router-link class="hover:text-gray-200" to="/buy_and_order"
-                  >Оплата и доставка</router-link
-                >
-              </li>
-              <li>
-                <router-link class="hover:text-gray-200" to="/quality_assurance"
-                  >Гарантия качества</router-link
-                >
-              </li>
-              <li>
-                <router-link class="hover:text-gray-200" to="/contact"
-                  >Контакты</router-link
-                >
+                <router-link class="hover:text-gray-200" to="/contact">{{
+                  $t("contact")
+                }}</router-link>
               </li>
             </ul>
             <!-- Header Icons -->
             <div class="flex items-center">
-              <div
-                class="flex items-center gap-2 cursor-pointer sm:mr-10 mr-3"
-              >
+              <div class="flex items-center gap-2 cursor-pointer sm:mr-10 mr-3">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="h-6 w-6 cart"
@@ -60,20 +60,25 @@
                     d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
                   />
                 </svg>
-                <!-- <span class="flex absolute -mt-5 ml-3">
-                  <span
-                    class="absolute inline-flex h-5 w-5 rounded-full bg-pink-400 opacity-75"
-                  ></span>
-                  <span
-                    class="relative inline-flex items-center justify-center text-xs rounded-full h-5 w-5 bg-pink-500"
-                  >9+
-                  </span>
-                </span> -->
-                <p class="font-semibold hover:text-gray-200  sm:block hidden">Корзина</p>
+                <p class="font-semibold hover:text-gray-200 sm:block hidden">
+                  {{ $t("basket") }}
+                </p>
               </div>
-              <div class="sm:flex hidden items-center gap-2 xl:mr-0 mr-10 hover:text-gray-200 cursor-pointer">
+              <div
+                class="sm:flex hidden items-center gap-2 xl:mr-0 mr-10 hover:text-gray-200 cursor-pointer"
+              >
                 <img src="../assets/svg/user.svg" alt="" />
-                <p class="font-semibold sm:block hidden">Войти</p>
+                <p class="font-semibold sm:block hidden">{{ $t("login") }}</p>
+              </div>
+              <div class="xl:flex hidden items-center ml-7">
+                <i class="bx bx-globe text-2xl"></i>
+                <form>
+                  <select class="bg-transparent w-28 overflow-hidden" v-model="$i18n.locale">
+                    <option class="bg-black" value="uz">{{ $t("uz") }}</option>
+                    <option class="bg-black" value="ru">{{ $t("ru") }}</option>
+                    <option class="bg-black" value="en">{{ $t("en") }}</option>
+                  </select>
+                </form>
               </div>
               <div>
                 <!-- Responsive navbar -->
