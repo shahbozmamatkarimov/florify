@@ -100,21 +100,3 @@
     text-decoration: none !important;
 }
 </style>
-
-
-<!--
-home page
-O нас
-Оплата и доставка
-Гарантия качества
-Контакты
-
-покупка
-Оформление заказа -->
-https://florify.vercel.app
-https://florify.vercel.app/about
-https://florify.vercel.app/buy_and_order
-https://florify.vercel.app/quality_assurance
-https://florify.vercel.app/contact
-https://florify.vercel.app/фрида_кало
-https://florify.vercel.app/order
