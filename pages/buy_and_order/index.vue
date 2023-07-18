@@ -1,7 +1,7 @@
 <template>
   <main class="pb-20">
     <!----------------------- Breadcrumb ---------------------------->
-    <section class="container mx-auto xl:px-20 md:px-10 px-5">
+    <section class="container mx-auto xl:px-28 md:px-10 px-5">
       <nav class="flex py-6" aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1 md:space-x-3">
           <li
@@ -23,7 +23,7 @@
     <!----------------------- section 1 ---------------------------->
 
     <section>
-      <div class="container mx-auto xl:px-20 md:px-10 px-5">
+      <div class="container mx-auto xl:px-28 md:px-10 px-5">
         <h1 class="header">Доставка и оплата</h1>
         <p class="lg:w-[829px]">
           Заказывая цветы с доставкой, вы можете порадовать своих близких, даже
@@ -34,7 +34,7 @@
         </p>
       </div>
       <div class="bg-[#b058eb2c]">
-        <div class="container mx-auto xl:px-20 md:px-10 px-5 pt-1 pb-8 my-5">
+        <div class="container mx-auto xl:px-28 md:px-10 px-5 pt-1 pb-8 my-5">
           <h1>Условия доставки</h1>
           <div class="flex sm:gap-12">
             <div class="flex flex-col gap-5 w-[795px]">
@@ -89,7 +89,7 @@
         </div>
       </div>
       <div
-        class="container md:flex w-full gap-5 mx-auto xl:px-20 md:px-10 px-5 pt-1 pb-8 my-5"
+        class="container md:flex w-full gap-5 mx-auto xl:px-28 md:px-10 px-5 pt-1 pb-8 my-5"
       >
         <div
           class="bg-green-100 rounded-xl p-7 sm:w-[540px] lg:text-md text-sm md:pt-0 md:mt-0 pt-1 xl:min-w-[540px]"
@@ -128,7 +128,7 @@
       </div>
 
       <!-------------  -------------->
-      <div class="container mx-auto xl:px-20 md:px-10 px-5 -mt-5">
+      <div class="container mx-auto xl:px-28 md:px-10 px-5 -mt-5">
         <h1>Оплата заказа</h1>
         <p class="lg:w-[760px]">
           Оплачивайте заказ сразу после оформления удобным для вас способом.

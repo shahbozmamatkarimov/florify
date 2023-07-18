@@ -1,5 +1,5 @@
 <template>
-  <main class="container mx-auto xl:px-20 md:px-10 px-5 pb-[15rem]">
+  <main class="container mx-auto xl:px-28 md:px-10 px-5 pb-[15rem]">
     <section class="grid xl:grid-cols-2 gap-16">
       <div>
         <h1 class="font-semibold sm:text-2xl text-xl py-5">

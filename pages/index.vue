@@ -1,5 +1,5 @@
 <template>
-  <main class="container mx-auto xl:px-20 md:px-10 px-5 pb-5">
+  <main class="container mx-auto xl:px-28 md:px-10 px-5 pb-5">
     <section>
       <div
         class="filter font-medium text-[#454545cf] flex sm:md:gap-7 gap-5 py-3 border-b-2"
@@ -29,7 +29,7 @@
     <section class="flex md:gap-7 gap-5 sm:py-10 py-5">
       <div
         id="default-carousel"
-        class="relative sm:w-[65%] w-full"
+        class="relative w-full"
         data-carousel="slide"
       >
         <!-- Carousel wrapper -->
@@ -317,7 +317,7 @@
         </button>
       </div>
       <div
-        class="relative w-[35%] lg:h-[300px] md:h-60 sm:h-48 sm:block hidden"
+        class="relative w-[320px] lg:min-w-[320px] md:min-w-[250px] min-w-[200px] lg:h-[300px] md:h-60 sm:h-48 sm:block hidden"
       >
         <p
           class="absolute right-0 px-4 py-2 bg-[#FFA500] rounded-es-xl rounded-se-xl"
@@ -326,7 +326,7 @@
         </p>
         <img
           class="h-full w-full object-cover rounded-xl"
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGITEKhF5dk9UrWF50dDbwxSVeop6b05157Q&usqp=CAU"
+          src="../assets/image/main.png"
           alt="img"
         />
       </div>

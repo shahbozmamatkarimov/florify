@@ -1,5 +1,5 @@
 <template>
-  <main class="container mx-auto xl:px-20 md:px-10 px-5">
+  <main class="container mx-auto xl:px-28 md:px-10 px-5">
     <!----------------------- Breadcrumb ---------------------------->
     <section>
       <nav class="flex py-6" aria-label="Breadcrumb">

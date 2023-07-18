@@ -7,7 +7,7 @@
           class="navbar flex h-[70px] justify-between bg-gray-900 text-white w-screen"
         >
           <div
-            class="container mx-auto xl:px-20 md:px-10 px-5 py-6 flex w-full items-center justify-between"
+            class="container mx-auto xl:px-28 md:px-10 px-5 py-6 flex w-full items-center justify-between"
           >
             <router-link to="/">
               <img

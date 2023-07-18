@@ -1,7 +1,7 @@
 <template>
   <footer class="bg-[#FFFFFF] pt-20">
     <div
-      class="footer grid grid-cols-6 container mx-auto xl:px-20 md:px-10 px-5"
+      class="footer grid grid-cols-6 container mx-auto xl:px-28 md:px-10 px-5"
     >
       <div>
         <img src="../assets/svg/footerLogo.svg" alt="logo" />
@@ -34,7 +34,7 @@
         <li>customercare@florify.com</li>
       </ul>
     </div>
-    <div class="container mx-auto xl:px-20 md:px-10 px-5">
+    <div class="container mx-auto xl:px-28 md:px-10 px-5">
       <p class="flex justify-between items-center">
         <span></span>
         <span class="font-bold pt-10 text-end">
