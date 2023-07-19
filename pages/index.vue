@@ -1,14 +1,5 @@
 <template>
   <main class="container mx-auto xl:px-28 md:px-10 px-5 pb-5">
-    <h1>{{ $t("hello") }}</h1>
-    <form>
-      <label for="locale-select">{{ $t("language") }}: </label>
-      <select id="locale-select" v-model="$i18n.locale">
-        <option value="uz">uz</option>
-        <option value="ru">ru</option>
-        <option value="en">en</option>
-      </select>
-    </form>
     <section>
       <div
         class="filter font-medium text-[#454545cf] flex sm:md:gap-7 gap-5 py-3 border-b-2"
@@ -155,7 +146,7 @@
           <!-- Item 4 -->
           <div class="hidden duration-700 ease-in-out" data-carousel-item>
             <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdgZ5ayCOG7OjOCqI-GnuCCZgGydJFF17UK2eb-hIpCgj4TY3a59gVv-mOPhikSGrZqr8&usqp=CAU"
+              src="../assets/images/carousel.png"
               class="absolute block w-full h-full object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
               alt="..."
             />
@@ -192,7 +183,7 @@
           <!-- Item 5 -->
           <div class="hidden duration-700 ease-in-out" data-carousel-item>
             <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlTqqkbhwlLsU7hGXovehpKdH5XVJxzZx-YzcS2BZcfTaYz-_wLOseXtp0cL_Hk8o7sNs&usqp=CAU"
+              src="https://wallpapers.com/images/featured/cute-flower-background-mdushf1od439uabm.jpg"
               class="absolute block w-full h-full object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
               alt="..."
             />
