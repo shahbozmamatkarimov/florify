@@ -4,7 +4,7 @@
       class="footer grid lg:grid-cols-6 grid-cols-5 overflow-hidden container mx-auto xl:px-28 md:px-10 px-5"
     >
       <div>
-        <img src="../assets/svg/footerLogo.svg" alt="logo" />
+        <img class="w-28" src="../assets/svg/footerLogo.svg" alt="logo" />
       </div>
       <ul>
         <li>О сервисе</li>
