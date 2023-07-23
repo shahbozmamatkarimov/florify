@@ -14,21 +14,21 @@
             type="text"
             id="input-group-1"
             class="border md:h-14 h-10 border-gray-300 placeholder-gray-800 md:text-lg rounded-xl outline-none block w-full pl-12 p-2.5"
-            placeholder="Укaжитe адрес доставки"
+            :placeholder="$t('navbar.address')"
             required
           />
         </div>
         <button
           class="locate md:h-14 h-10 text-center whitespace-nowrap flex items-center justify-center bg-[#5C0099] text-white rounded-xl"
         >
-          Показать
+          {{$t('navbar.show')}}
         </button>
       </form>
       <form class="relative md:col-span-2 col-span-full w-full">
         <input
           type="search"
           class="border md:h-14 h-10 border-gray-300 placeholder-gray-800 md:text-lg rounded-xl outline-none block w-full p-2.5"
-          placeholder="Цветы и букеты"
+          :placeholder="$t('navbar.search')"
           required
         />
         <button
@@ -46,22 +46,22 @@
         <li
           class="font-bold text-[#5C0099] cursor-pointer hover:text-[#5C0099]"
         >
-          Все
+        {{$t('navbar.all')}}
         </li>
         <li class="cursor-pointer whitespace-nowrap hover:text-[#5C0099]">
-          Букеты
+          {{$t('navbar.bouquets')}}
         </li>
         <li class="cursor-pointer whitespace-nowrap hover:text-[#5C0099]">
-          Подарки
+          {{$t('navbar.present')}}
         </li>
         <li class="cursor-pointer whitespace-nowrap hover:text-[#5C0099]">
-          Букет невесты
+          {{$t('navbar.the_brides_bouquet')}}
         </li>
         <li class="cursor-pointer whitespace-nowrap hover:text-[#5C0099]">
-          Композиции
+          {{$t('navbar.compositions')}}
         </li>
         <li class="cursor-pointer whitespace-nowrap hover:text-[#5C0099]">
-          ТОП 10
+          {{$t('navbar.top10')}}
         </li>
         <li
           class="cursor-pointer flex items-center gap-1 whitespace-nowrap hover:text-[#5C0099]"
@@ -88,13 +88,13 @@
               stroke-linejoin="round"
             />
           </svg>
-          Вы смотрели
+          {{$t('navbar.watched')}}
         </li>
         <li class="cursor-pointer whitespace-nowrap hover:text-[#5C0099]">
-          Мои заказы
+          {{$t('navbar.orders')}}
         </li>
         <li class="cursor-pointer whitespace-nowrap hover:text-[#5C0099]">
-          Избранное
+          {{$t('navbar.favorites')}}
         </li>
       </ul>
     </div>

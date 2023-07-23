@@ -7,13 +7,13 @@
           <li
             class="inline-flex cursor-pointer items-center font-semibold text-[#5C0099] hover:text-blue-600"
           >
-            Главная
+            {{ $t("contacts.home") }}
           </li>
           <li>/</li>
           <li
             class="ml-1 cursor-pointer font-medium text-gray-700 hover:text-blue-600 md:ml-2"
           >
-            Контакты
+            {{ $t("contacts.contact") }}
           </li>
         </ol>
       </nav>
@@ -21,7 +21,9 @@
     <!----------------------- Breadcrumb end---------------------------->
 
     <section>
-      <h1 class="text-3xl font-semibold pb-10 text-[#212121]">Контакты</h1>
+      <h1 class="text-3xl font-semibold pb-10 text-[#212121]">
+        {{ $t("contacts.contact") }}
+      </h1>
       <div class="grid md:grid-cols-2">
         <img
           class="w-full object-cover"
@@ -32,7 +34,7 @@
           <h1
             class="2xl:text-2xl lg:text-xl sm:text-lg text-md text-[#242424] font-semibold"
           >
-            Мы работаем 24 часа в сутки, без выходных
+            {{ $t("contacts.description") }}
           </h1>
           <div
             class="grid grid-cols-2 lg:-mb-5 md:-mb-40 sm:gap-0 gap-2 2xl:text-lg lg:text-md sm:text-sm text-xs lg:py-10 py-5"
@@ -41,17 +43,17 @@
               <li
                 class="2xl:mb-7 lg:mb-5 sm:mb-1 sm:min-h-[4rem] min-h-[3.5rem]"
               >
-                Юридический адрес
+                {{ $t("contacts.address") }}
               </li>
               <li
                 class="2xl:mb-7 lg:mb-5 sm:mb-1 sm:min-h-[4rem] min-h-[3.5rem]"
               >
-                Номер телефона
+              {{ $t("contacts.phone") }}
               </li>
               <li
                 class="2xl:mb-7 lg:mb-5 sm:mb-1 sm:min-h-[4rem] min-h-[3.5rem]"
               >
-                Электронная почта
+              {{ $t("contacts.email") }}
               </li>
             </ul>
             <ul>

@@ -5,24 +5,24 @@
         class="filter font-medium text-[#454545cf] flex sm:md:gap-7 gap-5 py-3 border-b-2"
       >
         <select class="pr-2 -ml-3 bg-transparent border-none rounded-xl">
-          <option value="1">Kому</option>
-          <option value="1">Kому</option>
-          <option value="1">Kому</option>
+          <option value="1">{{ $t("home.whom") }}</option>
+          <option value="1">{{ $t("home.whom") }}</option>
+          <option value="1">{{ $t("home.whom") }}</option>
         </select>
         <select class="pr-2 bg-transparent border-none rounded-xl">
-          <option value="1">Повод</option>
-          <option value="1">Повод</option>
-          <option value="1">Повод</option>
+          <option value="1">{{ $t("home.occasion") }}</option>
+          <option value="1">{{ $t("home.occasion") }}</option>
+          <option value="1">{{ $t("home.occasion") }}</option>
         </select>
         <select class="pr-2 bg-transparent border-none rounded-xl">
-          <option value="1">Цвет</option>
-          <option value="1">Цвет</option>
-          <option value="1">Цвет</option>
+          <option value="1">{{ $t("home.color") }}</option>
+          <option value="1">{{ $t("home.color") }}</option>
+          <option value="1">{{ $t("home.color") }}</option>
         </select>
         <select class="pr-2 bg-transparent border-none rounded-xl">
-          <option value="1">Цена</option>
-          <option value="1">Цена</option>
-          <option value="1">Цена</option>
+          <option value="1">{{ $t("home.price") }}</option>
+          <option value="1">{{ $t("home.price") }}</option>
+          <option value="1">{{ $t("home.price") }}</option>
         </select>
       </div>
     </section>
@@ -332,10 +332,10 @@
 
     <section>
       <h1 class="sm:text-3xl text-lg -mt-2 pb-1 text-[#242424]">
-        Готовые букеты
+        {{ $t("home.ready_bouquets") }}
       </h1>
       <p class="sm:text-lg text-sm text-[#242424]">
-        Собраны сегодня. Букет уже готов к доставке.
+        {{ $t("home.description1") }}
       </p>
       <div class="grid lg:grid-cols-4 grid-cols-3 cards my-5 md:gap-7 gap-5">
         <div
@@ -357,8 +357,8 @@
             </h5>
             <div class="flex justify-between items-center">
               <p class="font-semibold sm:text-lg text-xs whitespace-nowrap">
-                <span class="md:inline-block hidden pr-1">от</span> 350 000
-                <span class="sm:inline hidden">сум</span>
+                <span class="md:inline-block hidden"></span> 350 000
+                <span class="sm:inline hidden">{{$t('home.sum')}}</span>
               </p>
               <div class="flex items-center sm:gap-3 gap-1">
                 <img
@@ -380,7 +380,7 @@
       <button
         class="w-full font-semibold lg:h-14 h-10 border-2 rounded-xl border-[#5C0099] text-[#5C0099] hover:bg-[#5C0099] duration-500 hover:text-white"
       >
-        Показать больше
+        {{ $t("home.show_more") }}
       </button>
     </section>
 
@@ -388,7 +388,7 @@
 
     <section>
       <h1 class="sm:text-3xl sm:pt-7 pt-4 sm:pb-2 pb-0 text-md">
-        Яркие букетики
+        {{ $t("home.bright_bouquets") }}
       </h1>
       <div class="grid lg:grid-cols-4 grid-cols-3 cards my-5 md:gap-7 gap-5">
         <div
@@ -410,8 +410,8 @@
             </h5>
             <div class="flex justify-between items-center">
               <p class="font-semibold sm:text-lg text-xs whitespace-nowrap">
-                <span class="md:inline-block hidden pr-1">от</span> 350 000
-                <span class="sm:inline hidden">сум</span>
+                <span class="md:inline-block hidden"></span> 350 000
+                <span class="sm:inline hidden">{{$t('home.sum')}}</span>
               </p>
               <div class="flex items-center sm:gap-3 gap-1">
                 <img
@@ -432,7 +432,7 @@
       <button
         class="w-full font-semibold lg:h-14 h-10 border-2 rounded-xl border-[#5C0099] text-[#5C0099] hover:bg-[#5C0099] duration-500 hover:text-white"
       >
-        Показать больше
+        {{ $t("home.show_more") }}
       </button>
     </section>
 
@@ -440,7 +440,7 @@
 
     <section>
       <h1 class="sm:text-3xl sm:pt-7 pt-4 sm:pb-2 pb-0 text-md">
-        Розы Pink O'Hara
+        {{ $t("home.roses") }}
       </h1>
       <div class="grid lg:grid-cols-4 grid-cols-3 cards my-5 md:gap-7 gap-5">
         <div
@@ -462,8 +462,8 @@
             </h5>
             <div class="flex justify-between items-center">
               <p class="font-semibold sm:text-lg text-xs whitespace-nowrap">
-                <span class="md:inline-block hidden pr-1">от</span> 1 350 000
-                <span class="sm:inline hidden">сум</span>
+                <span class="md:inline-block hidden"></span> 1 350 000
+                <span class="sm:inline hidden">{{$t('home.sum')}}</span>
               </p>
               <div class="flex items-center sm:gap-3 gap-1">
                 <img
@@ -485,7 +485,7 @@
       <button
         class="w-full font-semibold lg:h-14 h-10 border-2 rounded-xl border-[#5C0099] text-[#5C0099] hover:bg-[#5C0099] duration-500 hover:text-white"
       >
-        Показать больше
+        {{ $t("home.show_more") }}
       </button>
     </section>
 
@@ -493,7 +493,7 @@
 
     <section>
       <h1 class="sm:text-3xl sm:pt-7 pt-4 sm:pb-2 pb-0 text-md">
-        Махровые эустомы
+        {{ $t("home.maxrove") }}
       </h1>
       <div class="grid lg:grid-cols-4 grid-cols-3 cards my-5 md:gap-7 gap-5">
         <div
@@ -515,8 +515,8 @@
             </h5>
             <div class="flex justify-between items-center">
               <p class="font-semibold sm:text-lg text-xs whitespace-nowrap">
-                <span class="md:inline-block hidden pr-1">от</span> 1 350 000
-                <span class="sm:inline hidden">сум</span>
+                <span class="md:inline-block hidden"></span> 1 350 000
+                <span class="sm:inline hidden">{{$t('home.sum')}}</span>
               </p>
               <div class="flex items-center sm:gap-3 gap-1">
                 <img
@@ -538,7 +538,7 @@
       <button
         class="w-full font-semibold lg:h-14 h-10 border-2 rounded-xl border-[#5C0099] text-[#5C0099] hover:bg-[#5C0099] duration-500 hover:text-white"
       >
-        Показать больше
+      {{ $t("home.show_more") }}
       </button>
     </section>
   </main>
