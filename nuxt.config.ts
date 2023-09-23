@@ -15,6 +15,11 @@ export default defineNuxtConfig({
       ],
     },
   },
+  runtimeConfig: {
+    public: {
+      baseURL: process.env.BASE_URL,
+    },
+  },
   css: ["~/assets/main.css"],
   postcss: {
     plugins: {
@@ -22,9 +27,18 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
+  // router: {
+  //   extendRoutes(routes, resolve) {
+  //     routes.push({
+  //       name: '404',
+  //       path: '*',
+  //       component: resolve(__dirname, 'layouts/error.vue')
+  //     })
+  //   }
+  // },
   modules: [
-    "@element-plus/nuxt",
     "@ant-design-vue/nuxt",
+    "@pinia/nuxt",
     // "@nuxtjs/i18n",
     // {
     //   locales: ['en', 'es'],

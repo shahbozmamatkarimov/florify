@@ -21,13 +21,13 @@
         <button
           class="locate md:h-14 h-10 text-center whitespace-nowrap flex items-center justify-center bg-[#5C0099] text-white rounded-xl"
         >
-          {{$t('navbar.show')}}
+          {{ $t("navbar.show") }}
         </button>
       </form>
       <form class="relative md:col-span-2 col-span-full w-full">
         <input
           type="search"
-          class="border md:h-14 h-10 border-gray-300 placeholder-gray-800 md:text-lg rounded-xl outline-none block w-full p-2.5"
+          class="border md:h-14 h-10 relative border-gray-300 placeholder-gray-800 md:text-lg rounded-xl outline-none block w-full p-2.5"
           :placeholder="$t('navbar.search')"
           required
         />
@@ -35,7 +35,7 @@
           type="submit"
           class="flex justify-center items-center border border-gray-300 border-l-0 absolute top-0 right-0 h-full p-2.5 font-medium bg-[#F3F3F3] rounded-r-xl sm:w-16 w-10"
         >
-          <i class="bx bx-search text-[#545454] sm:text-2xl text-lg"></i>
+          <img src="../assets/svg/searchIcon.svg" alt="" />
         </button>
       </form>
     </div>
@@ -44,24 +44,34 @@
         class="flex category gap-6 font-medium text-gray-600 py-1 md:pr-0 pr-10 overflow-hidden overflow-x-auto"
       >
         <li
-          class="font-bold text-[#5C0099] cursor-pointer hover:text-[#5C0099]"
+          @click="productStore.getAllProducts()"
+          :class="
+            productStore.state.sliderStep == 0 ? 'text-[#5C0099] font-bold' : ''
+          "
+          class="cursor-pointer hover:text-[#5C0099]"
         >
-        {{$t('navbar.all')}}
+          {{ $t("navbar.all") }}
+        </li>
+        <li
+          @click="productStore.getOneProduct(i.id, index + 1)"
+          v-for="(i, index) in productStore.allProducts"
+          :key="i.id"
+          :class="
+            productStore.state.sliderStep == index + 1
+              ? 'text-[#5C0099] font-bold'
+              : ''
+          "
+          class="cursor-pointer whitespace-nowrap hover:text-[#5C0099]"
+        >
+          <router-link to="/">
+            {{ i.name }}
+          </router-link>
         </li>
         <li class="cursor-pointer whitespace-nowrap hover:text-[#5C0099]">
-          {{$t('navbar.bouquets')}}
+          {{ $t("navbar.present") }}
         </li>
         <li class="cursor-pointer whitespace-nowrap hover:text-[#5C0099]">
-          {{$t('navbar.present')}}
-        </li>
-        <li class="cursor-pointer whitespace-nowrap hover:text-[#5C0099]">
-          {{$t('navbar.the_brides_bouquet')}}
-        </li>
-        <li class="cursor-pointer whitespace-nowrap hover:text-[#5C0099]">
-          {{$t('navbar.compositions')}}
-        </li>
-        <li class="cursor-pointer whitespace-nowrap hover:text-[#5C0099]">
-          {{$t('navbar.top10')}}
+          {{ $t("navbar.top10") }}
         </li>
         <li
           class="cursor-pointer flex items-center gap-1 whitespace-nowrap hover:text-[#5C0099]"
@@ -88,20 +98,27 @@
               stroke-linejoin="round"
             />
           </svg>
-          {{$t('navbar.watched')}}
+          {{ $t("navbar.watched") }}
         </li>
         <li class="cursor-pointer whitespace-nowrap hover:text-[#5C0099]">
-          {{$t('navbar.orders')}}
+          {{ $t("navbar.orders") }}
         </li>
         <li class="cursor-pointer whitespace-nowrap hover:text-[#5C0099]">
-          {{$t('navbar.favorites')}}
+          {{ $t("navbar.favorites") }}
         </li>
       </ul>
     </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { useProductsStore } from "@/store/products";
+const productStore = useProductsStore();
+
+onMounted(() => {
+  productStore.getAllProducts();
+});
+</script>
 
 <style lang="scss" scoped>
 .category::-webkit-scrollbar {

@@ -21,10 +21,16 @@
     "vue-i18n": "^9.2.2"
   },
   "dependencies": {
+    "@ant-design/icons-vue": "^7.0.0",
     "@nuxt/types": "^2.17.1",
     "@nuxtjs/i18n": "^7.3.1",
+    "@pinia/nuxt": "^0.4.11",
+    "ant-design-vue": "^4.0.3",
+    "devalue": "^4.3.2",
     "flowbite": "^1.7.0",
     "nuxt-i18n": "^6.28.1",
-    "sass": "^1.63.6"
+    "pinia": "^2.1.6",
+    "sass": "^1.63.6",
+    "vue": "^3.3.4"
   }
 }

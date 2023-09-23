@@ -45,21 +45,8 @@
             </ul>
             <!-- Header Icons -->
             <div class="flex items-center">
-              <div class="flex items-center gap-2 cursor-pointer sm:mr-10 mr-3">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-6 w-6 cart"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                  />
-                </svg>
+              <div class="flex items-center gap-2 cursor-pointer sm:mr-7 mr-3">
+                <img src="../assets/svg/cartWhite.svg" alt="cart" />
                 <p class="font-semibold hover:text-gray-200 sm:block hidden">
                   {{ $t("basket") }}
                 </p>
@@ -71,14 +58,80 @@
                 <p class="font-semibold sm:block hidden">{{ $t("login") }}</p>
               </div>
               <div class="xl:flex hidden items-center ml-7">
-                <i class="bx bx-globe text-2xl"></i>
-                <form>
-                  <select class="bg-transparent w-28 overflow-hidden" v-model="$i18n.locale">
-                    <option class="bg-black" value="uz">{{ $t("uz") }}</option>
-                    <option class="bg-black" value="ru">{{ $t("ru") }}</option>
-                    <option class="bg-black" value="en">{{ $t("en") }}</option>
-                  </select>
-                </form>
+                <a-dropdown>
+                  <div class="ant-dropdown-link cursor-pointer" @click.prevent>
+                    <p
+                      v-if="$t('en') === 'In'"
+                      class="flex w-12 gap-2"
+                      href="javascript:;"
+                    >
+                      <img
+                        class="w-6 h-6 object-cover rounded-full"
+                        src="../assets/lang/uz.svg"
+                        alt=""
+                      />
+                      {{ $t("uz") }}
+                    </p>
+                    <p
+                      v-else-if="$t('uz') === 'Ан'"
+                      class="flex w-12 gap-2"
+                      href="javascript:;"
+                    >
+                      <img
+                        class="w-6 h-6 object-cover rounded-full"
+                        src="../assets/lang/ru.svg"
+                        alt=""
+                      />
+                      {{ $t("uz") }}
+                    </p>
+                    <p
+                      v-else
+                      class="flex w-12 gap-2"
+                      href="javascript:;"
+                    >
+                      <img
+                        class="w-6 h-6 object-cover rounded-full"
+                        src="../assets/lang/en.svg"
+                        alt=""
+                      />
+                      {{ $t("en") }}
+                    </p>
+                  </div>
+                  <template #overlay>
+                    <a-menu @click="({ key }) => ($i18n.locale = key)">
+                      <a-menu-item key="uz">
+                        <div class="flex w-12 gap-2">
+                          <img
+                            class="w-6 h-6 object-cover rounded-full"
+                            src="../assets/lang/uz.svg"
+                            alt=""
+                          />
+                          {{ $t("uz") }}
+                        </div>
+                      </a-menu-item>
+                      <a-menu-item key="en">
+                        <div class="flex w-12 gap-2">
+                          <img
+                            class="w-6 h-6 object-cover rounded-full"
+                            src="../assets/lang/en.svg"
+                            alt=""
+                          />
+                          {{ $t("en") }}
+                        </div>
+                      </a-menu-item>
+                      <a-menu-item key="ru">
+                        <div class="flex w-12 gap-2">
+                          <img
+                            class="w-6 h-6 object-cover rounded-full"
+                            src="../assets/lang/ru.svg"
+                            alt=""
+                          />
+                          {{ $t("ru") }}
+                        </div>
+                      </a-menu-item>
+                    </a-menu>
+                  </template>
+                </a-dropdown>
               </div>
               <div>
                 <!-- Responsive navbar -->
