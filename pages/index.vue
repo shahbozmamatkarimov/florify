@@ -359,7 +359,7 @@
                       src="../assets/svg/heart.svg"
                       alt=""
                     />
-
+ 
                     <img
                       class="cursor-pointer sm:h-5 sm:w-5 md:h-6 md:w-6 h-3 w-3"
                       src="../assets/svg/cart.svg"
