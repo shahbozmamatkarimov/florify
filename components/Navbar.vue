@@ -44,7 +44,7 @@
         class="flex category gap-6 font-medium text-gray-600 py-1 md:pr-0 pr-10 overflow-hidden overflow-x-auto"
       >
         <li
-          @click="productStore.getAllProducts()"
+          @click="productStore.getAllProducts(); $router.push('/')"
           :class="
             productStore.state.sliderStep == 0 ? 'text-[#5C0099] font-bold' : ''
           "
@@ -63,15 +63,32 @@
           "
           class="cursor-pointer whitespace-nowrap hover:text-[#5C0099]"
         >
-          <router-link to="/">
-            {{ i.name }}
+          <router-link v-if="$t('en') == 'In'" to="/">
+            {{ i.uz }}
+          </router-link>
+          <router-link v-else-if="$t('en') == 'Ан'" to="/">
+            {{ i.ru }}
+          </router-link>
+          <router-link v-if="$t('en') == 'En'" to="/">
+            {{ i.en }}
           </router-link>
         </li>
-        <li class="cursor-pointer whitespace-nowrap hover:text-[#5C0099]">
-          {{ $t("navbar.present") }}
-        </li>
-        <li class="cursor-pointer whitespace-nowrap hover:text-[#5C0099]">
-          {{ $t("navbar.top10") }}
+        <li
+          :class="
+            productStore.state.sliderStep ==
+            productStore.allProducts?.length + 1
+              ? 'text-[#5C0099] font-bold'
+              : ''
+          "
+          @click="
+            productStore.getOneProduct(
+              'today',
+              productStore.allProducts?.length + 1
+            )
+          "
+          class="cursor-pointer whitespace-nowrap hover:text-[#5C0099]"
+        >
+          {{ $t("navbar.presents") }}
         </li>
         <li
           class="cursor-pointer flex items-center gap-1 whitespace-nowrap hover:text-[#5C0099]"

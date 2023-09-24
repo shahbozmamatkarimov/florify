@@ -1,7 +1,5 @@
 <template>
-  <main
-    class="container"
-  >
+  <main class="container">
     <placeholderMain v-if="productStore.state.isLoading" />
     <section>
       <div
@@ -13,10 +11,16 @@
           :class="index < 1 ? '' : 'sm:pt-7 pt-4'"
           class="sm:text-3xl text-lg -mt-2 pb-1 text-[#242424]"
         >
-          {{ i.name }}
+          {{ $t("en") == "In" ? i.uz : $t("en") == "Ан" ? i.ru : i.en }}
         </h1>
         <p class="sm:text-lg text-sm text-[#242424]">
-          {{ i.description }}
+          {{
+            $t("en") == "In"
+              ? i.uz_description
+              : $t("en") == "Ан"
+              ? i.ru_description
+              : i.en_description
+          }}
         </p>
         <div class="grid lg:grid-cols-4 grid-cols-3 cards my-5 md:gap-7 gap-5">
           <div
@@ -61,7 +65,7 @@
           </div>
         </div>
         <button
-          v-if="i.product.length > store.data"
+          v-if="i.product?.length > store.data"
           class="w-full font-semibold lg:h-14 h-10 border-2 rounded-xl border-[#5C0099] text-[#5C0099] hover:bg-[#5C0099] duration-500 hover:text-white"
         >
           {{ $t("home.show_more") }}

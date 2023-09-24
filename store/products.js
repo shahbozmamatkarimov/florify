@@ -21,6 +21,7 @@ export const useProductsStore = defineStore("products", () => {
   const showProductById = computed(() => state.showProduct);
 
   function getAllProducts() {
+    state.showProduct = "";
     state.isCategory = 0;
     state.sliderStep = 0;
     state.isLoading = true;
@@ -42,25 +43,36 @@ export const useProductsStore = defineStore("products", () => {
       });
   }
 
+  function getTodays() {
+    fetch(baseUrl + "/product/present")
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        state.showProduct = res;
+        state.isLoading = false;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   function getOneProduct(id, index) {
     state.isCategory = index;
     setTimeout(() => {
-      state.sliderStep = index
+      state.sliderStep = index;
       if (index == 0) {
         getAllProducts();
         return;
       }
       state.openEditModal = true;
       state.isLoading = true;
+      if (id == "today") {
+        getTodays();
+        return;
+      }
       fetch(baseUrl + `/category/${id}`)
-      .then((res) => res.json())
-      .then((res) => {
-        if (
-          res.message === "Token vaqti tugagan!" ||
-          res.message === "Token topilmadi!"
-          ) {
-            router.push("/login");
-          }
+        .then((res) => res.json())
+        .then((res) => {
           console.log(res);
           state.showProduct = [res];
           state.isLoading = false;

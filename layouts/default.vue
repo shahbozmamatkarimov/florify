@@ -6,7 +6,7 @@
     <nav>
       <Navbar />
     </nav>
-    <div class="overflow-hidden max-w-screen">
+    <div class="overflow-hidden max-w-screen container mx-auto">
       <section
         v-if="$router.currentRoute.value.fullPath == '/'"
         class="container mx-auto xl:px-28 md:px-10 px-5 pb-5"

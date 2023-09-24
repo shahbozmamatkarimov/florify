@@ -2,7 +2,10 @@
   <main
     class="container duration-1000 flex xl:gap-[14rem] md:gap-20 gap-10 mainSlider mx-auto xl:px-28 md:px-10 px-5 pb-5"
   >
-    <div v-if="productStore.state.sliderStep == 0" class="min-w-[100%]">
+    <div
+      :class="productStore.state.sliderStep == 0 ? '' : 'h-0'"
+      class="min-w-[100%]"
+    >
       <section class="flex md:gap-7 gap-5 sm:py-10 py-5">
         <div
           id="default-carousel"
@@ -321,10 +324,16 @@
             :class="index < 1 ? '' : 'sm:pt-7 pt-4'"
             class="sm:text-3xl text-lg -mt-2 pb-1 text-[#242424]"
           >
-            {{ i.name }}
+            {{ $t("en") == "In" ? i.uz : $t("en") == "Ан" ? i.ru : i.en }}
           </h1>
           <p class="sm:text-lg text-sm text-[#242424]">
-            {{ i.description }}
+            {{
+              $t("en") == "In"
+                ? i.uz_description
+                : $t("en") == "Ан"
+                ? i.ru_description
+                : i.en_description
+            }}
           </p>
           <div
             class="grid lg:grid-cols-4 grid-cols-3 cards my-5 md:gap-7 gap-5"
@@ -355,11 +364,10 @@
                   </p>
                   <div class="flex items-center sm:gap-3 gap-1">
                     <img
-                      class="cursor-pointer  md:h-6 md:w-6 h-3 w-3"
+                      class="cursor-pointer md:h-6 md:w-6 h-3 w-3"
                       src="../assets/svg/heart.svg"
                       alt=""
                     />
- 
                     <img
                       class="cursor-pointer sm:h-5 sm:w-5 md:h-6 md:w-6 h-3 w-3"
                       src="../assets/svg/cart.svg"
@@ -380,9 +388,8 @@
       </section>
     </div>
     <div
-      v-else
-      class="min-w-[100%] pt-5"
-      v-for="i in productStore.allProducts?.length"
+      class="min-w-[100%] overflow-hidden pt-5"
+      v-for="i in productStore.allProducts?.length + 2"
       :key="i"
     >
       <Category />
