@@ -2,13 +2,6 @@
   <main
     class="container duration-1000 flex xl:gap-[14rem] md:gap-20 gap-10 mainSlider mx-auto xl:px-28 md:px-10 px-5 pb-5"
   >
-    <input
-      @click="pay"
-      class="bg-red-600 btn"
-      id="payButton"
-      value="Оплатить"
-      type="button"
-    />
     <div
       :class="productStore.state.sliderStep == 0 ? '' : 'h-0'"
       class="min-w-[100%]"
@@ -413,54 +406,6 @@ const useImageCounter = useImageCountStore();
 const runtimeConfig = useRuntimeConfig();
 const baseUrl = runtimeConfig.public.baseURL;
 const baseUrlImage = ref(runtimeConfig.public.baseURL?.slice(0, -3));
-
-const store = reactive({
-  btn: "",
-  language: "ru-RU",
-});
-
-function pay() {
-  try {
-    const widget = new cp.CloudPayments({
-      language: store.language,
-    });
-    widget.pay(
-      "auth", // или 'charge'
-      {
-        //options
-        publicId: "test_api_00000000000000000000002", //id из личного кабинета
-        description: "Оплата товаров в example.com", //назначение
-        amount: 0, //сумма
-        currency: "UZS", //валюта
-        accountId: "shahbozmamatkarimov2303@gmail.com", //идентификатор плательщика (необязательно)
-        invoiceId: "1234567", //номер заказа  (необязательно)
-        skin: "mini", //дизайн виджета (необязательно)
-        autoClose: 3,
-      },
-      {
-        onSuccess: function (options) {
-          console.log(options);
-          // success
-          //действие при успешной оплате
-        },
-        onFail: function (reason, options) {
-          console.log(reason);
-          console.log(options);
-          // fail
-          //действие при неуспешной оплате
-        },
-        onComplete: function (paymentResult, options) {
-          console.log(options);
-          console.log(paymentResult);
-          //Вызывается как только виджет получает от api.cloudpayments ответ с результатом транзакции.
-          //например вызов вашей аналитики Facebook Pixel
-        },
-      }
-    );
-  } catch (error) {
-    console.log(error);
-  }
-}
 
 onBeforeMount(() => {
   useImageCounter.imageCount();
