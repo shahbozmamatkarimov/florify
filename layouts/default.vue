@@ -82,6 +82,12 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+const value1 = ref(false);
+
+function handleChange() {
+  console.log("hello world");
+}
+</script>
 
 <style lang="scss" scoped></style>
