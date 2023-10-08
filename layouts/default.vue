@@ -20,7 +20,6 @@
               ref="select"
               v-model:value="value1"
               :placeholder="$t('home.whom')"
-              @focus="focus"
               @change="handleChange"
             >
               <a-select-option value="jack">Jack</a-select-option>
@@ -35,7 +34,6 @@
               ref="select"
               v-model:value="value1"
               :placeholder="$t('home.occasion')"
-              @focus="focus"
               @change="handleChange"
             >
               <a-select-option value="jack">Jack</a-select-option>
@@ -50,7 +48,6 @@
               ref="select"
               v-model:value="value1"
               :placeholder="$t('home.color')"
-              @focus="focus"
               @change="handleChange"
             >
               <a-select-option value="jack">Jack</a-select-option>
@@ -65,7 +62,6 @@
               ref="select"
               v-model:value="value1"
               :placeholder="$t('home.price')"
-              @focus="focus"
               @change="handleChange"
             >
               <a-select-option value="jack">Jack</a-select-option>
@@ -83,7 +79,7 @@
 </template>
 
 <script setup>
-const value1 = ref(false);
+const value1 = ref([1,2,3,4,5,6,7]);
 
 function handleChange() {
   console.log("hello world");

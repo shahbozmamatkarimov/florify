@@ -415,8 +415,6 @@ onBeforeMount(() => {
 onMounted(() => {
   productStore.getAllProducts();
   watchEffect(() => {
-    store.btn = document.getElementById("payButton");
-
     const image = document.querySelector(".mainSlider");
     image.style.transform = `translateX(-${
       productStore.state.isCategory * 100
