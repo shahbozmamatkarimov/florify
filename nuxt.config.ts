@@ -21,9 +21,7 @@ export default defineNuxtConfig({
     },
   },
   css: ["~/assets/main.css"],
-  plugins: [
-    { src: '~/plugins/cloudpayments.js', mode: 'client' }
-  ],
+  plugins: [{ src: "~/plugins/cloudpayments.js", mode: "client" }],
   postcss: {
     plugins: {
       tailwindcss: {},
@@ -40,8 +38,8 @@ export default defineNuxtConfig({
   //   }
   // },
   modules: [
-    "@ant-design-vue/nuxt",
     "@pinia/nuxt",
+    "@element-plus/nuxt",
     // "@nuxtjs/i18n",
     // {
     //   locales: ['en', 'es'],

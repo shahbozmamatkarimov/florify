@@ -2,16 +2,9 @@
   <main
     class="container duration-1000 flex xl:gap-[14rem] md:gap-20 gap-10 mainSlider mx-auto xl:px-28 md:px-10 px-5 pb-5"
   >
-    <div
-      :class="productStore.state.sliderStep == 0 ? '' : 'h-0'"
-      class="min-w-[100%]"
-    >
+    <div :class="productStore.state.sliderStep == 0 ? '' : 'h-0'" class="min-w-[100%]">
       <section class="flex md:gap-7 gap-5 sm:py-10 py-5">
-        <div
-          id="default-carousel"
-          class="relative w-full"
-          data-carousel="slide"
-        >
+        <div id="default-carousel" class="relative w-full" data-carousel="slide">
           <!-- Carousel wrapper -->
           <div
             class="carousel relative lg:h-[300px] md:h-60 sm:h-48 h-52 overflow-hidden rounded-xl"
@@ -203,9 +196,7 @@
             </div>
           </div>
           <!-- Slider indicators -->
-          <div
-            class="absolute z-30 flex space-x-3 -translate-x-1/2 bottom-5 left-1/2"
-          >
+          <div class="absolute z-30 flex space-x-3 -translate-x-1/2 bottom-5 left-1/2">
             <button
               type="button"
               class="w-3 h-3 rounded-full"
@@ -299,9 +290,7 @@
         <div
           class="relative w-[320px] lg:min-w-[320px] md:min-w-[250px] min-w-[200px] lg:h-[300px] md:h-60 sm:h-48 sm:block hidden"
         >
-          <p
-            class="absolute right-0 px-4 py-2 bg-[#FFA500] rounded-es-xl rounded-se-xl"
-          >
+          <p class="absolute right-0 px-4 py-2 bg-[#FFA500] rounded-es-xl rounded-se-xl">
             -30%
           </p>
           <img
@@ -335,9 +324,7 @@
                 : i.en_description
             }}
           </p>
-          <div
-            class="grid lg:grid-cols-4 grid-cols-3 cards my-5 md:gap-7 gap-5"
-          >
+          <div class="grid lg:grid-cols-4 grid-cols-3 cards my-5 md:gap-7 gap-5">
             <div
               v-show="index < useImageCounter.data"
               v-for="(product, index) in i.product"
@@ -416,9 +403,7 @@ onMounted(() => {
   productStore.getAllProducts();
   watchEffect(() => {
     const image = document.querySelector(".mainSlider");
-    image.style.transform = `translateX(-${
-      productStore.state.isCategory * 100
-    }%)`;
+    image.style.transform = `translateX(-${productStore.state.isCategory * 100}%)`;
     initFlowbite();
   });
 });

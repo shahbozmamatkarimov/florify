@@ -26,6 +26,14 @@
               <a-select-option value="lucy">Lucy</a-select-option>
               <a-select-option value="Yiminghe">yiminghe</a-select-option>
             </a-select>
+            <el-select v-model="value" class="m-2" placeholder="Select">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              />
+            </el-select>
             <img class="-ml-[22px]" src="../assets/svg/selectIcon.svg" alt="" />
           </div>
           <div class="flex items-center">
@@ -79,6 +87,29 @@
 </template>
 
 <script setup>
+const options = [
+  {
+    value: 'Option1',
+    label: 'Option1',
+  },
+  {
+    value: 'Option2',
+    label: 'Option2',
+  },
+  {
+    value: 'Option3',
+    label: 'Option3',
+  },
+  {
+    value: 'Option4',
+    label: 'Option4',
+  },
+  {
+    value: 'Option5',
+    label: 'Option5',
+  },
+]
+
 const value1 = ref([1,2,3,4,5,6,7]);
 
 function handleChange() {
