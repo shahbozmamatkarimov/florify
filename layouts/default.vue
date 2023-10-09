@@ -7,7 +7,7 @@
       <Navbar />
     </nav>
     <div class="overflow-hidden max-w-screen container mx-auto">
-      <section
+      <!-- <section
         v-if="$router.currentRoute.value.fullPath == '/'"
         class="container mx-auto xl:px-28 md:px-10 px-5 pb-5"
       >
@@ -28,6 +28,7 @@
             </a-select>
             <el-select v-model="value" class="m-2" placeholder="Select">
               <el-option
+                class="max-w-fit"
                 v-for="item in options"
                 :key="item.value"
                 :label="item.label"
@@ -79,7 +80,7 @@
             <img class="-ml-[22px]" src="../assets/svg/selectIcon.svg" alt="" />
           </div>
         </div>
-      </section>
+      </section> -->
       <slot />
     </div>
     <Footer class="md:block hidden" />
@@ -111,6 +112,7 @@ const options = [
 ]
 
 const value1 = ref([1,2,3,4,5,6,7]);
+const value = ref("Whom");
 
 function handleChange() {
   console.log("hello world");
