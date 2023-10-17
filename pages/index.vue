@@ -376,7 +376,7 @@
                       :id="'id' + product.id"
                       :class="!product.like?.length ? 'hidden' : ''"
                       class="cursor-pointer duration-1000 md:h-6 md:w-6 h-3 w-3"
-                      src="@/assets/svg/redheart.svg"
+                      src="@/assets/svg/redHeart.svg"
                       alt=""
                     />
                     <img

@@ -63,7 +63,7 @@
                     @click="() => addToLike(i.id,i.product.id, 'liked')"
                     :id="'id' + i.product.id"
                     class="cursor-pointer duration-1000 md:h-6 md:w-6 h-3 w-3"
-                    src="@/assets/svg/redheart.svg"
+                    src="@/assets/svg/redHeart.svg"
                     alt=""
                   />
                   <img
