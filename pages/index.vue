@@ -2,9 +2,16 @@
   <main
     class="container duration-1000 flex xl:gap-[14rem] md:gap-20 gap-10 mainSlider mx-auto xl:px-28 md:px-10 px-5 pb-5"
   >
-    <div :class="productStore.state.sliderStep == 0 ? '' : 'h-0'" class="min-w-[100%]">
+    <div
+      :class="productStore.state.sliderStep == 0 ? '' : 'h-0'"
+      class="min-w-[100%]"
+    >
       <section class="flex md:gap-7 gap-5 sm:py-10 py-5">
-        <div id="default-carousel" class="relative w-full" data-carousel="slide">
+        <div
+          id="default-carousel"
+          class="relative w-full"
+          data-carousel="slide"
+        >
           <!-- Carousel wrapper -->
           <div
             class="carousel relative lg:h-[300px] md:h-60 sm:h-48 h-52 overflow-hidden rounded-xl"
@@ -196,7 +203,9 @@
             </div>
           </div>
           <!-- Slider indicators -->
-          <div class="absolute z-30 flex space-x-3 -translate-x-1/2 bottom-5 left-1/2">
+          <div
+            class="absolute z-30 flex space-x-3 -translate-x-1/2 bottom-5 left-1/2"
+          >
             <button
               type="button"
               class="w-3 h-3 rounded-full"
@@ -290,7 +299,9 @@
         <div
           class="relative w-[320px] lg:min-w-[320px] md:min-w-[250px] min-w-[200px] lg:h-[300px] md:h-60 sm:h-48 sm:block hidden"
         >
-          <p class="absolute right-0 px-4 py-2 bg-[#FFA500] rounded-es-xl rounded-se-xl">
+          <p
+            class="absolute right-0 px-4 py-2 bg-[#FFA500] rounded-es-xl rounded-se-xl"
+          >
             -30%
           </p>
           <img
@@ -324,7 +335,9 @@
                 : i.en_description
             }}
           </p>
-          <div class="grid lg:grid-cols-4 grid-cols-3 cards my-5 md:gap-7 gap-5">
+          <div
+            class="grid lg:grid-cols-4 grid-cols-3 cards my-5 md:gap-7 gap-5"
+          >
             <div
               v-show="index < useImageCounter.data"
               v-for="(product, index) in i.product"
@@ -332,7 +345,7 @@
               class="card max-w-sm hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
             >
               <img
-                @click="$router.push(`./${product.name}`)"
+                @click="$router.push(`./${product.id}`)"
                 class="img rounded-t-lg 2xl:h-80 xl:h-64 cursor-pointer md:h-52 sm:h-44 h-44 w-full object-cover"
                 :src="`${baseUrlImage}${product.image[0]?.image}`"
                 alt=""
@@ -351,8 +364,19 @@
                   </p>
                   <div class="flex items-center sm:gap-3 gap-1">
                     <img
-                      class="cursor-pointer md:h-6 md:w-6 h-3 w-3"
+                      :id="product.id"
+                      @click="() => addToLike(product.id, 'nolike')"
+                      :class="!product.like?.length ? '' : 'hidden'"
+                      class="cursor-pointer md:h-6 duration-1000 md:w-6 h-3 w-3"
                       src="../assets/svg/heart.svg"
+                      alt=""
+                    />
+                    <img
+                      @click="() => addToLike(product.id, 'liked')"
+                      :id="'id' + product.id"
+                      :class="!product.like?.length ? 'hidden' : ''"
+                      class="cursor-pointer duration-1000 md:h-6 md:w-6 h-3 w-3"
+                      src="../assets/svg/redheart.svg"
                       alt=""
                     />
                     <img
@@ -366,7 +390,7 @@
             </div>
           </div>
           <button
-            v-if="i.product.length > useImageCounter.data"
+            v-if="i.product?.length > useImageCounter.data"
             class="w-full font-semibold lg:h-14 h-10 border-2 rounded-xl border-[#5C0099] text-[#5C0099] hover:bg-[#5C0099] duration-500 hover:text-white"
           >
             {{ $t("home.show_more") }}
@@ -386,13 +410,57 @@
 
 <script setup>
 import { initFlowbite } from "flowbite";
-import { useProductsStore, useImageCountStore } from "@/store";
+import {
+  useProductsStore,
+  useImageCountStore,
+  useAuthStore,
+} from "@/store";
 
 const productStore = useProductsStore();
+const authStore = useAuthStore();
 const useImageCounter = useImageCountStore();
 const runtimeConfig = useRuntimeConfig();
 const baseUrl = runtimeConfig.public.baseURL;
 const baseUrlImage = ref(runtimeConfig.public.baseURL?.slice(0, -3));
+
+function addToLike(id, isLiked) {
+  document.getElementById(id)?.classList?.toggle("hidden");
+  document.getElementById("id" + id)?.classList?.toggle("hidden");
+
+  let method = "POST";
+  if (isLiked == "nolike") {
+    method = "POST";
+  } else {
+    method = "DELETE";
+  }
+  let product_id = id;
+  const client_id = localStorage.getItem("user_id");
+  fetch(baseUrl + "/like", {
+    method: method,
+    body: JSON.stringify({
+      client_id,
+      product_id,
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      console.log(res);
+      if (res.statusCode === 400) {
+        document.getElementById(id)?.classList?.toggle("hidden");
+        document.getElementById("id" + id)?.classList?.toggle("hidden");
+        authStore.store.loginModal = true;
+      }
+    })
+    .catch((err) => {
+      document.getElementById(id)?.classList?.toggle("hidden");
+      document.getElementById("id" + id)?.classList?.toggle("hidden");
+      authStore.store.loginModal = true;
+      console.log(err);
+    });
+}
 
 onBeforeMount(() => {
   useImageCounter.imageCount();
@@ -403,7 +471,9 @@ onMounted(() => {
   productStore.getAllProducts();
   watchEffect(() => {
     const image = document.querySelector(".mainSlider");
-    image.style.transform = `translateX(-${productStore.state.isCategory * 100}%)`;
+    image.style.transform = `translateX(-${
+      productStore.state.isCategory * 100
+    }%)`;
     initFlowbite();
   });
 });

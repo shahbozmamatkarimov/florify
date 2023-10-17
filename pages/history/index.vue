@@ -94,6 +94,10 @@
 import { useProductsStore } from "@/store";
 
 const productStore = useProductsStore();
+
+const store = reactive({
+  data: "",
+})
 </script>
 
 <style lang="scss" scoped></style>

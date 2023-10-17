@@ -40,6 +40,7 @@ export default defineNuxtConfig({
   modules: [
     "@pinia/nuxt",
     "@element-plus/nuxt",
+    "nuxt-swiper",
     // "@nuxtjs/i18n",
     // {
     //   locales: ['en', 'es'],

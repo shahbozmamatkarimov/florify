@@ -1,4 +1,4 @@
-import { defineStore } from "pinia";
+import { defineStore, storeToRefs } from "pinia";
 
 export const useProductsStore = defineStore("products", () => {
   const runtimeconfig = useRuntimeConfig();
@@ -12,6 +12,7 @@ export const useProductsStore = defineStore("products", () => {
     total_pages: 0,
     page: 1,
     showProduct: "",
+    getById: "",
     isCategory: 0,
     sliderStep: 0,
     openEditModal: false,
@@ -83,5 +84,20 @@ export const useProductsStore = defineStore("products", () => {
     }, 300);
   }
 
-  return { state, getAllProducts, getOneProduct, allProducts, showProductById };
+  function getById(id) {
+      state.isLoading = true;
+      fetch(baseUrl + `/product/${id}`)
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res);
+          state.getById = res;
+          state.isLoading = false;
+        })
+        .catch((err) => {
+          state.isLoading = false;
+          console.log(err);
+        });
+  }
+
+  return { state, getAllProducts, getOneProduct, allProducts, showProductById, getById };
 });
