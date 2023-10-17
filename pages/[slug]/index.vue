@@ -34,13 +34,13 @@
       <div class="max-w-[524px] w-full overflow-hidden">
         <div
           v-if="useProduct.state.getById"
-          class="flex max-w-[524px] duration-1000"
+          class="flex max-w-[524px] bg-white rounded-xl duration-1000"
           id="carouselMain"
         >
           <img
             v-for="i in useProduct.state.getById?.image"
             :key="i"
-            class="min-w-[524px] h-[524px] object-contain rounded-xl border border-gray-200 object-center"
+            class="min-w-[524px] h-[524px] bg-white object-contain rounded-xl border border-gray-200 object-center"
             :src="baseUrlImage + i.image"
             alt=""
           />
@@ -55,7 +55,7 @@
             @click="store.slideStep = index + 1"
             :key="index"
             :class="store.slideStep == index + 1 ? 'border-black p-1' : ''"
-            class="h-[110px] w-full cursor-pointer duration-500 object-contain border border-gray-200 rounded-lg"
+            class="h-[110px] bg-white w-full cursor-pointer duration-500 object-contain border border-gray-200 rounded-lg"
             :src="baseUrlImage + i.image"
             alt=""
           />
@@ -246,9 +246,10 @@
 </template>
 
 <script setup>
-import { useProductsStore } from "@/store";
+import { useProductsStore, useHistoryStore } from "@/store";
 
 const useProduct = useProductsStore();
+const useHistory = useHistoryStore();
 
 const runtimeConfig = useRuntimeConfig();
 const baseUrl = runtimeConfig.public.baseURL;
@@ -270,8 +271,9 @@ watch(
 );
 
 onMounted(() => {
-  store.product_id = router.currentRoute.value.params.slug;
+  store.product_id = +router.currentRoute.value.params.slug;
   useProduct.getById(store.product_id);
+  useHistory.addToWatched(store.product_id)
 });
 </script>
 
