@@ -368,7 +368,7 @@
                       @click="() => addToLike(product.id, 'nolike')"
                       :class="!product.like?.length ? '' : 'hidden'"
                       class="cursor-pointer md:h-6 duration-1000 md:w-6 h-3 w-3"
-                      src="../assets/svg/heart.svg"
+                      src="@/assets/svg/heart.svg"
                       alt=""
                     />
                     <img
@@ -376,12 +376,12 @@
                       :id="'id' + product.id"
                       :class="!product.like?.length ? 'hidden' : ''"
                       class="cursor-pointer duration-1000 md:h-6 md:w-6 h-3 w-3"
-                      src="../assets/svg/redheart.svg"
+                      src="@/assets/svg/redheart.svg"
                       alt=""
                     />
                     <img
                       class="cursor-pointer sm:h-5 sm:w-5 md:h-6 md:w-6 h-3 w-3"
-                      src="../assets/svg/cart.svg"
+                      src="@/assets/svg/cart.svg"
                       alt=""
                     />
                   </div>
