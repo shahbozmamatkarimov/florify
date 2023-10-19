@@ -22,7 +22,7 @@ export const useProductsStore = defineStore("products", () => {
   const allProducts = computed(() => state.products);
   const showProductById = computed(() => state.showProduct);
 
-  function getAllCategories() {
+  function getAllProducts() {
     axios.get(baseUrl + '/category')
       .then((res) => {
         if (
