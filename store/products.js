@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { defineStore, storeToRefs } from "pinia";
+import { defineStore } from "pinia";
 
 export const useProductsStore = defineStore("products", () => {
   const runtimeconfig = useRuntimeConfig();
