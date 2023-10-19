@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { defineStore, storeToRefs } from "pinia";
 
 export const useProductsStore = defineStore("products", () => {
@@ -21,42 +22,36 @@ export const useProductsStore = defineStore("products", () => {
   const allProducts = computed(() => state.products);
   const showProductById = computed(() => state.showProduct);
 
-  function getAllProducts() {
-    state.showProduct = "";
-    state.isCategory = 0;
-    state.sliderStep = 0;
-    state.isLoading = true;
-    fetch(baseUrl + `/category`)
-      .then((res) => res.json())
+  function getAllCategories() {
+    axios.get(baseUrl + '/category')
       .then((res) => {
         if (
-          res.message === "Token vaqti tugagan!" ||
-          res.message === "Token topilmadi!"
+          res.data.message === 'Token vaqti tugagan!' ||
+          res.data.message === 'Token topilmadi!'
         ) {
-          router.push("/login");
+          router.push('/login');
         }
-        console.log(res);
-        state.products = res;
+        console.log(res.data);
+        state.products = res.data;
         state.isLoading = false;
       })
       .catch((err) => {
         console.log(err);
       });
   }
-
+  
   function getTodays() {
-    fetch(baseUrl + "/product/present")
-      .then((res) => res.json())
+    axios.get(baseUrl + '/product/present')
       .then((res) => {
-        console.log(res);
-        state.showProduct = res;
+        console.log(res.data);
+        state.showProduct = res.data;
         state.isLoading = false;
       })
       .catch((err) => {
         console.log(err);
       });
   }
-
+  
   function getOneProduct(id, index) {
     state.isCategory = index;
     setTimeout(() => {
@@ -67,15 +62,14 @@ export const useProductsStore = defineStore("products", () => {
       }
       state.openEditModal = true;
       state.isLoading = true;
-      if (id == "today") {
+      if (id == 'today') {
         getTodays();
         return;
       }
-      fetch(baseUrl + `/category/${id}`)
-        .then((res) => res.json())
+      axios.get(baseUrl + `/category/${id}`)
         .then((res) => {
-          console.log(res);
-          state.showProduct = [res];
+          console.log(res.data);
+          state.showProduct = [res.data];
           state.isLoading = false;
         })
         .catch((err) => {
@@ -83,20 +77,19 @@ export const useProductsStore = defineStore("products", () => {
         });
     }, 300);
   }
-
+  
   function getById(id) {
-      state.isLoading = true;
-      fetch(baseUrl + `/product/${id}`)
-        .then((res) => res.json())
-        .then((res) => {
-          console.log(res);
-          state.getById = res;
-          state.isLoading = false;
-        })
-        .catch((err) => {
-          state.isLoading = false;
-          console.log(err);
-        });
+    state.isLoading = true;
+    axios.get(baseUrl + `/product/${id}`)
+      .then((res) => {
+        console.log(res.data);
+        state.getById = res.data;
+        state.isLoading = false;
+      })
+      .catch((err) => {
+        state.isLoading = false;
+        console.log(err);
+      });
   }
 
   return { state, getAllProducts, getOneProduct, allProducts, showProductById, getById };

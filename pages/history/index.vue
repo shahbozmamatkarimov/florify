@@ -33,34 +33,34 @@
           >
             <img
               v-if="i.product?.image?.length"
-              @click="$router.push(`./${i.product.name}`)"
+              @click="$router.push(`./${i.product?.name}`)"
               class="img rounded-t-lg 2xl:h-80 xl:h-64 cursor-pointer md:h-52 sm:h-44 h-44 w-full object-cover"
-              :src="`${baseUrlImage}${i.product.image[0]?.image}`"
+              :src="`${baseUrlImage}${i.product?.image[0]?.image}`"
               alt=""
             />
             <div class="md:p-5 p-3">
               <h5
                 class="mb-2 sm:text-xl text-sm text-[#1F9D6D] tracking-tight font-medium"
               >
-                {{ i.product.name }}
+                {{ i.product?.name }}
               </h5>
               <div class="flex justify-between items-center">
                 <p class="font-semibold sm:text-lg text-xs whitespace-nowrap">
                   <span class="md:inline-block hidden"></span>
-                  {{ i.product.price }}
+                  {{ i.product?.price }}
                   <span class="sm:inline hidden">{{ $t("home.sum") }}</span>
                 </p>
                 <div class="flex items-center sm:gap-3 gap-1">
                   <img
-                    :id="i.product.id"
-                    @click="() => addToLike(i.id, i.product.id, 'nolike')"
+                    :id="i.product?.id"
+                    @click="() => addToLike(i.id, i.product?.id, 'nolike')"
                     class="cursor-pointer md:h-6 duration-1000 md:w-6 h-3 w-3"
                     src="@/assets/svg/heart.svg"
                     alt=""
                   />
                   <img
-                    @click="() => addToLike(i.id, i.product.id, 'liked')"
-                    :id="'id' + i.product.id"
+                    @click="() => addToLike(i.id, i.product?.id, 'liked')"
+                    :id="'id' + i.product?.id"
                     class="cursor-pointer hidden duration-1000 md:h-6 md:w-6 h-3 w-3"
                     src="@/assets/svg/redHeart.svg"
                     alt=""
@@ -74,7 +74,7 @@
               </div>
             </div>
             <button
-              v-if="i.product.length > store.data"
+              v-if="i.product?.length > store.data"
               class="w-full font-semibold lg:h-14 h-10 border-2 rounded-xl border-[#5C0099] text-[#5C0099] hover:bg-[#5C0099] duration-500 hover:text-white"
             >
               {{ $t("home.show_more") }}
