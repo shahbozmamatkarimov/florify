@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { useAuthStore } from "./auth";
+import axios from "axios";
 
 export const useHistoryStore = defineStore("history", () => {
   const authStore = useAuthStore();
@@ -18,15 +19,11 @@ export const useHistoryStore = defineStore("history", () => {
   function getHistory() {
     store.isLoading = true;
     const client_id = localStorage.getItem("user_id");
-    fetch(baseUrl + "/watched/clientId/" + client_id, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
+    axios
+      .get(baseUrl + "/watched/clientId/" + client_id)
       .then((res) => {
-        console.log(res);
-        store.allHistory = res;
+        console.log(res.data);
+        store.allHistory = res.data;
         store.isLoading = false;
       })
       .catch((err) => {
@@ -37,19 +34,13 @@ export const useHistoryStore = defineStore("history", () => {
 
   function addToWatched(product_id) {
     const client_id = localStorage.getItem("user_id");
-    fetch(baseUrl + "/watched", {
-      method: "POST",
-      body: JSON.stringify({
+    axios
+      .post(baseUrl + "/watched", {
         client_id,
         product_id,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
+      })
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
       })
       .catch((err) => {
         document.getElementById(id)?.classList?.toggle("hidden");

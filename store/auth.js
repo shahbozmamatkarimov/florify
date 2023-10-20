@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import axios from "axios";
 
 export const useAuthStore = defineStore("isLogged", () => {
   const router = useRouter();
@@ -18,19 +19,23 @@ export const useAuthStore = defineStore("isLogged", () => {
     store.loginModal = true;
     store.isLoading = true;
     console.log(store.phone);
-    fetch(baseUrl + "/client/sendSMS", {
-      method: "POST",
-      body: JSON.stringify({
-        phone: store.phone,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
+    axios
+      .post(
+        baseUrl + "/client/sendSMS",
+        {
+          phone: store.phone,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
       .then((res) => {
-        console.log(res);
-        if (res.message == "Telefon raqamingizga tasdiqlash kodi yuborildi") {
+        console.log(res.data);
+        if (
+          res.data.message == "Telefon raqamingizga tasdiqlash kodi yuborildi"
+        ) {
           store.loginModal = false;
           store.otpModal = true;
           store.isVerified = true;
@@ -50,26 +55,28 @@ export const useAuthStore = defineStore("isLogged", () => {
     store.isLoading = true;
     console.log(store.phone);
     console.log(store.otp);
-    fetch(baseUrl + "/client/signup", {
-      method: "POST",
-      body: JSON.stringify({
-        phone: store.phone,
-        code: store.otp.join(""),
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
+    axios
+      .post(
+        baseUrl + "/client/signup",
+        {
+          phone: store.phone,
+          code: store.otp.join(""),
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
       .then((res) => {
-        console.log(res);
-        if (res.message === "Tizimga kirildi") {
+        console.log(res.data);
+        if (res.data.message === "Tizimga kirildi") {
           store.otpModal = false;
           store.isVerified = true;
           store.isLoading = false;
-          console.log('object');
-          localStorage.setItem("user_id", res.client.id);
-          localStorage.setItem("phone", res.client.phone);
+          console.log("object");
+          localStorage.setItem("user_id", res.data.client.id);
+          localStorage.setItem("phone", res.data.client.phone);
           return;
         }
         store.isVerified = false;

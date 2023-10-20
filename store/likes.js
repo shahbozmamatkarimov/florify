@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { useAuthStore } from "./auth";
+import axios from 'axios';
 
 export const useLikeStore = defineStore("add_to_like", () => {
   const authStore = useAuthStore();
@@ -18,15 +19,11 @@ export const useLikeStore = defineStore("add_to_like", () => {
   function getFavorites() {
     store.isLoading = true;
     const client_id = localStorage.getItem("user_id");
-    fetch(baseUrl + "/like/clientId/" + client_id, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
+    axios
+      .get(baseUrl + "/like/clientId/" + client_id)
       .then((res) => {
-        console.log(res);
-        store.allFavorites = res;
+        console.log(res.data);
+        store.allFavorites = res.data;
         store.isLoading = false;
       })
       .catch((err) => {
@@ -34,6 +31,7 @@ export const useLikeStore = defineStore("add_to_like", () => {
         console.log(err);
       });
   }
+  
 
   return { store, getFavorites };
 });
