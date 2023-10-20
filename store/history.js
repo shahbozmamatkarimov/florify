@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { useAuthStore } from "./auth";
 import axios from "axios";
 
-export const useHistoryStore = defineStore("history", () => {
+export const useHistoryStore = defineStore("watched", () => {
   const authStore = useAuthStore();
   const runtimeconfig = useRuntimeConfig();
   const baseUrl = runtimeconfig.public.baseURL;
