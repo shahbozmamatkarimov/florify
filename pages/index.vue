@@ -409,12 +409,9 @@
 </template>
 
 <script setup>
+import axios from "axios";
 import { initFlowbite } from "flowbite";
-import {
-  useProductsStore,
-  useImageCountStore,
-  useAuthStore,
-} from "@/store";
+import { useProductsStore, useImageCountStore, useAuthStore } from "@/store";
 
 const productStore = useProductsStore();
 const authStore = useAuthStore();
@@ -435,20 +432,14 @@ function addToLike(id, isLiked) {
   }
   let product_id = id;
   const client_id = localStorage.getItem("user_id");
-  fetch(baseUrl + "/like", {
-    method: method,
-    body: JSON.stringify({
+  axios
+    .post(baseUrl + "/like", {
       client_id,
       product_id,
-    }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-    .then((res) => res.json())
+    })
     .then((res) => {
-      console.log(res);
-      if (res.statusCode === 400) {
+      console.log(res.data);
+      if (res.data.statusCode === 400) {
         document.getElementById(id)?.classList?.toggle("hidden");
         document.getElementById("id" + id)?.classList?.toggle("hidden");
         authStore.store.loginModal = true;

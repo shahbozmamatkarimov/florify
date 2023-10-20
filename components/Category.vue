@@ -76,6 +76,7 @@
 </template>
 
 <script setup>
+import axios from "axios";
 import { initFlowbite } from "flowbite";
 import { useProductsStore } from "@/store/products";
 
@@ -93,8 +94,7 @@ const store = reactive({
 
 const getAllProducts = () => {
   store.isLoading = true;
-  fetch(baseUrl + `/category`)
-    .then((res) => res.json())
+  axios.get(baseUrl + `/category`)
     .then((res) => {
       if (
         res.message === "Token vaqti tugagan!" ||

@@ -87,6 +87,7 @@
 </template>
 
 <script setup>
+import axios from "axios";
 import { useProductsStore, useHistoryStore, useAuthStore } from "@/store";
 
 const productStore = useProductsStore();
@@ -113,22 +114,24 @@ function addToLike(productId, id, isLiked) {
   }
   let product_id = id;
   const client_id = localStorage.getItem("user_id");
-  fetch(baseUrl + "/like", {
-    method: method,
-    body: JSON.stringify({
-      client_id,
-      product_id,
-    }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-    .then((res) => res.json())
+  axios
+    .request({
+      url: baseUrl + "/like",
+      method: method,
+      data: {
+        client_id,
+        product_id,
+      },
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
     .then((res) => {
-      console.log(res);
+      console.log(res.data);
       if (
-        res.statusCode === 400 &&
-        res.message != "Mahsulot allaqachon sevimlilar ro'yxatiga qo'shilgan!"
+        res.data.statusCode === 400 &&
+        res.data.message !==
+          "Mahsulot allaqachon sevimlilar ro'yxatiga qo'shilgan!"
       ) {
         document.getElementById(id)?.classList?.toggle("hidden");
         document.getElementById("id" + id)?.classList?.toggle("hidden");
