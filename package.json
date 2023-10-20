@@ -24,7 +24,6 @@
     "@nuxtjs/i18n": "^7.3.1",
     "@pinia/nuxt": "^0.4.11",
     "axios": "^1.5.1",
-    "cloudpayments": "^6.0.1",
     "devalue": "^4.3.2",
     "flowbite": "^1.7.0",
     "nuxt-i18n": "^6.28.1",
