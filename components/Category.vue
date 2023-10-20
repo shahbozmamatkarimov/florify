@@ -96,12 +96,6 @@ const getAllProducts = () => {
   store.isLoading = true;
   axios.get(baseUrl + `/category`)
     .then((res) => {
-      if (
-        res.message === "Token vaqti tugagan!" ||
-        res.message === "Token topilmadi!"
-      ) {
-        router.push("/login");
-      }
       console.log(res);
       store.allProducts = res;
       store.isLoading = false;

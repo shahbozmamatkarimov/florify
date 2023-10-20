@@ -25,12 +25,6 @@ export const useProductsStore = defineStore("products", () => {
   function getAllProducts() {
     axios.get(baseUrl + '/category')
       .then((res) => {
-        if (
-          res.data.message === 'Token vaqti tugagan!' ||
-          res.data.message === 'Token topilmadi!'
-        ) {
-          router.push('/login');
-        }
         console.log(res.data);
         state.products = res.data;
         state.isLoading = false;
