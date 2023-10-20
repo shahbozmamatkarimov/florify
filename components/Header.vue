@@ -51,14 +51,83 @@
                   {{ $t("basket") }}
                 </p>
               </div>
-              <div @click="authStore.store.loginModal = true"
+              <div
+                @click="authStore.store.loginModal = true"
                 class="sm:flex hidden items-center gap-2 xl:mr-0 mr-10 hover:text-gray-200 cursor-pointer"
               >
                 <img src="../assets/svg/user.svg" alt="" />
                 <p class="font-semibold sm:block hidden">{{ $t("login") }}</p>
               </div>
               <div class="xl:flex hidden items-center ml-7">
-                <a-dropdown>
+                <el-dropdown @command="(command) => ($i18n.locale = command)">
+                  <div class="text-white cursor-pointer" @click.prevent>
+                    <p
+                      v-if="$t('en') === 'In'"
+                      class="flex items-center leading-4 w-12 gap-2"
+                    >
+                      <img
+                        class="w-6 h-6 object-cover rounded-full"
+                        src="../assets/lang/uz.svg"
+                        alt=""
+                      />
+                      {{ $t("uz") }}
+                    </p>
+                    <p
+                      v-else-if="$t('en') === 'Ан'"
+                      class="flex items-center leading-4 w-12 gap-2"
+                    >
+                      <img
+                        class="w-6 h-6 object-cover rounded-full"
+                        src="../assets/lang/ru.svg"
+                        alt=""
+                      />
+                      {{ $t("ru") }}
+                    </p>
+                    <p v-else class="flex items-center leading-4 w-12 gap-2">
+                      <img
+                        class="w-6 h-6 object-cover rounded-full"
+                        src="../assets/lang/en.svg"
+                        alt=""
+                      />
+                      {{ $t("en") }}
+                    </p>
+                  </div>
+                  <template #dropdown>
+                    <el-dropdown-menu>
+                      <el-dropdown-item command="uz">
+                        <div class="flex w-12 gap-2">
+                          <img
+                            class="w-6 h-6 object-cover rounded-full"
+                            src="../assets/lang/uz.svg"
+                            alt=""
+                          />
+                          {{ $t("uz") }}
+                        </div>
+                      </el-dropdown-item>
+                      <el-dropdown-item command="en">
+                        <div class="flex w-12 gap-2">
+                          <img
+                            class="w-6 h-6 object-cover rounded-full"
+                            src="../assets/lang/en.svg"
+                            alt=""
+                          />
+                          {{ $t("en") }}
+                        </div>
+                      </el-dropdown-item>
+                      <el-dropdown-item command="ru">
+                        <div class="flex w-12 gap-2">
+                          <img
+                            class="w-6 h-6 object-cover rounded-full"
+                            src="../assets/lang/ru.svg"
+                            alt=""
+                          />
+                          {{ $t("ru") }}
+                        </div>
+                      </el-dropdown-item>
+                    </el-dropdown-menu>
+                  </template>
+                </el-dropdown>
+                <!-- <a-dropdown>
                   <div class="ant-dropdown-link cursor-pointer" @click.prevent>
                     <p
                       v-if="$t('en') === 'In'"
@@ -84,11 +153,7 @@
                       />
                       {{ $t("uz") }}
                     </p>
-                    <p
-                      v-else
-                      class="flex w-12 gap-2"
-                      href="javascript:;"
-                    >
+                    <p v-else class="flex w-12 gap-2" href="javascript:;">
                       <img
                         class="w-6 h-6 object-cover rounded-full"
                         src="../assets/lang/en.svg"
@@ -131,7 +196,7 @@
                       </a-menu-item>
                     </a-menu>
                   </template>
-                </a-dropdown>
+                </a-dropdown> -->
               </div>
               <div>
                 <!-- Responsive navbar -->
@@ -191,7 +256,7 @@
 </template>
 
 <script setup>
-import {useAuthStore} from "@/store"
+import { useAuthStore } from "@/store";
 
 const authStore = useAuthStore();
 const store = reactive({
