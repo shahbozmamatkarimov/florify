@@ -77,7 +77,7 @@
 
 <script setup>
 import axios from "axios";
-import { initFlowbite } from "flowbite";
+// import { initFlowbite } from "flowbite";
 import { useProductsStore } from "@/store/products";
 
 const productStore = useProductsStore();
@@ -125,7 +125,7 @@ onBeforeMount(() => {
     store.data = 8;
   }
   store.width = window.innerWidth;
-  initFlowbite();
+  // initFlowbite();
 });
 
 onMounted(() => {

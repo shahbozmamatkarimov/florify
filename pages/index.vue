@@ -410,7 +410,7 @@
 
 <script setup>
 import axios from "axios";
-import { initFlowbite } from "flowbite";
+// import { initFlowbite } from "flowbite";
 import { useProductsStore, useImageCountStore, useAuthStore } from "@/store";
 
 const productStore = useProductsStore();
@@ -455,7 +455,7 @@ function addToLike(id, isLiked) {
 
 onBeforeMount(() => {
   useImageCounter.imageCount();
-  initFlowbite();
+  // initFlowbite();
 });
 
 onMounted(() => {
@@ -465,7 +465,7 @@ onMounted(() => {
     image.style.transform = `translateX(-${
       productStore.state.isCategory * 100
     }%)`;
-    initFlowbite();
+    // initFlowbite();
   });
 });
 </script>
