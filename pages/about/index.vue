@@ -9,7 +9,7 @@
           >
             Главная
           </li>
-          <li>/</li>
+          <li>/</li> 
           <li
             class="ml-1 cursor-pointer font-medium text-gray-700 hover:text-blue-600 md:ml-2"
           >
