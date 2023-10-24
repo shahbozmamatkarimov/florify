@@ -105,28 +105,28 @@ const getAllProducts = () => {
     });
 };
 
-onBeforeMount(() => {
-  window.addEventListener("resize", () => {
-    store.width = window.innerWidth;
-    if (store.width < 501) {
-      store.data = 4;
-    } else if (store.width < 1024) {
-      store.data = 6;
-    } else {
-      store.data = 8;
-    }
-  });
-  store.width = window.innerWidth;
-  if (store.width < 501) {
-    store.data = 4;
-  } else if (store.width < 1024) {
-    store.data = 6;
-  } else {
-    store.data = 8;
-  }
-  store.width = window.innerWidth;
-  // initFlowbite();
-});
+// onBeforeMount(() => {
+//   window.addEventListener("resize", () => {
+//     store.width = window.innerWidth;
+//     if (store.width < 501) {
+//       store.data = 4;
+//     } else if (store.width < 1024) {
+//       store.data = 6;
+//     } else {
+//       store.data = 8;
+//     }
+//   });
+//   store.width = window.innerWidth;
+//   if (store.width < 501) {
+//     store.data = 4;
+//   } else if (store.width < 1024) {
+//     store.data = 6;
+//   } else {
+//     store.data = 8;
+//   }
+//   store.width = window.innerWidth;
+//   // initFlowbite();
+// });
 
 onMounted(() => {
   getAllProducts();
