@@ -43,11 +43,12 @@
       <div>
         <ul
           class="flex category gap-6 font-medium text-gray-600 py-1 md:pr-0 pr-10 overflow-hidden overflow-x-auto"
-        >
+        >{{ productStore.state.sliderStep }}
           <li
             @click="
               productStore.getAllProducts();
               $router.push('/');
+              productStore.state.sliderStep = 0;
             "
             :class="
               productStore.state.sliderStep == 0

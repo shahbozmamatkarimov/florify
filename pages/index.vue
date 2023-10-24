@@ -456,14 +456,15 @@ onBeforeMount(() => {
   useImageCounter.imageCount();
 });
 
+watch(()=> productStore.state.sliderStep, ()=> {
+     const image = document.querySelector(".mainSlider");
+    image.style.transform = `translateX(-${
+      productStore.state.sliderStep * 100
+    }%)`;
+})
+
 onMounted(() => {
   productStore.getAllProducts();
-  watchEffect(() => {
-    const image = document.querySelector(".mainSlider");
-    image.style.transform = `translateX(-${
-      productStore.state.isCategory * 100
-    }%)`;
-  });
 });
 </script>
 
