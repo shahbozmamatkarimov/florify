@@ -452,10 +452,6 @@ function addToLike(id, isLiked) {
     });
 }
 
-onBeforeMount(() => {
-  useImageCounter.imageCount();
-});
-
 watch(()=> productStore.state.sliderStep, ()=> {
      const image = document.querySelector(".mainSlider");
     image.style.transform = `translateX(-${
@@ -465,6 +461,7 @@ watch(()=> productStore.state.sliderStep, ()=> {
 
 onMounted(() => {
   productStore.getAllProducts();
+  useImageCounter.imageCount();
 });
 </script>
 
