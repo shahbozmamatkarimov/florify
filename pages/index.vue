@@ -448,7 +448,7 @@ function addToLike(id, isLiked) {
       document.getElementById(id)?.classList?.toggle("hidden");
       document.getElementById("id" + id)?.classList?.toggle("hidden");
       authStore.store.loginModal = true;
-      console.log(err);
+      console.log(err); 
     });
 }
 
