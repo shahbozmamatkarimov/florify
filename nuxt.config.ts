@@ -40,40 +40,5 @@ export default defineNuxtConfig({
   modules: [
     "@pinia/nuxt",
     "@element-plus/nuxt",
-    // "nuxt-swiper",
-    // "@nuxtjs/i18n",
-    // {
-    //   locales: ['en', 'es'],
-    //   defaultLocale: 'en',
-    //   vueI18n: {
-    //     fallbackLocale: 'en',
-    //     messages: {
-    //       en: {
-    //         greeting: 'Hello world!'
-    //       },
-    //       es: {
-    //         greeting: '¡Hola mundo!'
-    //       }
-    //     }
-    //   }
-    // }
   ],
-  // i18n: {
-  //   locales: ["en", "fr", "es"],
-  //   defaultLocale: "en",
-  //   vueI18n: {
-  //     fallbackLocale: "en",
-  //     messages: {
-  //       en: {
-  //         welcome: "Welcome",
-  //       },
-  //       fr: {
-  //         welcome: "Bienvenue",
-  //       },
-  //       es: {
-  //         welcome: "Bienvenido",
-  //       },
-  //     },
-  //   },
-  // },
 });
