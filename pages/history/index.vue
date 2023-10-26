@@ -32,7 +32,6 @@
             class="card max-w-sm hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
           >
             <img
-              v-if="i.product?.image?.length"
               @click="$router.push(`./${i.product?.name}`)"
               class="img rounded-t-lg 2xl:h-80 xl:h-64 cursor-pointer md:h-52 sm:h-44 h-44 w-full object-cover"
               :src="`${baseUrlImage}${i.product?.image[0]?.image}`"
