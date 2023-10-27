@@ -95,13 +95,13 @@
               <p class="bg-gray-200 rounded-2xl w-28 h-5 animate-pulse"></p>
               <div class="flex items-center sm:gap-3 gap-1">
                 <img
-                  class="animate-pulse -mr-1"
+                  class="animate-pulse -mr-1 md:max-h-6 md:max-w-6 max-h-4 max-w-4"
                   src="../assets/svg/heartLoad.svg"
                   alt=""
                 />
 
                 <img
-                  class="animate-pulse"
+                  class="animate-pulse md:max-h-6 md:max-w-6 max-h-4 max-w-4"
                   src="../assets/svg/cartLoad.svg"
                   alt=""
                 />

@@ -31,16 +31,16 @@
 
     <section class="flex md:flex-row flex-col gap-10 w-full">
       <!---------------------- carousel -------------------------->
-      <div class="max-w-[524px] w-full overflow-hidden">
+      <div class="2xl:max-w-[522px] xl:max-w-[508px] lg:max-w-[452px] md:max-w-[324px] sm:max-w-[450px] max-w-[calc(100vw_-_40px)] w-full overflow-hidden">
         <div
           v-if="useProduct.state.getById"
-          class="flex max-w-[524px] bg-white rounded-xl duration-1000"
+          class="flex max-w-[600px] bg-white rounded-xl duration-1000"
           id="carouselMain"
         >
           <img
             v-for="i in useProduct.state.getById?.image"
             :key="i"
-            class="min-w-[524px] h-[524px] bg-white object-contain rounded-xl border border-gray-200 object-center"
+            class="carouselImg 2xl:min-w-[522px] xl:min-w-[508px] lg:min-w-[452px] md:min-w-[324px] sm:min-w-[450px] min-w-[calc(100vw_-_40px)] lg:h-[524px] md:h-[424px] bg-white object-contain rounded-xl border border-gray-200 object-center"
             :src="baseUrlImage + i.image"
             alt=""
           />
@@ -48,14 +48,15 @@
         <div
           v-if="useProduct.state.getById?.image?.length > 1"
           id="carousel"
-          class="grid grid-cols-5 gap-[10px] mt-[10px]"
+          class="grid grid-cols-5 w-full gap-[10px] mt-[10px]"
         >
           <img
+            id="img"
             v-for="(i, index) in useProduct.state.getById?.image"
             @click="store.slideStep = index + 1"
             :key="index"
             :class="store.slideStep == index + 1 ? 'border-black p-1' : ''"
-            class="h-[110px] bg-white w-full cursor-pointer duration-500 object-contain border border-gray-200 rounded-lg"
+            class="bottomIMages lg:h-[110px] md:h-[80px] sm:h-[110px] h-[150px] bg-white w-full cursor-pointer duration-500 object-contain border border-gray-200 rounded-lg"
             :src="baseUrlImage + i.image"
             alt=""
           />
@@ -67,22 +68,37 @@
       <!---------------------- about flower -------------------------->
 
       <div class="w-full leading-10">
-        <ul class="border-b-2 pb-2">
+        <ul class="border-b-2 pb-6 mb-[3px] leading-[19px] space-y-6">
           <li
-            class="flex flex-wrap w-full justify-between font-semibold items-center"
+            class="flex leading-[19px] flex-wrap w-full justify-between font-semibold items-center"
           >
-            <h2><span>Артикул:</span><span> 333014199</span></h2>
+            <h2>
+              <span class="leading-[19px]">Артикул:</span>
+              <span class="leading-[19px]">{{
+                useProduct.state.getById?.id
+              }}</span>
+            </h2>
             <p class="flex items-center gap-3">
               <i class="bx bx-heart text-lg"></i>В желания
             </p>
           </li>
-          <li class="lg:text-2xl text-lg font-semibold">
+          <li class="leading-[19px] lg:text-2xl text-lg font-semibold">
             {{ useProduct.state.getById?.name }}
           </li>
-          <li>
-            <p class="flex items-center gap-2">
-              <i class="bx bxs-star text-[#FFA500]"></i>0.0 Оценок пока нет
-            </p>
+          <li class="flex items-center gap-5 leading-[19px]">
+            <div>
+              <p
+                v-if="useProduct.state.getById?.like?.length"
+                class="flex items-center gap-2"
+              >
+                <i class="bx bxs-star text-[#FFA500]"></i
+                >4.9 ( {{useProduct.state.getById?.like?.length}} оценка )
+              </p>
+              <p v-else class="flex items-center gap-2">
+                <i class="bx bxs-star text-[#FFA500]"></i>0.0 Оценок пока нет
+              </p>
+            </div>
+            <p>Более 1500 заказов</p>
           </li>
           <li class="flex flex-wrap">
             <p class="w-24">Продавец:</p>
@@ -100,31 +116,24 @@
           </li>
           <li>
             <h2>Количество:</h2>
-            <div class="custom-number-input h-10 w-32">
-              <div
-                class="flex flex-row h-10 w-full rounded-lg relative bg-transparent mt-1"
+            <div
+              class="flex items-center justify-around h-10 max-w-[120px] rounded-md overflow-hidden bg-[#EEEEEE] mt-1"
+            >
+              <button
+                @click="decrement"
+                class="hover:bg-gray-200 h-full w-full"
               >
-                <button
-                  data-action="decrement"
-                  class="bg-[#EEEEEE] text-gray-600 px-1 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none"
-                >
-                  <span class="m-auto text-2xl font-bold">−</span>
-                </button>
-                <input
-                  type="number"
-                  min="1"
-                  max="999"
-                  class="outline-none focus:outline-none border-none text-center w-full bg-[#EEEEEE] font-semibold text-md hover:text-black focus:text-black md:text-basecursor-default flex items-center text-gray-700"
-                  name="custom-input-number"
-                  value="1"
-                />
-                <button
-                  data-action="increment"
-                  class="bg-[#EEEEEE] text-gray-800 px-1 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer"
-                >
-                  <span class="m-auto text-2xl font-bold">+</span>
-                </button>
-              </div>
+                <img class="mx-auto" src="@/assets/svg/minus.svg" alt="-" />
+              </button>
+              <p class="w-full text-center text-xl leading-6">
+                {{ store.quintity }}
+              </p>
+              <button
+                @click="increment"
+                class="hover:bg-gray-200 h-full w-full"
+              >
+                <img class="mx-auto" src="@/assets/svg/plus.svg" alt="+" />
+              </button>
             </div>
           </li>
         </ul>
@@ -259,7 +268,20 @@ const router = useRouter();
 const store = reactive({
   slideStep: 1,
   product_id: "",
+  quintity: 1,
 });
+
+function increment() {
+  if (store.quintity < useProduct.state.getById?.quantity) {
+    store.quintity++;
+  }
+}
+
+function decrement() {
+  if (store.quintity > 1) {
+    store.quintity--;
+  }
+}
 
 watch(
   () => store.slideStep,
@@ -273,7 +295,7 @@ watch(
 onMounted(() => {
   store.product_id = +router.currentRoute.value.params.slug;
   useProduct.getById(store.product_id);
-  useHistory.addToWatched(store.product_id)
+  useHistory.addToWatched(store.product_id);
 });
 </script>
 
@@ -285,5 +307,35 @@ input:focus {
 
 .ul {
   list-style-type: disc;
+}
+
+@media (max-width: 500px){
+  .bottomIMages {
+    height: 120px;
+  }
+}
+
+@media (max-width: 450px){
+  .carouselImg {
+    height: 450px;
+  }
+  .bottomIMages {
+    height: 100px;
+  }
+}
+
+@media (max-width: 400px){
+  .carouselImg {
+    height: 400px;
+  }
+  .bottomIMages {
+    height: 80px;
+  }
+}
+
+@media (max-width: 350px){
+  .carouselImg {
+    height: 350px;
+  }
 }
 </style>

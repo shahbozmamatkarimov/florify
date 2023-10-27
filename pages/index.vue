@@ -345,7 +345,7 @@
               class="card max-w-sm hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
             >
               <img
-                @click="$router.push(`./${product.id}`)"
+                @click="$router.push(`./flowers/${product.id}`)"
                 class="img rounded-t-lg 2xl:h-80 xl:h-64 cursor-pointer md:h-52 sm:h-44 h-44 w-full object-cover"
                 :src="`${baseUrlImage}${product.image[0]?.image}`"
                 alt=""
@@ -367,7 +367,7 @@
                       :id="product.id"
                       @click="() => addToLike(product.id, 'nolike')"
                       :class="!product.like?.length ? '' : 'hidden'"
-                      class="cursor-pointer md:h-6 duration-1000 md:w-6 h-3 w-3"
+                      class="cursor-pointer md:h-6 duration-1000 md:w-6 h-4 w-4"
                       src="@/assets/svg/heart.svg"
                       alt=""
                     />
@@ -375,12 +375,12 @@
                       @click="() => addToLike(product.id, 'liked')"
                       :id="'id' + product.id"
                       :class="!product.like?.length ? 'hidden' : ''"
-                      class="cursor-pointer duration-1000 md:h-6 md:w-6 h-3 w-3"
+                      class="cursor-pointer duration-1000 md:h-6 md:w-6 h-4 w-4"
                       src="@/assets/svg/redHeart.svg"
                       alt=""
                     />
                     <img
-                      class="cursor-pointer sm:h-5 sm:w-5 md:h-6 md:w-6 h-3 w-3"
+                      class="cursor-pointer sm:h-5 sm:w-5 md:max-h-6 md:max-w-6 max-h-4 max-w-4"
                       src="@/assets/svg/cart.svg"
                       alt=""
                     />
@@ -466,60 +466,4 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss" scoped>
-@media (max-width: 580px) {
-  .card .img {
-    height: 9rem;
-  }
-}
-
-@media (max-width: 500px) {
-  .cards {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  .card .img {
-    height: 12rem;
-  }
-  .carousel {
-    height: 10rem;
-  }
-  .filter {
-    gap: 1.4rem;
-  }
-  .filter select {
-    font-size: 16px;
-    padding: 0 30px 0 5px;
-    border-radius: 5px;
-  }
-
-  .filter select:first-child {
-    padding-left: 10px;
-  }
-}
-
-@media (max-width: 400px) {
-  .filter {
-    gap: 0.5rem;
-  }
-  .filter select {
-    font-size: 10px;
-    padding: 0 30px 0 5px;
-    border-radius: 5px;
-  }
-}
-
-@media (max-width: 450px) {
-  .card .img {
-    height: 10rem;
-  }
-}
-
-@media (max-width: 350px) {
-  .card .img {
-    height: 9rem;
-  }
-  .cards {
-    gap: 0.5rem;
-  }
-}
-</style>
+<style lang="scss" scoped></style>

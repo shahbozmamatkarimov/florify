@@ -27,7 +27,7 @@ export const useProductsStore = defineStore("products", () => {
       .then((res) => {
         console.log(res.data);
         state.products = res.data;
-        state.isLoading = false;
+        // state.isLoading = false;
       })
       .catch((err) => {
         console.log(err);

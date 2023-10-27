@@ -15,19 +15,19 @@
           ></div>
           <div class="md:p-5 p-3">
             <h5
-              class="bg-gray-200 rounded-2xl w-24 -mt-1 mb-1 h-5 animate-pulse"
+              class="bg-gray-200 rounded-2xl max-w-[96px] -mt-1 mb-1 h-5 animate-pulse"
             ></h5>
             <div class="flex justify-between items-center">
-              <p class="bg-gray-200 rounded-2xl w-28 h-5 animate-pulse"></p>
+              <p class="bg-gray-200 rounded-2xl max-w-[112px] w-full h-5 animate-pulse"></p>
               <div class="flex items-center sm:gap-3 gap-1">
                 <img
-                  class="animate-pulse -mr-1"
+                  class="animate-pulse -mr-1 md:max-h-6 md:max-w-6 max-h-4 max-w-4"
                   src="../assets/svg/heartLoad.svg"
                   alt=""
                 />
 
                 <img
-                  class="animate-pulse"
+                  class="animate-pulse md:max-h-6 md:max-w-6 max-h-4 max-w-4"
                   src="../assets/svg/cartLoad.svg"
                   alt=""
                 />
@@ -44,7 +44,6 @@
 </template>
 
 <script setup>
-
 const store = reactive({
   width: "",
   data: 8,
