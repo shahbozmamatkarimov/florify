@@ -22,11 +22,13 @@
               : i.en_description
           }}
         </p>
-        <div v-if="i.product?.length" class="grid lg:grid-cols-4 grid-cols-3 cards my-5 md:gap-7 gap-5">
+        <div
+          v-if="i.product?.length"
+          class="grid lg:grid-cols-4 grid-cols-3 cards my-5 md:gap-7 gap-5"
+        >
           <div
             v-show="index < store.data"
             v-for="(product, index) in i.product"
-            :key="product.id"
             class="card max-w-sm hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
           >
             <img
@@ -49,14 +51,24 @@
                 </p>
                 <div class="flex items-center sm:gap-3 gap-1">
                   <img
-                    class="cursor-pointer"
-                    src="../assets/svg/heart.svg"
+                    :id="product.id"
+                    @click="() => addToLike(product.id, 'nolike')"
+                    :class="!product.likes?.is_like ? '' : 'hidden'"
+                    class="cursor-pointer md:h-6 duration-1000 md:w-6 h-4 w-4"
+                    src="@/assets/svg/heart.svg"
                     alt=""
                   />
-
                   <img
-                    class="cursor-pointer sm:h-5 sm:w-5 h-3 w-3"
-                    src="../assets/svg/cart.svg"
+                    @click="() => addToLike(product.id, 'liked')"
+                    :id="'id' + product.id"
+                    :class="!product.likes?.is_like ? 'hidden' : ''"
+                    class="cursor-pointer duration-1000 md:h-6 md:w-6 h-4 w-4"
+                    src="@/assets/svg/redHeart.svg"
+                    alt=""
+                  />
+                  <img
+                    class="cursor-pointer sm:h-5 sm:w-5 md:max-h-6 md:max-w-6 max-h-4 max-w-4"
+                    src="@/assets/svg/cart.svg"
                     alt=""
                   />
                 </div>
@@ -64,9 +76,9 @@
             </div>
           </div>
         </div>
-        <div v-else class="gap-2 pt-20 pb-32 max-w-fit text-center">      
-            <img src="@/assets/empty/nocategory.svg" alt="">
-            <h1>Mahsulotlar yo’q</h1>       
+        <div v-else class="gap-2 pt-20 pb-32 max-w-fit text-center">
+          <img src="@/assets/empty/nocategory.svg" alt="" />
+          <h1>Mahsulotlar yo’q</h1>
         </div>
         <button
           v-if="i.product?.length > store.data"
@@ -82,10 +94,11 @@
 <script setup>
 import axios from "axios";
 // import { initFlowbite } from "flowbite";
-import { useProductsStore } from "@/store/products";
+import { useProductsStore, useAuthStore } from "@/store";
 
 const productStore = useProductsStore();
 const runtimeConfig = useRuntimeConfig();
+const authStore = useAuthStore();
 const baseUrl = runtimeConfig.public.baseURL;
 const baseUrlImage = ref(runtimeConfig.public.baseURL?.slice(0, -3));
 
@@ -99,7 +112,8 @@ const store = reactive({
 
 const getAllProducts = () => {
   store.isLoading = true;
-  axios.get(baseUrl + `/category`)
+  axios
+    .get(baseUrl + `/category`)
     .then((res) => {
       console.log(res);
       store.allProducts = res;
@@ -109,6 +123,39 @@ const getAllProducts = () => {
       console.log(err);
     });
 };
+
+function addToLike(id, isLiked) {
+  document.getElementById(id)?.classList?.toggle("hidden");
+  document.getElementById("id" + id)?.classList?.toggle("hidden");
+  console.log(isLiked);
+  let method = "POST";
+  if (isLiked == "nolike") {
+    method = "DELETE";
+  } else {
+    method = "POST";
+  }
+  let product_id = id;
+  const client_id = localStorage.getItem("user_id");
+  axios({
+    method,
+    url: baseUrl + "/like",
+    data: { client_id, product_id },
+  })
+    .then((res) => {
+      console.log(res.data);
+      if (res.data.statusCode === 400) {
+        document.getElementById(id)?.classList?.toggle("hidden");
+        document.getElementById("id" + id)?.classList?.toggle("hidden");
+        authStore.store.loginModal = true;
+      }
+    })
+    .catch((err) => {
+      document.getElementById(id)?.classList?.toggle("hidden");
+      document.getElementById("id" + id)?.classList?.toggle("hidden");
+      authStore.store.loginModal = true;
+      console.log(err);
+    });
+}
 
 // onBeforeMount(() => {
 //   window.addEventListener("resize", () => {

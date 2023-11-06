@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 import { defineStore } from "pinia";
 
 export const useProductsStore = defineStore("products", () => {
@@ -23,19 +23,21 @@ export const useProductsStore = defineStore("products", () => {
   const showProductById = computed(() => state.showProduct);
 
   function getAllProducts() {
-    axios.get(baseUrl + '/category')
+    axios
+      .get(baseUrl + "/category")
       .then((res) => {
         console.log(res.data);
         state.products = res.data;
-        // state.isLoading = false;
+        state.isLoading = false;
       })
       .catch((err) => {
         console.log(err);
       });
   }
-  
+
   function getTodays() {
-    axios.get(baseUrl + '/product/present')
+    axios
+      .get(baseUrl + "/product/present")
       .then((res) => {
         console.log(res.data);
         state.showProduct = res.data;
@@ -45,7 +47,7 @@ export const useProductsStore = defineStore("products", () => {
         console.log(err);
       });
   }
-  
+
   function getOneProduct(id, index) {
     state.isCategory = index;
     setTimeout(() => {
@@ -56,11 +58,12 @@ export const useProductsStore = defineStore("products", () => {
       }
       state.openEditModal = true;
       state.isLoading = true;
-      if (id == 'today') {
+      if (id == "today") {
         getTodays();
         return;
       }
-      axios.get(baseUrl + `/category/${id}`)
+      axios
+        .get(baseUrl + `/category/${id}:` + localStorage.getItem("user_id"))
         .then((res) => {
           console.log(res.data);
           state.showProduct = [res.data];
@@ -71,10 +74,11 @@ export const useProductsStore = defineStore("products", () => {
         });
     }, 300);
   }
-  
+
   function getById(id) {
     state.isLoading = true;
-    axios.get(baseUrl + `/product/${id}`)
+    axios
+      .get(baseUrl + `/product/${id}`)
       .then((res) => {
         console.log(res.data);
         state.getById = res.data;
@@ -86,5 +90,12 @@ export const useProductsStore = defineStore("products", () => {
       });
   }
 
-  return { state, getAllProducts, getOneProduct, allProducts, showProductById, getById };
+  return {
+    state,
+    getAllProducts,
+    getOneProduct,
+    allProducts,
+    showProductById,
+    getById,
+  };
 });

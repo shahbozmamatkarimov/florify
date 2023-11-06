@@ -52,20 +52,22 @@
                 <div class="flex items-center sm:gap-3 gap-1">
                   <img
                     :id="i.product?.id"
-                    @click="() => addToLike(i.id, i.product?.id, 'nolike')"
-                    class="cursor-pointer md:h-6 duration-1000 md:w-6 h-3 w-3"
+                    @click="() => addToLike(i.product.id, 'like')"
+                    :class="!i.product?.likes?.is_like ? 'hidden' : ''"
+                    class="cursor-pointer md:h-6 duration-1000 md:w-6 h-4 w-4"
                     src="@/assets/svg/heart.svg"
                     alt=""
                   />
                   <img
-                    @click="() => addToLike(i.id, i.product?.id, 'liked')"
+                    @click="() => addToLike(i.product.id, 'noliked')"
                     :id="'id' + i.product?.id"
-                    class="cursor-pointer hidden duration-1000 md:h-6 md:w-6 h-3 w-3"
+                    :class="!i.product?.likes?.is_like ? '' : 'hidden'"
+                    class="cursor-pointer duration-1000 md:h-6 md:w-6 h-4 w-4"
                     src="@/assets/svg/redHeart.svg"
                     alt=""
                   />
                   <img
-                    class="cursor-pointer sm:h-5 sm:w-5 h-3 w-3"
+                    class="cursor-pointer sm:h-5 sm:w-5 md:max-h-6 md:max-w-6 max-h-4 max-w-4"
                     src="@/assets/svg/cart.svg"
                     alt=""
                   />
@@ -101,37 +103,26 @@ const store = reactive({
   data: "",
 });
 
-function addToLike(productId, id, isLiked) {
+function addToLike(id, isLiked) {
   document.getElementById(id)?.classList?.toggle("hidden");
   document.getElementById("id" + id)?.classList?.toggle("hidden");
-
-  let method = "POST";
-  if (isLiked == "nolike") {
-    method = "POST";
+  console.log(isLiked);
+  let method = "post";
+  if (isLiked == "noliked") {
+    method = "delete";
   } else {
-    method = "DELETE";
+    method = "post";
   }
   let product_id = id;
   const client_id = localStorage.getItem("user_id");
-  axios
-    .request({
-      url: baseUrl + "/like",
-      method: method,
-      data: {
-        client_id,
-        product_id,
-      },
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
+  axios({
+    method: method,
+    url: baseUrl + "/like",
+    data: { client_id, product_id },
+  })
     .then((res) => {
       console.log(res.data);
-      if (
-        res.data.statusCode === 400 &&
-        res.data.message !==
-          "Mahsulot allaqachon sevimlilar ro'yxatiga qo'shilgan!"
-      ) {
+      if (res.data.statusCode === 400) {
         document.getElementById(id)?.classList?.toggle("hidden");
         document.getElementById("id" + id)?.classList?.toggle("hidden");
         authStore.store.loginModal = true;
