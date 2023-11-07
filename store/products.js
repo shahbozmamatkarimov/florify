@@ -23,8 +23,14 @@ export const useProductsStore = defineStore("products", () => {
   const showProductById = computed(() => state.showProduct);
 
   function getAllProducts() {
+    let url;
+    if (localStorage.getItem("user_id")) {
+      url = baseUrl + "/category/clientId/" + localStorage.getItem("user_id");
+    } else {
+      url = baseUrl + "/category";
+    }
     axios
-      .get(baseUrl + "/category")
+      .get(url)
       .then((res) => {
         console.log(res.data);
         state.products = res.data;

@@ -5,7 +5,7 @@
       <div
         v-show="!productStore.state.isLoading"
         v-for="(i, index) in productStore.showProductById"
-        :key="i.id"
+        :key="i.id + 'category'"
       >
         <h1
           :class="index < 1 ? '' : 'sm:pt-7 pt-4'"
@@ -51,17 +51,17 @@
                 </p>
                 <div class="flex items-center sm:gap-3 gap-1">
                   <img
-                    :id="product.id"
-                    @click="() => addToLike(product.id, 'nolike')"
-                    :class="!product.likes?.is_like ? '' : 'hidden'"
+                    :id="product.id + 'unique'"
+                    @click="() => addToLike(product.id, 'like')"
+                    :class="!product.likes?.length ? '' : 'hidden'"
                     class="cursor-pointer md:h-6 duration-1000 md:w-6 h-4 w-4"
                     src="@/assets/svg/heart.svg"
                     alt=""
                   />
                   <img
-                    @click="() => addToLike(product.id, 'liked')"
-                    :id="'id' + product.id"
-                    :class="!product.likes?.is_like ? 'hidden' : ''"
+                    @click="() => addToLike(product.id, 'nolike')"
+                    :id="'id_unique' + product.id"
+                    :class="!product.likes?.length ? 'hidden' : ''"
                     class="cursor-pointer duration-1000 md:h-6 md:w-6 h-4 w-4"
                     src="@/assets/svg/redHeart.svg"
                     alt=""
@@ -113,7 +113,7 @@ const store = reactive({
 const getAllProducts = () => {
   store.isLoading = true;
   axios
-    .get(baseUrl + `/category`)
+    .get(baseUrl + "/category/clientId/" + localStorage.getItem("user_id"))
     .then((res) => {
       console.log(res);
       store.allProducts = res;
@@ -125,14 +125,13 @@ const getAllProducts = () => {
 };
 
 function addToLike(id, isLiked) {
-  document.getElementById(id)?.classList?.toggle("hidden");
-  document.getElementById("id" + id)?.classList?.toggle("hidden");
-  console.log(isLiked);
+  document.getElementById(id + 'unique')?.classList?.toggle("hidden");
+  document.getElementById("id_unique" + id)?.classList?.toggle("hidden");
   let method = "POST";
   if (isLiked == "nolike") {
-    method = "DELETE";
+    method = "delete";
   } else {
-    method = "POST";
+    method = "post";
   }
   let product_id = id;
   const client_id = localStorage.getItem("user_id");

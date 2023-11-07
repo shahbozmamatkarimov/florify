@@ -54,14 +54,14 @@
                   <img
                     :id="i.product.id"
                     @click="() => addToLike(i.id, i.product.id, 'nolike')"
-                    class="cursor-pointer hidden md:h-6 duration-1000 md:w-6 h-3 w-3"
+                    class="cursor-pointer hidden sm:h-6 duration-1000 sm:w-6 sm:min-w-[24px] h-3 w-3 min-w-[12px]"
                     src="@/assets/svg/heart.svg"
                     alt=""
                   />
                   <img
                     @click="() => addToLike(i.id, i.product.id, 'liked')"
                     :id="'id' + i.product.id"
-                    class="cursor-pointer duration-1000 md:h-6 md:w-6 h-3 w-3"
+                    class="cursor-pointer sm:h-6 duration-1000 sm:w-6 sm:min-w-[24px] h-3 w-3 min-w-[12px]"
                     src="@/assets/svg/redHeart.svg"
                     alt=""
                   />
