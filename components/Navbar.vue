@@ -61,8 +61,8 @@
           </li>
           <li
             @click="productStore.getOneProduct(i.id, index + 1)"
-            v-for="(i, index) in productStore.allProducts"
-            :key="i.id"
+            v-for="(i, index) in productStore.state.categories"
+            :key="i.id" 
             :class="
               productStore.state.sliderStep == index + 1
                 ? 'text-[#5C0099] font-bold'
@@ -83,14 +83,14 @@
           <li
             :class="
               productStore.state.sliderStep ==
-              productStore.allProducts?.length + 1
+              productStore.state.categories?.length + 1
                 ? 'text-[#5C0099] font-bold'
                 : ''
             "
             @click="
               productStore.getOneProduct(
                 'today',
-                productStore.allProducts?.length + 1
+                productStore.state.categories?.length + 1
               )
             "
             class="cursor-pointer whitespace-nowrap hover:text-[#5C0099]"
@@ -145,7 +145,10 @@
       width="30%"
       align-center
     >
-      <form v-loading="authStore.store.isLoading" @submit.prevent="authStore.handleSubmit()">
+      <form
+        v-loading="authStore.store.isLoading"
+        @submit.prevent="authStore.handleSubmit()"
+      >
         <h1 class="font-semibold text-2xl leading-7">Введите номер телефона</h1>
         <p class="leading-6 mt-[14px] mb-5">
           Напишите номер своего мобильного телефона и вам придет СМС с кодом для
@@ -183,7 +186,10 @@
       width="30%"
       align-center
     >
-      <form v-loading="authStore.store.isLoading" @submit.prevent="authStore.verifyOtp()">
+      <form
+        v-loading="authStore.store.isLoading"
+        @submit.prevent="authStore.verifyOtp()"
+      >
         <h1 class="font-semibold text-2xl leading-7">Tasdiqlash kodi</h1>
         <p class="leading-6 mt-[14px] mb-5">
           Tasdiqlash kodi +998 99 *** ** 03 raqamiga yuborilgan
@@ -233,14 +239,16 @@
 </template>
 
 <script setup>
-import { useProductsStore, useAuthStore } from "@/store";
+import { useProductsStore, useAuthStore, useLoadingStore } from "@/store";
 const productStore = useProductsStore();
 const authStore = useAuthStore();
+const isLoading = useLoadingStore();
 const isMount = ref(false);
 
 const store = reactive({
   loginModal: false,
   otpStep: 1,
+  width: "",
 });
 
 function nextNumber(e, val) {
@@ -251,9 +259,29 @@ function nextNumber(e, val) {
   }
   authStore.store.otp.push(document.getElementById(val - 1)?.value);
   if (e.inputType === "deleteContentBackward") return;
-  console.log("hello");
   document.getElementById(val)?.focus();
 }
+
+onBeforeMount(() => {
+  window.addEventListener("resize", () => {
+    store.width = window.innerWidth;
+    if (store.width < 501) {
+      isLoading.store.limit = 4;
+    } else if (store.width < 1024) {
+      isLoading.store.limit = 6;
+    } else {
+      isLoading.store.limit = 8;
+    }
+  });
+  store.width = window.innerWidth;
+  if (store.width < 501) {
+    isLoading.store.limit = 4;
+  } else if (store.width < 1024) {
+    isLoading.store.limit = 6;
+  } else {
+    isLoading.store.limit = 8;
+  }
+});
 
 onMounted(() => {
   isMount.value = true;

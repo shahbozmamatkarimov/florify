@@ -312,12 +312,15 @@
         </div>
       </section>
 
-      <placeholderMain v-if="productStore.state.isLoading" />
+      <placeholderMain v-if="isLoading.isLoadingType('getAllProducts')" />
 
       <section>
         <div
-          v-show="i.product?.length && !productStore.state.isLoading"
-          v-for="(i, index) in productStore.allProducts"
+          v-show="
+            productStore.state.products[i.id]?.data?.records?.length &&
+            !productStore.state.isLoading
+          "
+          v-for="(i, index) in productStore.state.categories"
           :key="i.id"
         >
           <h1
@@ -339,8 +342,8 @@
             class="grid lg:grid-cols-4 grid-cols-3 cards my-5 md:gap-7 gap-5"
           >
             <div
-              v-show="index < useImageCounter.data"
-              v-for="(product, index) in i.product"
+              v-for="(product, index) in productStore.state.products[i.id]?.data
+                ?.records"
               :key="product.id"
               class="card max-w-sm hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
             >
@@ -364,17 +367,17 @@
                   </p>
                   <div class="flex items-center sm:gap-3 gap-1">
                     <img
+                      v-if="product.likes !== true"
                       :id="product.id"
-                      @click="() => addToLike(product.id, 'like')"
-                      :class="!product.likes?.length ? '' : 'hidden'"
+                      @click="() => addToLike(index, i.id, true, product.id)"
                       class="cursor-pointer md:h-6 duration-1000 md:w-6 h-4 w-4"
                       src="@/assets/svg/heart.svg"
                       alt=""
                     />
                     <img
-                      @click="() => addToLike(product.id, 'nolike')"
+                      v-else
+                      @click="() => addToLike(index, i.id, false, product.id)"
                       :id="'id' + product.id"
-                      :class="!product.likes?.length ? 'hidden' : ''"
                       class="cursor-pointer duration-1000 md:h-6 md:w-6 h-4 w-4"
                       src="@/assets/svg/redHeart.svg"
                       alt=""
@@ -390,8 +393,18 @@
             </div>
           </div>
           <button
-            v-if="i.product?.length > useImageCounter.data"
-            class="w-full font-semibold lg:h-14 h-10 border-2 rounded-xl border-[#5C0099] text-[#5C0099] hover:bg-[#5C0099] duration-500 hover:text-white"
+            @click="paginationNext(i.id)"
+            v-if="
+              productStore.state.products[i.id]?.data?.pagination?.total_pages >
+              1
+            "
+            :class="
+              isLoadingModal(i.id)
+                ? 'bg-[#F1F1F2] border-gray-400 opacity-25 pointer-events-none'
+                : 'border-[#5C0099] text-[#5C0099]'
+            "
+            class="w-full font-semibold lg:h-14 h-10 border-2 rounded-xl overflow-hidden hover:bg-[#5C0099] duration-500 hover:text-white"
+            v-loading="isLoading.isLoadingType('getProductByCategory')"
           >
             {{ $t("home.show_more") }}
           </button>
@@ -400,7 +413,7 @@
     </div>
     <div
       class="min-w-[100%] overflow-hidden pt-5"
-      v-for="i in productStore.allProducts?.length + 2"
+      v-for="i in productStore.state.categories?.length + 2"
       :key="i"
     >
       <Category />
@@ -410,24 +423,49 @@
 
 <script setup>
 import axios from "axios";
-import { useProductsStore, useImageCountStore, useAuthStore } from "@/store";
+import {
+  useProductsStore,
+  useImageCountStore,
+  useAuthStore,
+  useLoadingStore,
+} from "@/store";
 import { initFlowbite } from "flowbite";
+const isLoading = useLoadingStore();
 const productStore = useProductsStore();
 const authStore = useAuthStore();
 const useImageCounter = useImageCountStore();
 const runtimeConfig = useRuntimeConfig();
 const baseUrl = runtimeConfig.public.baseURL;
 const baseUrlImage = ref(runtimeConfig.public.baseURL?.slice(0, -3));
+isLoading.addLoading("getAllProducts");
 
-function addToLike(id, isLiked) {
-  document.getElementById(id)?.classList?.toggle("hidden");
-  document.getElementById("id" + id)?.classList?.toggle("hidden");
-  console.log(isLiked);
+function paginationNext(id) {
+  const pageInfo = productStore.state.products[id]?.data?.pagination;
+  productStore.getProductByCategoryId(
+    id,
+    pageInfo.currentPage + 1,
+  );
+}
+
+function isLoadingModal(id) {
+  if (
+    productStore.state.products[id]?.data?.pagination?.total_pages ==
+      productStore.state.products[id]?.data?.pagination?.currentPage ||
+    isLoading.isLoadingType("getProductByCategory")
+  ) {
+    return true;
+  }
+  return false;
+}
+
+function addToLike(index, category_id, isLiked, id) {
+  productStore.state.products[category_id].data.records[index].likes = isLiked;
+
   let method = "POST";
-  if (isLiked == "nolike") {
-    method = "delete";
-  } else {
+  if (isLiked) {
     method = "post";
+  } else {
+    method = "delete";
   }
   let product_id = id;
   const client_id = localStorage.getItem("user_id");
@@ -463,7 +501,7 @@ watch(
 );
 
 onMounted(() => {
-  productStore.getAllProducts();
+  // productStore.getAllProducts();
   useImageCounter.imageCount();
   initFlowbite();
 });

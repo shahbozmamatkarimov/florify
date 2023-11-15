@@ -1,10 +1,21 @@
 <template>
   <main class="container">
-    <placeholderMain v-if="productStore.state.isLoading" />
-    <section>
+    {{
+      console.log(
+        productStore.state.categories[productStore.state.categoryPageId]
+      )
+    }}
+    <placeholderMain v-if="isLoading.isLoadingType('getProductByCategory')" />
+    <section
+      v-else-if="
+        productStore?.state?.categories[productStore.state.categoryPageId] ||
+        productStore.state.isTodays
+      "
+    >
       <div
-        v-show="!productStore.state.isLoading"
-        v-for="(i, index) in productStore.showProductById"
+        v-for="(i, index) in [
+          productStore?.state?.categories[productStore.state.categoryPageId],
+        ]"
         :key="i.id + 'category'"
       >
         <h1
@@ -27,8 +38,9 @@
           class="grid lg:grid-cols-4 grid-cols-3 cards my-5 md:gap-7 gap-5"
         >
           <div
-            v-show="index < store.data"
-            v-for="(product, index) in i.product"
+            v-for="(product, index) in productStore.state.products[i.id]?.data
+              ?.records"
+            :key="product.id"
             class="card max-w-sm hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
           >
             <img
@@ -51,17 +63,17 @@
                 </p>
                 <div class="flex items-center sm:gap-3 gap-1">
                   <img
-                    :id="product.id + 'unique'"
-                    @click="() => addToLike(product.id, 'like')"
-                    :class="!product.likes?.length ? '' : 'hidden'"
+                    v-if="product.likes !== true"
+                    :id="product.id"
+                    @click="() => addToLike(index, i.id, true, product.id)"
                     class="cursor-pointer md:h-6 duration-1000 md:w-6 h-4 w-4"
                     src="@/assets/svg/heart.svg"
                     alt=""
                   />
                   <img
-                    @click="() => addToLike(product.id, 'nolike')"
-                    :id="'id_unique' + product.id"
-                    :class="!product.likes?.length ? 'hidden' : ''"
+                    v-else
+                    @click="() => addToLike(index, i.id, false, product.id)"
+                    :id="'id' + product.id"
                     class="cursor-pointer duration-1000 md:h-6 md:w-6 h-4 w-4"
                     src="@/assets/svg/redHeart.svg"
                     alt=""
@@ -81,11 +93,76 @@
           <h1>Mahsulotlar yo’q</h1>
         </div>
         <button
-          v-if="i.product?.length > store.data"
-          class="w-full font-semibold lg:h-14 h-10 border-2 rounded-xl border-[#5C0099] text-[#5C0099] hover:bg-[#5C0099] duration-500 hover:text-white"
+          @click="paginationNext(i.id)"
+          v-if="
+            productStore.state.products[i.id]?.data?.pagination?.total_pages > 1
+          "
+          :class="
+            isLoadingModal(i.id)
+              ? 'bg-[#F1F1F2] border-gray-400 opacity-25 pointer-events-none'
+              : 'border-[#5C0099] text-[#5C0099]'
+          "
+          class="w-full font-semibold lg:h-14 h-10 border-2 rounded-xl overflow-hidden hover:bg-[#5C0099] duration-500 hover:text-white"
+          v-loading="isLoading.isLoadingType('getProductByCategory')"
         >
           {{ $t("home.show_more") }}
         </button>
+      </div>
+    </section>
+    <section v-else>
+      <div
+        v-if="productStore.state.showProduct?.length"
+        class="grid lg:grid-cols-4 grid-cols-3 cards my-5 md:gap-7 gap-5"
+      >
+        <div
+          v-for="(product, index) in productStore.state.showProduct"
+          :key="product.id"
+          class="card max-w-sm hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
+        >
+          <img
+            @click="$router.push(`./flowers/${product.id}`)"
+            class="img rounded-t-lg 2xl:h-80 xl:h-64 cursor-pointer md:h-52 sm:h-44 h-44 w-full object-cover"
+            :src="`${baseUrlImage}${product.image[0]?.image}`"
+            alt=""
+          />
+          <div class="md:p-5 p-3">
+            <h5
+              class="mb-2 sm:text-xl text-sm text-[#1F9D6D] tracking-tight font-medium"
+            >
+              {{ product.name }}
+            </h5>
+            <div class="flex justify-between items-center">
+              <p class="font-semibold sm:text-lg text-xs whitespace-nowrap">
+                <span class="md:inline-block hidden"></span>
+                {{ product.price }}
+                <span class="sm:inline hidden">{{ $t("home.sum") }}</span>
+              </p>
+              <div class="flex items-center sm:gap-3 gap-1">
+                <img
+                  v-if="product.likes !== true"
+                  :id="product.id"
+                  @click="() => addToLike(index, i.id, true, product.id)"
+                  class="cursor-pointer md:h-6 duration-1000 md:w-6 h-4 w-4"
+                  src="@/assets/svg/heart.svg"
+                  alt=""
+                />
+                <img
+                  v-else
+                  @click="() => addToLike(index, i.id, false, product.id)"
+                  :id="'id' + product.id"
+                  class="cursor-pointer duration-1000 md:h-6 md:w-6 h-4 w-4"
+                  src="@/assets/svg/redHeart.svg"
+                  alt=""
+                />
+                <img
+                  class="cursor-pointer sm:h-5 sm:w-5 md:max-h-6 md:max-w-6 max-h-4 max-w-4"
+                  src="@/assets/svg/cart.svg"
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -94,8 +171,9 @@
 <script setup>
 import axios from "axios";
 // import { initFlowbite } from "flowbite";
-import { useProductsStore, useAuthStore } from "@/store";
+import { useProductsStore, useAuthStore, useLoadingStore } from "@/store";
 
+const isLoading = useLoadingStore();
 const productStore = useProductsStore();
 const runtimeConfig = useRuntimeConfig();
 const authStore = useAuthStore();
@@ -110,28 +188,38 @@ const store = reactive({
   data: 8,
 });
 
-const getAllProducts = () => {
-  store.isLoading = true;
-  axios
-    .get(baseUrl + "/category/clientId/" + localStorage.getItem("user_id"))
-    .then((res) => {
-      console.log(res);
-      store.allProducts = res;
-      store.isLoading = false;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
-
-function addToLike(id, isLiked) {
-  document.getElementById(id + 'unique')?.classList?.toggle("hidden");
-  document.getElementById("id_unique" + id)?.classList?.toggle("hidden");
-  let method = "POST";
-  if (isLiked == "nolike") {
-    method = "delete";
+function isLikedChecker(isLike, index) {
+  if (isLike?.length) {
+    productStore.showProductById[0].product[index].likes = "";
   } else {
+    productStore.showProductById[0].product[index].likes = "true";
+  }
+}
+
+function paginationNext(id) {
+  const pageInfo = productStore.state.products[id]?.data?.pagination;
+  productStore.getProductByCategoryId(id, pageInfo.currentPage + 1);
+}
+
+function isLoadingModal(id) {
+  if (
+    productStore.state.products[id]?.data?.pagination?.total_pages ==
+      productStore.state.products[id]?.data?.pagination?.currentPage ||
+    isLoading.isLoadingType("getProductByCategory")
+  ) {
+    return true;
+  }
+  return false;
+}
+
+function addToLike(index, category_id, isLiked, id) {
+  productStore.state.products[category_id].data.records[index].likes = isLiked;
+
+  let method = "POST";
+  if (isLiked) {
     method = "post";
+  } else {
+    method = "delete";
   }
   let product_id = id;
   const client_id = localStorage.getItem("user_id");
@@ -178,16 +266,6 @@ function addToLike(id, isLiked) {
 //   store.width = window.innerWidth;
 //   // initFlowbite();
 // });
-
-onMounted(() => {
-  getAllProducts();
-  // watchEffect(() => {
-  //   const image = document.querySelector(".mainSlider");
-  //   image.style.transform = `translateX(-${
-  //     productStore.state.isCategory * 100
-  //   }%)`;
-  // });
-});
 </script>
 
 <style lang="scss" scoped>
