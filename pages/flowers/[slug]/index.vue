@@ -31,7 +31,9 @@
 
     <section class="flex md:flex-row flex-col gap-10 w-full">
       <!---------------------- carousel -------------------------->
-      <div class="2xl:max-w-[522px] xl:max-w-[508px] lg:max-w-[452px] md:max-w-[324px] sm:max-w-[450px] max-w-[calc(100vw_-_40px)] w-full overflow-hidden">
+      <div
+        class="2xl:max-w-[522px] xl:max-w-[508px] lg:max-w-[452px] md:max-w-[324px] sm:max-w-[450px] max-w-[calc(100vw_-_40px)] w-full overflow-hidden"
+      >
         <div
           v-if="useProduct.state.getById"
           class="flex max-w-[600px] bg-white rounded-xl duration-1000"
@@ -91,8 +93,8 @@
                 v-if="useProduct.state.getById?.like?.length"
                 class="flex items-center gap-2"
               >
-                <i class="bx bxs-star text-[#FFA500]"></i
-                >4.9 ( {{useProduct.state.getById?.like?.length}} оценка )
+                <i class="bx bxs-star text-[#FFA500]"></i>4.9 (
+                {{ useProduct.state.getById?.like?.length }} оценка )
               </p>
               <p v-else class="flex items-center gap-2">
                 <i class="bx bxs-star text-[#FFA500]"></i>0.0 Оценок пока нет
@@ -138,6 +140,13 @@
           </li>
         </ul>
         <div class="grid grid-cols-2 gap-5 my-5">
+          <input
+            @click="pay"
+            class="bg-red-600 btn"
+            id="payButton"
+            value="Оплатить"
+            type="button"
+          />
           <button
             class="md:text-md text-sm sm:h-16 h-12 bg-[#5C0099] active:opacity-50 text-white font-semibold rounded-xl border border-[#5C0099]"
           >
@@ -178,7 +187,7 @@
         >
           <img
             class="img rounded-t-lg 2xl:h-72 xl:h-64 md:h-52 sm:h-44 h-40 w-full object-cover"
-            src="../../assets/image/image2.png"
+            src="@/assetss/image/image2.png"
             alt=""
           />
           <div class="md:p-5 p-3">
@@ -195,12 +204,12 @@
               <div class="flex items-center sm:gap-3 gap-1">
                 <img
                   class="cursor-pointer"
-                  src="../../assets/svg/heart.svg"
+                  src="@/assetss/svg/heart.svg"
                   alt=""
                 />
                 <img
                   class="cursor-pointer sm:h-5 sm:w-5 h-3 w-3"
-                  src="../../assets/svg/cart.svg"
+                  src="@/assetss/svg/cart.svg"
                   alt=""
                 />
               </div>
@@ -219,7 +228,7 @@
         >
           <img
             class="img rounded-t-lg 2xl:h-72 xl:h-64 md:h-52 sm:h-44 h-44 w-full object-cover"
-            src="../../assets/image/image5.png"
+            src="@/assetss/image/image5.png"
             alt=""
           />
           <div class="md:p-5 p-3">
@@ -236,13 +245,13 @@
               <div class="flex items-center sm:gap-3 gap-1">
                 <img
                   class="cursor-pointer"
-                  src="../../assets/svg/heart.svg"
+                  src="@/assetss/svg/heart.svg"
                   alt=""
                 />
 
                 <img
                   class="cursor-pointer sm:h-5 sm:w-5 h-3 w-3"
-                  src="../../assets/svg/cart.svg"
+                  src="@/assetss/svg/cart.svg"
                   alt=""
                 />
               </div>
@@ -269,7 +278,50 @@ const store = reactive({
   slideStep: 1,
   product_id: "",
   quintity: 1,
+  btn: "",
+  language: "ru-RU",
 });
+
+function pay() {
+  try {
+    const widget = new cp.CloudPayments();
+    widget.pay(
+      "auth", // или 'charge'
+      {
+        //options
+        publicId: "test_api_00000000000000000000002", //id из личного кабинета
+        description: "Оплата товаров в example.com", //назначение
+        amount: 0, //сумма
+        currency: "UZS", //валюта
+        accountId: "shahbozmamatkarimov2303@gmail.com", //идентификатор плательщика (необязательно)
+        invoiceId: "1234567", //номер заказа  (необязательно)
+        skin: "mini", //дизайн виджета (необязательно)
+        autoClose: 3,
+      },
+      {
+        onSuccess: function (options) {
+          console.log(options);
+          // success
+          //действие при успешной оплате
+        },
+        onFail: function (reason, options) {
+          console.log(reason);
+          console.log(options);
+          // fail
+          //действие при неуспешной оплате
+        },
+        onComplete: function (paymentResult, options) {
+          console.log(options);
+          console.log(paymentResult);
+          //Вызывается как только виджет получает от api.cloudpayments ответ с результатом транзакции.
+          //например вызов вашей аналитики Facebook Pixel
+        },
+      }
+    );
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 function increment() {
   if (store.quintity < useProduct.state.getById?.quantity) {
@@ -309,13 +361,13 @@ input:focus {
   list-style-type: disc;
 }
 
-@media (max-width: 500px){
+@media (max-width: 500px) {
   .bottomIMages {
     height: 120px;
   }
 }
 
-@media (max-width: 450px){
+@media (max-width: 450px) {
   .carouselImg {
     height: 450px;
   }
@@ -324,7 +376,7 @@ input:focus {
   }
 }
 
-@media (max-width: 400px){
+@media (max-width: 400px) {
   .carouselImg {
     height: 400px;
   }
@@ -333,7 +385,7 @@ input:focus {
   }
 }
 
-@media (max-width: 350px){
+@media (max-width: 350px) {
   .carouselImg {
     height: 350px;
   }
