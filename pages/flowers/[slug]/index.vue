@@ -187,7 +187,7 @@
         >
           <img
             class="img rounded-t-lg 2xl:h-72 xl:h-64 md:h-52 sm:h-44 h-40 w-full object-cover"
-            src="@/assetss/image/image2.png"
+            src="@/assets/image/image2.png"
             alt=""
           />
           <div class="md:p-5 p-3">
@@ -204,12 +204,12 @@
               <div class="flex items-center sm:gap-3 gap-1">
                 <img
                   class="cursor-pointer"
-                  src="@/assetss/svg/heart.svg"
+                  src="@/assets/svg/heart.svg"
                   alt=""
                 />
                 <img
                   class="cursor-pointer sm:h-5 sm:w-5 h-3 w-3"
-                  src="@/assetss/svg/cart.svg"
+                  src="@/assets/svg/cart.svg"
                   alt=""
                 />
               </div>
@@ -228,7 +228,7 @@
         >
           <img
             class="img rounded-t-lg 2xl:h-72 xl:h-64 md:h-52 sm:h-44 h-44 w-full object-cover"
-            src="@/assetss/image/image5.png"
+            src="@/assets/image/image5.png"
             alt=""
           />
           <div class="md:p-5 p-3">
@@ -245,13 +245,13 @@
               <div class="flex items-center sm:gap-3 gap-1">
                 <img
                   class="cursor-pointer"
-                  src="@/assetss/svg/heart.svg"
+                  src="@/assets/svg/heart.svg"
                   alt=""
                 />
 
                 <img
                   class="cursor-pointer sm:h-5 sm:w-5 h-3 w-3"
-                  src="@/assetss/svg/cart.svg"
+                  src="@/assets/svg/cart.svg"
                   alt=""
                 />
               </div>
