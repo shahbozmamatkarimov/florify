@@ -1,13 +1,8 @@
 <template>
   <main class="container">
-    {{
-      console.log(
-        productStore.state.categories[productStore.state.categoryPageId]
-      )
-    }}
-    <placeholderMain v-if="isLoading.isLoadingType('getProductByCategory')" />
+    <placeholderMain v-if="isLoading.isLoadingType('getProductByCategory') && !productStore?.state?.categories[productStore.state.categoryPageId]" />
     <section
-      v-else-if="
+      v-if="
         productStore?.state?.categories[productStore.state.categoryPageId] ||
         productStore.state.isTodays
       "
@@ -79,6 +74,7 @@
                     alt=""
                   />
                   <img
+                    @click="() => addToCart(product.id)"
                     class="cursor-pointer sm:h-5 sm:w-5 md:max-h-6 md:max-w-6 max-h-4 max-w-4"
                     src="@/assets/svg/cart.svg"
                     alt=""
@@ -120,7 +116,7 @@
           class="card max-w-sm hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
         >
           <img
-            @click="$router.push(`./flowers/${product.id}`)"
+            @click="$router.push(`/flowers/${product.id}`)"
             class="img rounded-t-lg 2xl:h-80 xl:h-64 cursor-pointer md:h-52 sm:h-44 h-44 w-full object-cover"
             :src="`${baseUrlImage}${product.image[0]?.image}`"
             alt=""
@@ -141,20 +137,27 @@
                 <img
                   v-if="product.likes !== true"
                   :id="product.id"
-                  @click="() => addToLike(index, i.id, true, product.id)"
+                  @click="
+                    () =>
+                      addToLike(index, product.category_id, true, product.id)
+                  "
                   class="cursor-pointer md:h-6 duration-1000 md:w-6 h-4 w-4"
                   src="@/assets/svg/heart.svg"
                   alt=""
                 />
                 <img
                   v-else
-                  @click="() => addToLike(index, i.id, false, product.id)"
+                  @click="
+                    () =>
+                      addToLike(index, product.category_id, false, product.id)
+                  "
                   :id="'id' + product.id"
                   class="cursor-pointer duration-1000 md:h-6 md:w-6 h-4 w-4"
                   src="@/assets/svg/redHeart.svg"
                   alt=""
                 />
                 <img
+                  @click="() => addToCart(product.id)"
                   class="cursor-pointer sm:h-5 sm:w-5 md:max-h-6 md:max-w-6 max-h-4 max-w-4"
                   src="@/assets/svg/cart.svg"
                   alt=""
@@ -164,6 +167,20 @@
           </div>
         </div>
       </div>
+      <button
+        @click="showTodaysProduct()"
+        v-if="productStore.todays.pagination?.total_pages > 1"
+        :class="
+          productStore.todays.pagination?.total_pages ==
+          productStore.todays.pagination?.currentPage
+            ? 'bg-[#F1F1F2] border-gray-400 opacity-25 pointer-events-none'
+            : 'border-[#5C0099] text-[#5C0099]'
+        "
+        class="w-full font-semibold lg:h-14 h-10 border-2 rounded-xl overflow-hidden hover:bg-[#5C0099] duration-500 hover:text-white"
+        v-loading="isLoading.isLoadingType('getProductByCategory')"
+      >
+        {{ $t("home.show_more") }}
+      </button>
     </section>
   </main>
 </template>
@@ -171,14 +188,17 @@
 <script setup>
 import axios from "axios";
 // import { initFlowbite } from "flowbite";
-import { useProductsStore, useAuthStore, useLoadingStore } from "@/store";
+import { useProductsStore, useAuthStore, useLoadingStore, useAddToCartStore } from "@/store";
 
 const isLoading = useLoadingStore();
 const productStore = useProductsStore();
 const runtimeConfig = useRuntimeConfig();
+const useAddToCart = useAddToCartStore();
 const authStore = useAuthStore();
 const baseUrl = runtimeConfig.public.baseURL;
 const baseUrlImage = ref(runtimeConfig.public.baseURL?.slice(0, -3));
+const router = useRouter();
+isLoading.addLoading('getProductByCategory')
 
 const store = reactive({
   width: "",
@@ -187,6 +207,11 @@ const store = reactive({
   allProducts: "",
   data: 8,
 });
+
+function showTodaysProduct() {
+  productStore.todays.pagination.currentPage += 1;
+  productStore.getTodays();
+}
 
 function isLikedChecker(isLike, index) {
   if (isLike?.length) {
@@ -212,9 +237,20 @@ function isLoadingModal(id) {
   return false;
 }
 
-function addToLike(index, category_id, isLiked, id) {
-  productStore.state.products[category_id].data.records[index].likes = isLiked;
+function addToCart(id) {
+  const user_id = localStorage.getItem("user_id");
+  useAddToCart.addcart.client_id = user_id;
+  useAddToCart.addcart.product_id = id;
+  useAddToCart.addToCart();
+}
 
+function addToLike(index, category_id, isLiked, id) {
+  if (router.currentRoute.value?.query?.categories == "todays") {
+    productStore.state.showProduct[index].likes = isLiked;
+  } else {
+    productStore.state.products[category_id].data.records[index].likes =
+      isLiked;
+  }
   let method = "POST";
   if (isLiked) {
     method = "post";
@@ -231,14 +267,22 @@ function addToLike(index, category_id, isLiked, id) {
     .then((res) => {
       console.log(res.data);
       if (res.data.statusCode === 400) {
-        document.getElementById(id)?.classList?.toggle("hidden");
-        document.getElementById("id" + id)?.classList?.toggle("hidden");
+        if (router.currentRoute.value?.query?.categories == "todays") {
+          productStore.state.showProduct[index].likes = !isLiked;
+        } else {
+          productStore.state.products[category_id].data.records[index].likes =
+            !isLiked;
+        }
         authStore.store.loginModal = true;
       }
     })
     .catch((err) => {
-      document.getElementById(id)?.classList?.toggle("hidden");
-      document.getElementById("id" + id)?.classList?.toggle("hidden");
+      if (router.currentRoute.value?.query?.categories == "todays") {
+        productStore.state.showProduct[index].likes = !isLiked;
+      } else {
+        productStore.state.products[category_id].data.records[index].likes =
+          !isLiked;
+      }
       authStore.store.loginModal = true;
       console.log(err);
     });

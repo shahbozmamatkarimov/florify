@@ -348,7 +348,7 @@
               class="card max-w-sm hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
             >
               <img
-                @click="$router.push(`./flowers/${product.id}`)"
+                @click="$router.push(`/flowers/${product.id}`)"
                 class="img rounded-t-lg 2xl:h-80 xl:h-64 cursor-pointer md:h-52 sm:h-44 h-44 w-full object-cover"
                 :src="`${baseUrlImage}${product.image[0]?.image}`"
                 alt=""
@@ -383,6 +383,7 @@
                       alt=""
                     />
                     <img
+                      @click="() => addToCart(product.id)"
                       class="cursor-pointer sm:h-5 sm:w-5 md:max-h-6 md:max-w-6 max-h-4 max-w-4"
                       src="@/assets/svg/cart.svg"
                       alt=""
@@ -428,23 +429,22 @@ import {
   useImageCountStore,
   useAuthStore,
   useLoadingStore,
+  useAddToCartStore
 } from "@/store";
 import { initFlowbite } from "flowbite";
 const isLoading = useLoadingStore();
+const useAddToCart = useAddToCartStore();
 const productStore = useProductsStore();
 const authStore = useAuthStore();
 const useImageCounter = useImageCountStore();
 const runtimeConfig = useRuntimeConfig();
 const baseUrl = runtimeConfig.public.baseURL;
 const baseUrlImage = ref(runtimeConfig.public.baseURL?.slice(0, -3));
+const router = useRouter();
 isLoading.addLoading("getAllProducts");
-
 function paginationNext(id) {
   const pageInfo = productStore.state.products[id]?.data?.pagination;
-  productStore.getProductByCategoryId(
-    id,
-    pageInfo.currentPage + 1,
-  );
+  productStore.getProductByCategoryId(id, pageInfo.currentPage + 1);
 }
 
 function isLoadingModal(id) {
@@ -456,6 +456,13 @@ function isLoadingModal(id) {
     return true;
   }
   return false;
+}
+
+function addToCart(id) {
+  const user_id = localStorage.getItem("user_id");
+  useAddToCart.addcart.client_id = user_id;
+  useAddToCart.addcart.product_id = id;
+  useAddToCart.addToCart();
 }
 
 function addToLike(index, category_id, isLiked, id) {
@@ -483,8 +490,8 @@ function addToLike(index, category_id, isLiked, id) {
       }
     })
     .catch((err) => {
-      document.getElementById(id)?.classList?.toggle("hidden");
-      document.getElementById("id" + id)?.classList?.toggle("hidden");
+      productStore.state.products[category_id].data.records[index].likes =
+        !isLiked;
       authStore.store.loginModal = true;
       console.log(err);
     });
@@ -500,10 +507,55 @@ watch(
   }
 );
 
+watch(
+  () => router.currentRoute.value,
+  () => {
+    if (router.currentRoute.value?.query?.page) {
+      console.log("object");
+      const image = document.querySelector(".mainSlider");
+      image.style.transform = `translateX(-${
+        router.currentRoute.value?.query?.page * 100
+      }%)`;
+      productStore.state.categoryPageId =
+        router.currentRoute.value?.query?.page - 1;
+      productStore.state.sliderStep = router.currentRoute.value?.query?.page;
+    } else if (router.currentRoute.value?.query?.categories == "todays") {
+      const image = document.querySelector(".mainSlider");
+      image.style.transform = `translateX(-${
+        (productStore.state.categories?.length + 1) * 100
+      }%)`;
+    }
+  }
+);
+
+watch(
+  () => productStore.state.todaysSlider,
+  () => {
+    const image = document.querySelector(".mainSlider");
+    image.style.transform = `translateX(-${
+      (productStore.state.categories?.length + 1) * 100
+    }%)`;
+  },
+);
+
 onMounted(() => {
-  // productStore.getAllProducts();
   useImageCounter.imageCount();
   initFlowbite();
+  if (router.currentRoute.value?.query?.page) {
+    console.log("object");
+    const image = document.querySelector(".mainSlider");
+    image.style.transform = `translateX(-${
+      router.currentRoute.value?.query?.page * 100
+    }%)`;
+    productStore.state.categoryPageId =
+      router.currentRoute.value?.query?.page - 1;
+    productStore.state.sliderStep = router.currentRoute.value?.query?.page;
+  } else if (router.currentRoute.value?.query?.categories == "todays") {
+    const image = document.querySelector(".mainSlider");
+    image.style.transform = `translateX(-${
+      (productStore.state.categories?.length + 1) * 100
+    }%)`;
+  }
 });
 </script>
 

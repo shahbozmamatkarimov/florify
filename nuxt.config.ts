@@ -13,6 +13,13 @@ export default defineNuxtConfig({
           href: "https://i.ibb.co/dQfTqMw/icon-1.png",
         },
       ],
+      meta: [
+        {
+          // Content Security Policy (CSP) meta tag
+          "http-equiv": "Content-Security-Policy",
+          content: "frame-ancestors https: https://widget.cloudpayments.ru/",
+        },
+      ],
     },
   },
   runtimeConfig: {
@@ -37,8 +44,5 @@ export default defineNuxtConfig({
   //     })
   //   }
   // },
-  modules: [
-    "@pinia/nuxt",
-    "@element-plus/nuxt",
-  ],
+  modules: ["@pinia/nuxt", "@element-plus/nuxt"],
 });

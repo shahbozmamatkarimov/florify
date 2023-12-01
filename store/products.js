@@ -6,6 +6,7 @@ export const useProductsStore = defineStore("products", () => {
   const runtimeconfig = useRuntimeConfig();
   const baseUrl = runtimeconfig.public.baseURL;
   const isLoading = useLoadingStore();
+  const router = useRouter();
 
   const state = reactive({
     categories: [],
@@ -15,7 +16,7 @@ export const useProductsStore = defineStore("products", () => {
     total_count: 0,
     total_pages: 0,
     page: 1,
-    showProduct: "",
+    showProduct: [],
     getById: "",
     isCategory: 0,
     sliderStep: 0,
@@ -23,6 +24,20 @@ export const useProductsStore = defineStore("products", () => {
     getDataCount: 0,
     categoryPageId: "",
     isTodays: false,
+    todaysSlider: false,
+    addToProductDrawer: false,
+  });
+
+  const search = reactive({
+    search: "",
+  })
+
+  const todays = reactive({
+    pagination: {
+      currentPage: 1,
+      total_pages: 1,
+    },
+    page: 1,
   });
 
   const allProducts = computed(() => state.products);
@@ -44,7 +59,13 @@ export const useProductsStore = defineStore("products", () => {
         for (let i = 0; i < state.getDataCount; i++) {
           getProductByCategoryId(res.data[i].id, 1, i);
         }
-        console.log(state.products);
+
+        if (router.currentRoute.value.query?.categories == "todays") {
+          console.log(res.data);
+          router.push("/?categories=todays");
+          getTodays();
+          return;
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -52,6 +73,7 @@ export const useProductsStore = defineStore("products", () => {
   }
 
   function getProductByCategoryId(id, page, index) {
+    console.log(page);
     isLoading.addLoading("getProductByCategory");
     axios
       .get(
@@ -68,11 +90,11 @@ export const useProductsStore = defineStore("products", () => {
               }
             }
           }
-        }else {
+        } else {
           for (let i = 0; i < res.data.data.records?.length; i++) {
             for (let like of res.data.data.records[i].likes) {
-                res.data.data.records[i].likes = false;
-                break;
+              res.data.data.records[i].likes = false;
+              break;
             }
           }
         }
@@ -82,6 +104,7 @@ export const useProductsStore = defineStore("products", () => {
         }
         console.log(res.data);
         state.products[id] = res.data;
+        console.log(res.data);
         isLoading.removeLoading("getProductByCategory");
         if (index + 1 === state.getDataCount) {
           isLoading.removeLoading("getAllProducts");
@@ -97,10 +120,19 @@ export const useProductsStore = defineStore("products", () => {
     isLoading.addLoading("getProductByCategory");
 
     axios
-      .get(baseUrl + "/product/present")
+      .get(
+        baseUrl +
+          `/product/present/${todays.pagination.currentPage}:${isLoading.store.limit}`
+      )
       .then((res) => {
         console.log(res.data);
-        state.showProduct = res.data;
+        todays.pagination = res.data?.data.pagination;
+        if (todays.pagination.currentPage == 1) {
+          console.log(state.categories);
+          state.showProduct = [];
+          state.todaysSlider = true;
+        }
+        state.showProduct.push(...res.data?.data.records);
         isLoading.removeLoading("getProductByCategory");
       })
       .catch((err) => {
@@ -110,7 +142,10 @@ export const useProductsStore = defineStore("products", () => {
   }
 
   function getOneProduct(id, index) {
-    state.categoryPageId = index-1;
+    if (!state.categories?.length) {
+      getAllProducts()
+    }
+    state.categoryPageId = index - 1;
     state.isCategory = index;
     state.sliderStep = index;
     if (index == 0) {
@@ -122,16 +157,22 @@ export const useProductsStore = defineStore("products", () => {
     state.openEditModal = true;
     state.isLoading = true;
     if (id == "today") {
+      router.push("/?categories=todays");
       getTodays();
       return;
     }
+    router.push(
+      `/?page=${state.categoryPageId + 1}&categories=${
+        state.categories[state.categoryPageId].en
+      }`
+    );
     getProductByCategoryId(id, 1);
   }
 
   function getById(id) {
     state.isLoading = true;
     axios
-      .get(baseUrl + `/product/${id}`)
+      .get(baseUrl + `/product/getById/${id}`)
       .then((res) => {
         console.log(res.data);
         state.getById = res.data;
@@ -147,9 +188,12 @@ export const useProductsStore = defineStore("products", () => {
     state,
     getAllProducts,
     getOneProduct,
+    getTodays,
     allProducts,
     showProductById,
     getProductByCategoryId,
     getById,
+    todays,
+    search,
   };
 });

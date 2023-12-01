@@ -90,11 +90,16 @@
           <li class="flex items-center gap-5 leading-[19px]">
             <div>
               <p
-                v-if="useProduct.state.getById?.like?.length"
+                v-if="useProduct.state.getById?.likes?.length"
                 class="flex items-center gap-2"
               >
-                <i class="bx bxs-star text-[#FFA500]"></i>4.9 (
-                {{ useProduct.state.getById?.like?.length }} оценка )
+                <i class="bx bxs-star text-[#FFA500]"></i
+                >{{
+                  Math.ceil(
+                    (useProduct.state.getById?.likes?.length / 50) * 10
+                  ) / 10
+                }}
+                ( {{ useProduct.state.getById?.likes?.length }} оценка )
               </p>
               <p v-else class="flex items-center gap-2">
                 <i class="bx bxs-star text-[#FFA500]"></i>0.0 Оценок пока нет
@@ -104,7 +109,12 @@
           </li>
           <li class="flex flex-wrap">
             <p class="w-24">Продавец:</p>
-            <p class="font-bold">BOTANICA Department of flowers</p>
+            <p
+              @click="$router.push('/marketplace')"
+              class="font-bold hover:underline cursor-pointer"
+            >
+              BOTANICA Department of flowers
+            </p>
           </li>
           <li class="flex flex-wrap">
             <p class="w-24">Доставка:</p>
@@ -140,14 +150,8 @@
           </li>
         </ul>
         <div class="grid grid-cols-2 gap-5 my-5">
-          <input
-            @click="pay"
-            class="bg-red-600 btn"
-            id="payButton"
-            value="Оплатить"
-            type="button"
-          />
           <button
+            @click="pay"
             class="md:text-md text-sm sm:h-16 h-12 bg-[#5C0099] active:opacity-50 text-white font-semibold rounded-xl border border-[#5C0099]"
           >
             Добавить в корзину
@@ -282,46 +286,131 @@ const store = reactive({
   language: "ru-RU",
 });
 
-function pay() {
+const paymentStatus = ref(null);
+const initiatePayment = async (orderDetails) => {
+  // Call your backend API to get payment details
   try {
+    // const response = await fetch("/api/payment/initiate", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(orderDetails),
+    // });
+
+    // const data = await response.json();
+
+    // Use the data from your backend to initiate the CloudPayments payment
     const widget = new cp.CloudPayments();
     widget.pay(
       "auth", // или 'charge'
       {
         //options
-        publicId: "test_api_00000000000000000000002", //id из личного кабинета
-        description: "Оплата товаров в example.com", //назначение
-        amount: 0, //сумма
+        publicId: "test_api_00000000000000000000001", //id из личного кабинета
+        description: "Оплата товаров в florify.uz", //назначение
+        amount: 10, //сумма
         currency: "UZS", //валюта
-        accountId: "shahbozmamatkarimov2303@gmail.com", //идентификатор плательщика (необязательно)
+        accountId: "user@example.com", //идентификатор плательщика (необязательно)
         invoiceId: "1234567", //номер заказа  (необязательно)
+        email: "user@example.com", //email плательщика (необязательно)
         skin: "mini", //дизайн виджета (необязательно)
-        autoClose: 3,
+        autoClose: 3, //время в секундах до авто-закрытия виджета (необязательный)
+        data: {
+          myProp: "myProp value",
+        },
       },
       {
         onSuccess: function (options) {
-          console.log(options);
+          console.log(options, "options1");
           // success
           //действие при успешной оплате
         },
         onFail: function (reason, options) {
-          console.log(reason);
-          console.log(options);
+          console.log(reason, options, "options2");
           // fail
           //действие при неуспешной оплате
         },
         onComplete: function (paymentResult, options) {
-          console.log(options);
-          console.log(paymentResult);
+          console.log(paymentResult, options, "options3");
           //Вызывается как только виджет получает от api.cloudpayments ответ с результатом транзакции.
           //например вызов вашей аналитики Facebook Pixel
         },
       }
     );
+    // const options = {
+    //   publicId: "YOUR_CLOUDPAYMENTS_PUBLIC_ID",
+    //   description: "Payment for Order",
+    //   amount: "data.amount",
+    //   currency: "USD", // Change as per your requirement
+    //   accountId: "data.accountId",
+    //   invoiceId: "data.invoiceId",
+    //   skin: "classic", // Choose the appropriate skin
+    //   data: { orderId: "data.orderId" },
+    // };
+
+    // window.cloudpayments.start(options, (event) => {
+    //   // Handle CloudPayments events (e.g., successful payment, failure, etc.)
+    //   if (event.name === "Success") {
+    //     paymentStatus.value = "success";
+    //   } else if (event.name === "Fail") {
+    //     paymentStatus.value = "fail";
+    //   }
+    // });
   } catch (error) {
-    console.log(error);
+    console.error("Error initiating payment:", error);
+    paymentStatus.value = "error";
   }
+};
+
+function pay() {
+  const orderDetails = {
+    amount: "data.amount",
+    currency: "USD", // Change as per your requirement
+    accountId: "data.accountId",
+    invoiceId: "data.invoiceId",
+  };
+
+  initiatePayment(orderDetails);
 }
+
+// function pay() {
+//   var widget = new cp.CloudPayments();
+//   widget.pay(
+//     "auth", // или 'charge'
+//     {
+//       //options
+//       publicId: "test_api_00000000000000000000001", //id из личного кабинета
+//       description: "Оплата товаров в example.com", //назначение
+//       amount: 100, //сумма
+//       currency: "UZS", //валюта
+//       accountId: "user@example.com", //идентификатор плательщика (необязательно)
+//       invoiceId: "1234567", //номер заказа  (необязательно)
+//       email: "user@example.com", //email плательщика (необязательно)
+//       skin: "mini", //дизайн виджета (необязательно)
+//       autoClose: 3, //время в секундах до авто-закрытия виджета (необязательный)
+//       data: {
+//         myProp: "myProp value",
+//       },
+//     },
+//     {
+//       onSuccess: function (options) {
+//         console.log(options);
+//         // success
+//         //действие при успешной оплате
+//       },
+//       onFail: function (reason, options) {
+//         console.log(reason, options);
+//         // fail
+//         //действие при неуспешной оплате
+//       },
+//       onComplete: function (paymentResult, options) {
+//         console.log(paymentResu,options);
+//         //Вызывается как только виджет получает от api.cloudpayments ответ с результатом транзакции.
+//         //например вызов вашей аналитики Facebook Pixel
+//       },
+//     }
+//   );
+// }
 
 function increment() {
   if (store.quintity < useProduct.state.getById?.quantity) {
@@ -344,7 +433,17 @@ watch(
   }
 );
 
+async function getMap() {
+  fetch("https://maps.googleapis.com/maps/api/js?key=AIzaSyDFbokfydsBJEwU_wpsWLDbraKxFXjZ0FA&libraries=places&callback=initMap")
+  .then(res => res.json())
+  .then(res => {
+    console.log(res);
+  })
+  // console.log(JSON.parse(map));
+}
+
 onMounted(() => {
+  getMap()
   store.product_id = +router.currentRoute.value.params.slug;
   useProduct.getById(store.product_id);
   useHistory.addToWatched(store.product_id);

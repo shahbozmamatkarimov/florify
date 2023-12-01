@@ -45,7 +45,7 @@
             </ul>
             <!-- Header Icons -->
             <div class="flex items-center">
-              <div class="flex items-center gap-2 cursor-pointer sm:mr-7 mr-3">
+              <div @click="useProduct.state.addToProductDrawer = true" class="flex items-center gap-2 cursor-pointer sm:mr-7 mr-3">
                 <img src="../assets/svg/cartWhite.svg" alt="cart" />
                 <p class="font-semibold hover:text-gray-200 sm:block hidden">
                   {{ $t("basket") }}
@@ -186,9 +186,10 @@
 </template>
 
 <script setup>
-import { useAuthStore } from "@/store";
+import { useAuthStore, useProductsStore } from "@/store";
 
 const authStore = useAuthStore();
+const useProduct = useProductsStore()
 const store = reactive({
   toggle: true,
   lang: false,

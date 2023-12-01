@@ -1,37 +1,55 @@
 import { defineStore } from "pinia";
-import { useAuthStore } from "./auth";
-import axios from 'axios';
+import { useAuthStore, useLoadingStore } from "@/store";
+import axios from "axios";
 
 export const useLikeStore = defineStore("add_to_like", () => {
   const authStore = useAuthStore();
+  const isLoading = useLoadingStore();
   const runtimeconfig = useRuntimeConfig();
   const baseUrl = runtimeconfig.public.baseURL;
 
   const store = reactive({
-    allFavorites: "",
+    allFavorites: [],
     isLoading: true,
-    currentPage: 0,
-    total_count: 0,
-    total_pages: 0,
-    page: 1,
+    pagination: {
+      currentPage: 1,
+      total_count: 1,
+      total_pages: 1,
+    },
   });
 
   function getFavorites() {
-    store.isLoading = true;
+    isLoading.addLoading("getAllFavorites");
     const client_id = localStorage.getItem("user_id");
     axios
-      .get(baseUrl + "/like/clientId/" + client_id)
+      .get(
+        baseUrl +
+          `/like/clientId/${client_id}:${store.pagination.currentPage}:${isLoading.store.limit}`
+      )
       .then((res) => {
         console.log(res.data);
-        store.allFavorites = res.data;
-        store.isLoading = false;
+        const client_id = localStorage.getItem("user_id");
+        if (client_id) {
+          for (let i = 0; i < res.data.data.records?.length; i++) {
+            res.data.data.records[i].product.likes = true;
+          }
+        } else {
+          for (let i = 0; i < res.data.data.records?.length; i++) {
+            for (let like of res.data.data.records[i].product.likes) {
+              res.data.data.records[i].product.likes = false;
+              break;
+            }
+          }
+        }
+        store.allFavorites.push(...res.data.data.records);
+        store.pagination = res.data.data.pagination;
+        isLoading.removeLoading("getAllFavorites");
       })
       .catch((err) => {
-        store.isLoading = false;
+        isLoading.removeLoading("getAllFavorites");
         console.log(err);
       });
   }
-  
 
   return { store, getFavorites };
 });

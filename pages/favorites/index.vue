@@ -22,12 +22,17 @@
     <h1 class="font-medium text-2xl">Мои желания</h1>
     <!----------------------- Breadcrumb end---------------------------->
 
-    <placeholder-slug v-if="useLike.store.isLoading" />
+    <placeholder-slug
+      v-if="
+        isLoading.isLoadingType('getAllFavorites') &&
+        !useLike.store.allFavorites?.length
+      "
+    />
     <section v-else>
       <div>
         <div class="grid lg:grid-cols-4 grid-cols-3 cards my-5 md:gap-7 gap-5">
           <div
-            v-for="i in useLike.store.allFavorites"
+            v-for="(i, index) in useLike.store.allFavorites"
             :key="i.id"
             :id="i.id"
             class="card max-w-sm hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
@@ -52,35 +57,45 @@
                 </p>
                 <div class="flex items-center sm:gap-3 gap-1">
                   <img
+                    v-if="i.product.likes !== true"
                     :id="i.product.id"
-                    @click="() => addToLike(i.id, i.product.id, 'nolike')"
-                    class="cursor-pointer hidden sm:h-6 duration-1000 sm:w-6 sm:min-w-[24px] h-3 w-3 min-w-[12px]"
+                    @click="() => addToLike(index, true, i.product.id)"
+                    class="cursor-pointer md:h-6 duration-1000 md:w-6 h-4 w-4"
                     src="@/assets/svg/heart.svg"
                     alt=""
                   />
                   <img
-                    @click="() => addToLike(i.id, i.product.id, 'liked')"
+                    v-else
+                    @click="() => addToLike(index, false, i.product.id)"
                     :id="'id' + i.product.id"
-                    class="cursor-pointer sm:h-6 duration-1000 sm:w-6 sm:min-w-[24px] h-3 w-3 min-w-[12px]"
+                    class="cursor-pointer duration-1000 md:h-6 md:w-6 h-4 w-4"
                     src="@/assets/svg/redHeart.svg"
                     alt=""
                   />
                   <img
-                    class="cursor-pointer sm:h-5 sm:w-5 h-3 w-3"
+                    class="cursor-pointer sm:h-5 sm:w-5 md:max-h-6 md:max-w-6 max-h-4 max-w-4"
                     src="@/assets/svg/cart.svg"
                     alt=""
                   />
                 </div>
               </div>
             </div>
-            <button
-              v-if="i.product.length > store.data"
-              class="w-full font-semibold lg:h-14 h-10 border-2 rounded-xl border-[#5C0099] text-[#5C0099] hover:bg-[#5C0099] duration-500 hover:text-white"
-            >
-              {{ $t("home.show_more") }}
-            </button>
           </div>
         </div>
+        <button
+          @click="showMoreHistory"
+          v-if="useLike.store.pagination.total_pages > 1"
+          :class="
+            useLike.store.pagination.total_pages ==
+            useLike.store.pagination.currentPage
+              ? 'bg-[#F1F1F2] border-gray-400 opacity-25 pointer-events-none'
+              : 'border-[#5C0099] text-[#5C0099]'
+          "
+          class="w-full font-semibold lg:h-14 h-10 border-2 rounded-xl overflow-hidden hover:bg-[#5C0099] duration-500 hover:text-white"
+          v-loading="isLoading.isLoadingType('getAllFavorites')"
+        >
+          {{ $t("home.show_more") }}
+        </button>
       </div>
     </section>
   </main>
@@ -88,61 +103,57 @@
 
 <script setup>
 import axios from "axios";
-import { useLikeStore, useAuthStore } from "@/store";
+import { useLikeStore, useAuthStore, useLoadingStore } from "@/store";
 
 const useLike = useLikeStore();
 const authStore = useAuthStore();
+const isLoading = useLoadingStore();
 const runtimeConfig = useRuntimeConfig();
 const baseUrl = runtimeConfig.public.baseURL;
 const baseUrlImage = ref(runtimeConfig.public.baseURL?.slice(0, -3));
+isLoading.addLoading("getAllFavorites");
 
 const store = reactive({
   data: 8,
 });
 
-function addToLike(productId, id, isLiked) {
-  document.getElementById(id)?.classList?.toggle("hidden");
-  document.getElementById("id" + id)?.classList?.toggle("hidden");
-  document.getElementById(productId).classList.add("hidden");
+function showMoreHistory() {
+  useLike.store.pagination.currentPage += 1;
+  useLike.getFavorites();
+}
 
+function addToLike(index, isLiked, id) {
+  console.log(useLike.store.allFavorites[index]);
+  useLike.store.allFavorites[index].product.likes = isLiked;
   let method = "POST";
-  if (isLiked == "nolike") {
-    method = "POST";
+  if (isLiked) {
+    method = "post";
   } else {
-    method = "DELETE";
+    method = "delete";
   }
   let product_id = id;
   const client_id = localStorage.getItem("user_id");
-  axios
-    .request({
-      url: baseUrl + "/like",
-      method: method,
-      data: {
-        client_id,
-        product_id,
-      },
-    })
+  axios({
+    method,
+    url: baseUrl + "/like",
+    data: { client_id, product_id },
+  })
     .then((res) => {
       console.log(res.data);
-      if (
-        res.data.statusCode === 400 &&
-        res.data.message !==
-          "Mahsulot allaqachon sevimlilar ro'yxatiga qo'shilgan!"
-      ) {
-        document.getElementById(id)?.classList?.toggle("hidden");
-        document.getElementById("id" + id)?.classList?.toggle("hidden");
+      if (res.data.statusCode === 400) {
+        useLike.store.allFavorites[index].product.likes = !isLiked;
         authStore.store.loginModal = true;
       }
     })
     .catch((err) => {
-      document.getElementById(id)?.classList?.toggle("hidden");
-      document.getElementById("id" + id)?.classList?.toggle("hidden");
+      useLike.store.allFavorites[index].product.likes = !isLiked;
       authStore.store.loginModal = true;
       console.log(err);
     });
 }
 
 onMounted(() => {
+  useLike.store.allFavorites = [];
   useLike.getFavorites();
 });
 </script>

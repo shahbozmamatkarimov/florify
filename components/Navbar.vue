@@ -25,20 +25,52 @@
             {{ $t("navbar.show") }}
           </button>
         </form>
-        <form class="relative md:col-span-2 col-span-full w-full">
-          <input
-            type="search"
-            class="border md:h-14 h-10 relative border-gray-300 placeholder-gray-800 md:text-lg rounded-xl outline-none block w-full p-2.5"
-            :placeholder="$t('navbar.search')"
-            required
-          />
-          <button
-            type="submit"
-            class="flex justify-center items-center border border-gray-300 border-l-0 absolute top-0 right-0 h-full p-2.5 font-medium bg-[#F3F3F3] rounded-r-xl sm:w-16 w-10"
+        <div class="relative md:col-span-2 col-span-full w-full">
+          <form class="relative">
+            <input
+              v-model="productStore.search.search"
+              type="search"
+              class="border md:h-14 h-10 relative border-gray-300 placeholder-gray-800 md:text-lg rounded-xl outline-none block w-full p-2.5"
+              :placeholder="$t('navbar.search')"
+              required
+            />
+            <button
+              type="submit"
+              class="flex justify-center items-center border border-gray-300 border-l-0 absolute top-0 right-0 h-full p-2.5 font-medium bg-[#F3F3F3] rounded-r-xl sm:w-16 w-10"
+            >
+              <img src="../assets/svg/searchIcon.svg" alt="" />
+            </button>
+          </form>
+          <div
+            v-if="productStore.search.search?.length > 0"
+            class="p-6 absolute z-50 w-full bg-white rounded-b-xl"
           >
-            <img src="../assets/svg/searchIcon.svg" alt="" />
-          </button>
-        </form>
+            <h1 class="text-xl leading-6 font-medium">Популярное</h1>
+            <div
+              class="space-y-4 mt-6 max-h-[calc(100vh_-_250px)] overflow-hidden overflow-y-auto"
+            >
+              <div
+                v-for="i in 5"
+                class="flex items-center gap-3 border-b pb-4 border-[#E6E6E6]"
+              >
+                <img
+                  class="h-20 w-20 rounded-[10px]"
+                  src="@/assets/image/image1.png"
+                  alt=""
+                />
+                <div class="space-y-1 font-medium">
+                  <p class="leading-[21px] text-[#5C0099] text-lg">
+                    Разноцветные тюльпаны
+                  </p>
+                  <p class="leading-[19px]">3330077923</p>
+                </div>
+              </div>
+              <p class="text-[#5C0099] text-xl leading-6 font-medium">
+                Показать все результаты (4)
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
       <div>
         <ul
@@ -62,7 +94,7 @@
           <li
             @click="productStore.getOneProduct(i.id, index + 1)"
             v-for="(i, index) in productStore.state.categories"
-            :key="i.id" 
+            :key="i.id"
             :class="
               productStore.state.sliderStep == index + 1
                 ? 'text-[#5C0099] font-bold'
@@ -235,6 +267,83 @@
         </button>
       </form>
     </el-dialog>
+
+    <!-- add to cart drawer -->
+    <el-drawer
+      v-if="isMount"
+      class="rounded-l-[40px] min-w-[500px] px-[30px]"
+      v-model="productStore.state.addToProductDrawer"
+      title="I am the title"
+      :with-header="false"
+    >
+      <div class="flex sticky top-0 py-2 items-center justify-between bg-white">
+        <h1 class="font-semibold text-2xl">Состав заказа</h1>
+        <img
+          @click="productStore.state.addToProductDrawer = false"
+          class="h-6 w-6 rounded-lg cursor-pointer"
+          src="../assets/svg/x.svg"
+          alt="x"
+        />
+      </div>
+      <div
+        class="space-y-4 w-full mt-6 -mb-2 max-h-[calc(100vh_-_125px)] overflow-hidden overflow-y-auto"
+      >
+        <div v-for="i in 5">
+          <div class="tableImg flex w-full text-start">
+            <img
+              class="h-20 w-20 rounded-[10px]"
+              src="@/assets/image/image8.png"
+              alt="Jese image"
+            />
+            <div class="pl relative pl-3 w-full">
+              <div class="flex w-full items-start justify-between">
+                <h1
+                  class="sm:font-bold font-semibold lg:text-md sm:text-lg text-sm xl:w-[70%] w-[90 %] overflow-hidden"
+                >
+                  Букет из "9 кустовых хризантем с эвкалиптом 😍
+                </h1>
+                <img
+                  class="cursor-pointer mt-2 h-4 w-4"
+                  src="@/assets/svg/x.svg"
+                  alt="x"
+                />
+              </div>
+              <p
+                class="price pb-5 font-normal sm:text-md text-xs text-gray-500 sm:pt-2 py-2"
+              >
+                Cтандартний
+              </p>
+              <p
+                class="flex justify-between sm:text-md text-sm w-full absolute bottom-0"
+              >
+                <span class="font-normal">1 шт.</span
+                ><span class="font-semibold pr-3">800 000 сум</span>
+              </p>
+            </div>
+          </div>
+          <hr class="sm:my-5 my-4 w-full" />
+        </div>
+        <div class="flex justify-between items-center">
+          <p>Доставка</p>
+          <p class="font-semibold">Бесплатно</p>
+        </div>
+        <hr class="sm:my-5 my-2" />
+        <div class="flex justify-between py-2 items-center">
+          <p>Общая стоимость</p>
+          <p class="font-semibold">800 000 сум</p>
+        </div>
+        <button
+          @click="() => pushToOrder()"
+          class="sm:h-16 h-10 sm:my-5 my-2 flex justify-center sm:text-md text-sm items-center w-full font-semibold text-white rounded-xl bg-[#5C0099]"
+        >
+          Оформить заказ
+        </button>
+        <h1 class="sm:text-md text-sm">
+          Нажимая на кнопку, вы соглашаетесь с условиями оказания услуг и
+          политикой обработки персональных данных
+        </h1>
+      </div>
+    </el-drawer>
   </main>
 </template>
 
@@ -244,6 +353,7 @@ const productStore = useProductsStore();
 const authStore = useAuthStore();
 const isLoading = useLoadingStore();
 const isMount = ref(false);
+const router = useRouter();
 
 const store = reactive({
   loginModal: false,
@@ -260,6 +370,11 @@ function nextNumber(e, val) {
   authStore.store.otp.push(document.getElementById(val - 1)?.value);
   if (e.inputType === "deleteContentBackward") return;
   document.getElementById(val)?.focus();
+}
+
+function pushToOrder() {
+  productStore.state.addToProductDrawer = false;
+  router.push("/order");
 }
 
 onBeforeMount(() => {
