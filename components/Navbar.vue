@@ -83,7 +83,7 @@
               productStore.state.sliderStep = 0;
             "
             :class="
-              productStore.state.sliderStep == 0
+              !$router.currentRoute.value?.query?.page
                 ? 'text-[#5C0099] font-bold'
                 : ''
             "
@@ -96,7 +96,7 @@
             v-for="(i, index) in productStore.state.categories"
             :key="i.id"
             :class="
-              productStore.state.sliderStep == index + 1
+              $router.currentRoute.value?.query?.page == index + 1
                 ? 'text-[#5C0099] font-bold'
                 : ''
             "
@@ -114,8 +114,7 @@
           </li>
           <li
             :class="
-              productStore.state.sliderStep ==
-              productStore.state.categories?.length + 1
+              $router.currentRoute.value?.query?.categories == 'todays'
                 ? 'text-[#5C0099] font-bold'
                 : ''
             "
@@ -130,6 +129,11 @@
             {{ $t("navbar.presents") }}
           </li>
           <li
+            :class="
+              $router.currentRoute.value?.name == 'history'
+                ? 'text-[#5C0099] font-bold'
+                : ''
+            "
             @click="$router.push('/history')"
             class="cursor-pointer flex items-center gap-1 whitespace-nowrap hover:text-[#5C0099]"
           >
@@ -142,14 +146,22 @@
             >
               <path
                 d="M2 11.3C2 11.3 4.7 5 11 5C17.3 5 20 11.3 20 11.3C20 11.3 17.3 17.6 11 17.6C4.7 17.6 2 11.3 2 11.3Z"
-                stroke="#555555"
+                :stroke="
+                  $router.currentRoute.value?.name == 'history'
+                    ? '#5C0099'
+                    : '#555555'
+                "
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
               />
               <path
                 d="M10.9998 14C12.491 14 13.6998 12.7912 13.6998 11.3C13.6998 9.80884 12.491 8.60001 10.9998 8.60001C9.50864 8.60001 8.2998 9.80884 8.2998 11.3C8.2998 12.7912 9.50864 14 10.9998 14Z"
-                stroke="#555555"
+                :stroke="
+                  $router.currentRoute.value?.name == 'history'
+                    ? '#5C0099'
+                    : '#555555'
+                "
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -161,6 +173,11 @@
             {{ $t("navbar.orders") }}
           </li>
           <li
+            :class="
+              $router.currentRoute.value?.name == 'favorites'
+                ? 'text-[#5C0099] font-bold'
+                : ''
+            "
             @click="$router.push('/favorites')"
             class="cursor-pointer whitespace-nowrap hover:text-[#5C0099]"
           >

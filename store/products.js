@@ -30,7 +30,7 @@ export const useProductsStore = defineStore("products", () => {
 
   const search = reactive({
     search: "",
-  })
+  });
 
   const todays = reactive({
     pagination: {
@@ -52,14 +52,18 @@ export const useProductsStore = defineStore("products", () => {
       .get(baseUrl + "/category")
       .then((res) => {
         console.log(res.data);
-        state.categories = res.data;
+        res = res.data;
+        if (!res.data?.categories?.length) {
+          isLoading.removeLoading("getAllProducts");
+          return;
+        }
+        state.categories = res.data.categories;
         state.isLoading = false;
         state.getDataCount = 0;
-        state.getDataCount = res.data?.length;
+        state.getDataCount = res.data.categories?.length;
         for (let i = 0; i < state.getDataCount; i++) {
-          getProductByCategoryId(res.data[i].id, 1, i);
+          getProductByCategoryId(res.data.categories[i].id, 1, i);
         }
-
         if (router.currentRoute.value.query?.categories == "todays") {
           console.log(res.data);
           router.push("/?categories=todays");
@@ -75,15 +79,17 @@ export const useProductsStore = defineStore("products", () => {
   function getProductByCategoryId(id, page, index) {
     console.log(page);
     isLoading.addLoading("getProductByCategory");
+    const client_id = localStorage.getItem("user_id");
     axios
       .get(
-        baseUrl + `/product/categoryId/${id}:${page}:${isLoading.store.limit}`
+        baseUrl + `/product/categoryId/${id}/${client_id}/${page}/${isLoading.store.limit}`
       )
       .then((res) => {
-        const client_id = localStorage.getItem("user_id");
+        console.log(res);
+        
         if (client_id) {
           for (let i = 0; i < res.data.data.records?.length; i++) {
-            for (let like of res.data.data.records[i].likes) {
+            for (let like of res.data.data?.records[i]?.likes) {
               if (like.client_id == client_id) {
                 res.data.data.records[i].likes = true;
                 break;
@@ -92,7 +98,7 @@ export const useProductsStore = defineStore("products", () => {
           }
         } else {
           for (let i = 0; i < res.data.data.records?.length; i++) {
-            for (let like of res.data.data.records[i].likes) {
+            for (let like of res.data.data.records[i]?.likes) {
               res.data.data.records[i].likes = false;
               break;
             }
@@ -122,7 +128,7 @@ export const useProductsStore = defineStore("products", () => {
     axios
       .get(
         baseUrl +
-          `/product/present/${todays.pagination.currentPage}:${isLoading.store.limit}`
+          `/product/presents/${todays.pagination.currentPage}/${isLoading.store.limit}`
       )
       .then((res) => {
         console.log(res.data);
@@ -143,7 +149,7 @@ export const useProductsStore = defineStore("products", () => {
 
   function getOneProduct(id, index) {
     if (!state.categories?.length) {
-      getAllProducts()
+      getAllProducts();
     }
     state.categoryPageId = index - 1;
     state.isCategory = index;

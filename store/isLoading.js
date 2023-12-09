@@ -20,7 +20,7 @@ export const useLoadingStore = defineStore("loading", () => {
   function removeLoading(type) {
     if (store.loadingTypes?.includes(type)) {
       store.loadingTypes = store.loadingTypes?.filter(
-        (fruit) => fruit !== type
+        (loading) => loading !== type
       );
     }
   }

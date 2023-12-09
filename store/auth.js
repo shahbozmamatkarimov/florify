@@ -21,7 +21,7 @@ export const useAuthStore = defineStore("isLogged", () => {
     console.log(store.phone);
     axios
       .post(
-        baseUrl + "/client/sendSMS",
+        baseUrl + "/otp/sendOtp",
         {
           phone: store.phone,
         },
@@ -34,7 +34,7 @@ export const useAuthStore = defineStore("isLogged", () => {
       .then((res) => {
         console.log(res.data);
         if (
-          res.data.message == "Telefon raqamingizga tasdiqlash kodi yuborildi"
+          res.data.statusCode == 201
         ) {
           store.loginModal = false;
           store.otpModal = true;
@@ -57,7 +57,7 @@ export const useAuthStore = defineStore("isLogged", () => {
     console.log(store.otp);
     axios
       .post(
-        baseUrl + "/client/signup",
+        baseUrl + "/client/register",
         {
           phone: store.phone,
           code: store.otp.join(""),
@@ -70,7 +70,7 @@ export const useAuthStore = defineStore("isLogged", () => {
       )
       .then((res) => {
         console.log(res.data);
-        if (res.data.message === "Tizimga kirildi") {
+        if (res.data.statusCode == 200) {
           store.otpModal = false;
           store.isVerified = true;
           store.isLoading = false;
