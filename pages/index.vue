@@ -350,7 +350,7 @@
               <img
                 @click="$router.push(`/flowers/${product.id}`)"
                 class="img rounded-t-lg 2xl:h-80 xl:h-64 cursor-pointer md:h-52 sm:h-44 h-44 w-full object-cover"
-                :src="`${baseUrlImage}${product.image[0]?.image}`"
+                :src="`${baseUrlImage}${product?.images[0]?.image}`"
                 alt=""
               />
               <div class="md:p-5 p-3">

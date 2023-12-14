@@ -305,21 +305,51 @@
       <div
         class="space-y-4 w-full mt-6 -mb-2 max-h-[calc(100vh_-_125px)] overflow-hidden overflow-y-auto"
       >
-        <div v-for="i in 5">
+        <div
+          v-if="isLoading.isLoadingType('addToCart')"
+          class="animate-pulse"
+          v-for="i in 5"
+        >
           <div class="tableImg flex w-full text-start">
-            <img
-              class="h-20 w-20 rounded-[10px]"
-              src="@/assets/image/image8.png"
-              alt="Jese image"
-            />
+            <div class="bg-gray-200 h-20 min-w-[80px] rounded-[10px]"></div>
             <div class="pl relative pl-3 w-full">
               <div class="flex w-full items-start justify-between">
                 <h1
-                  class="sm:font-bold font-semibold lg:text-md sm:text-lg text-sm xl:w-[70%] w-[90 %] overflow-hidden"
+                  class="h-6 rounded-[5px] bg-gray-200 xl:w-[70%] w-[90%]"
+                ></h1>
+              </div>
+              <p class="bg-gray-200 rounded-[5px] h-5 w-24 mt-3"></p>
+              <p
+                class="flex justify-between sm:text-md text-sm w-full absolute bottom-0"
+              >
+                <span class="bg-gray-200 rounded-[5px] h-5 w-9"></span
+                ><span class="bg-gray-200 rounded-[5px] h-5 w-24 mr-3"></span>
+              </p>
+            </div>
+          </div>
+          <hr class="sm:my-5 my-4 w-full" />
+        </div>
+        <div v-else v-for="i in useAddToCart.store.products">
+          <div class="tableImg flex w-full text-start">
+            <img
+              v-if="i.images[0]?.image"
+              class="h-20 w-20 rounded-[10px]"
+              :src="baseUrlImage + i.images[0]?.image"
+              alt="Jese image"
+            />
+            <div
+              v-else
+              class="h-20 min-w-[80px] rounded-[10px] bg-gray-200"
+            ></div>
+            <div class="pl relative pl-3 w-full">
+              <div class="flex w-full items-start justify-between">
+                <h1
+                  class="sm:font-bold font-semibold lg:text-md sm:text-lg text-sm xl:w-[70%] w-[90%] overflow-hidden"
                 >
-                  Букет из "9 кустовых хризантем с эвкалиптом 😍
+                  {{ i.name }}
                 </h1>
                 <img
+                  @click="changeQuantity('delete', i.id)"
                   class="cursor-pointer mt-2 h-4 w-4"
                   src="@/assets/svg/x.svg"
                   alt="x"
@@ -330,12 +360,44 @@
               >
                 Cтандартний
               </p>
-              <p
+              <div
                 class="flex justify-between sm:text-md text-sm w-full absolute bottom-0"
               >
-                <span class="font-normal">1 шт.</span
-                ><span class="font-semibold pr-3">800 000 сум</span>
-              </p>
+                <div
+                  class="flex items-center justify-around h-6 w-full max-w-[80px] text-xs rounded-[3px] overflow-hidden bg-[#EEEEEE] mt-1"
+                >
+                  <button
+                    @click="changeQuantity('dec', i.id)"
+                    class="hover:bg-gray-200 h-full w-full"
+                  >
+                    <img
+                      class="mx-auto h-4 w-4"
+                      src="@/assets/svg/minus.svg"
+                      alt="-"
+                    />
+                  </button>
+                  <input
+                    type="number"
+                    @change="(e) => changeQuantity(e, i.id)"
+                    v-model="i.client_quantity"
+                    class="w-full bg-transparent p-0 text-center leading-6"
+                  />
+                  <button
+                    @click="changeQuantity('inc', i.id)"
+                    class="hover:bg-gray-200 h-full w-full"
+                  >
+                    <img
+                      class="mx-auto h-4 w-4"
+                      src="@/assets/svg/plus.svg"
+                      alt="+"
+                    />
+                  </button>
+                </div>
+                <span class="font-semibold pr-3">
+                  {{ i.price }}
+                  сум</span
+                >
+              </div>
             </div>
           </div>
           <hr class="sm:my-5 my-4 w-full" />
@@ -347,7 +409,7 @@
         <hr class="sm:my-5 my-2" />
         <div class="flex justify-between py-2 items-center">
           <p>Общая стоимость</p>
-          <p class="font-semibold">800 000 сум</p>
+          <p class="font-semibold">{{ useAddToCart.store.total_price }} сум</p>
         </div>
         <button
           @click="() => pushToOrder()"
@@ -365,17 +427,27 @@
 </template>
 
 <script setup>
-import { useProductsStore, useAuthStore, useLoadingStore } from "@/store";
+import {
+  useProductsStore,
+  useAddToCartStore,
+  useAuthStore,
+  useLoadingStore,
+} from "@/store";
 const productStore = useProductsStore();
+const useAddToCart = useAddToCartStore();
 const authStore = useAuthStore();
 const isLoading = useLoadingStore();
 const isMount = ref(false);
 const router = useRouter();
+const runtimeConfig = useRuntimeConfig();
+const baseUrl = runtimeConfig.public.baseURL;
+const baseUrlImage = ref(runtimeConfig.public.baseURL?.slice(0, -3));
 
 const store = reactive({
   loginModal: false,
   otpStep: 1,
   width: "",
+  quintity: 1,
 });
 
 function nextNumber(e, val) {
@@ -392,6 +464,46 @@ function nextNumber(e, val) {
 function pushToOrder() {
   productStore.state.addToProductDrawer = false;
   router.push("/order");
+}
+
+function changeQuantity(e, id) {
+  for (var i = 0; i < useAddToCart.store.products.length; i++) {
+    if (useAddToCart.store.products[i].id == id) {
+      if (e == "inc") {
+        if (
+          useAddToCart.store.products[i].quantity !=
+          useAddToCart.store.products[i].client_quantity
+        ) {
+          useAddToCart.store.products[i].client_quantity += 1;
+          localStorage.setItem(
+            "addToCart",
+            JSON.stringify(useAddToCart.store.products)
+          );
+        }
+      } else if (e == "dec") {
+        if (useAddToCart.store.products[i].client_quantity > 1) {
+          useAddToCart.store.products[i].client_quantity -= 1;
+          localStorage.setItem(
+            "addToCart",
+            JSON.stringify(useAddToCart.store.products)
+          );
+        }
+      } else if (e == "delete") {
+        useAddToCart.store.products?.splice(i, 1);
+        localStorage.setItem(
+          "addToCart",
+          JSON.stringify(useAddToCart.store.products)
+        );
+      } else {
+        useAddToCart.store.products[i].client_quantity = +e.target.value || 1;
+        localStorage.setItem(
+          "addToCart",
+          JSON.stringify(useAddToCart.store.products)
+        );
+      }
+    }
+  }
+  useAddToCart.totalPrice();
 }
 
 onBeforeMount(() => {
@@ -414,6 +526,18 @@ onBeforeMount(() => {
     isLoading.store.limit = 8;
   }
 });
+
+function increment() {
+  // if (store.quintity < productStore.state.getById?.quantity) {
+  store.quintity++;
+  // }
+}
+
+function decrement() {
+  if (store.quintity > 1) {
+    store.quintity--;
+  }
+}
 
 onMounted(() => {
   isMount.value = true;

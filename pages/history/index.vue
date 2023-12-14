@@ -38,7 +38,7 @@
             <img
               @click="$router.push(`./flowers/${i.product?.id}`)"
               class="img rounded-t-lg 2xl:h-80 xl:h-64 cursor-pointer md:h-52 sm:h-44 h-44 w-full object-cover"
-              :src="`${baseUrlImage}${i.product?.image[0]?.image}`"
+              :src="`${baseUrlImage}${i.product?.images[0]?.image}`"
               alt=""
             />
             <div class="md:p-5 p-3">
@@ -57,34 +57,21 @@
                   <img
                     v-if="i.product.likes !== true"
                     :id="i.product.id"
-                    @click="
-                      () =>
-                        addToLike(
-                          index,
-                          true,
-                          i.product.id
-                        )
-                    "
+                    @click="() => addToLike(index, true, i.product.id)"
                     class="cursor-pointer md:h-6 duration-1000 md:w-6 h-4 w-4"
                     src="@/assets/svg/heart.svg"
                     alt=""
                   />
                   <img
                     v-else
-                    @click="
-                      () =>
-                        addToLike(
-                          index,
-                          false,
-                          i.product.id
-                        )
-                    "
+                    @click="() => addToLike(index, false, i.product.id)"
                     :id="'id' + i.product.id"
                     class="cursor-pointer duration-1000 md:h-6 md:w-6 h-4 w-4"
                     src="@/assets/svg/redHeart.svg"
                     alt=""
                   />
                   <img
+                    @click="() => addToCart(i.product.id)"
                     class="cursor-pointer sm:h-5 sm:w-5 md:max-h-6 md:max-w-6 max-h-4 max-w-4"
                     src="@/assets/svg/cart.svg"
                     alt=""
@@ -115,8 +102,14 @@
 
 <script setup>
 import axios from "axios";
-import { useHistoryStore, useAuthStore, useLoadingStore } from "@/store";
+import {
+  useHistoryStore,
+  useAddToCartStore,
+  useAuthStore,
+  useLoadingStore,
+} from "@/store";
 
+const useAddToCart = useAddToCartStore();
 const isLoading = useLoadingStore();
 const useHistory = useHistoryStore();
 const authStore = useAuthStore();
@@ -133,6 +126,13 @@ const store = reactive({
 function showMoreHistory() {
   useHistory.store.pagination.currentPage += 1;
   useHistory.getHistory();
+}
+
+function addToCart(id) {
+  const user_id = localStorage.getItem("user_id");
+  useAddToCart.addcart.client_id = user_id;
+  useAddToCart.addcart.product_id = id;
+  useAddToCart.addToCart();
 }
 
 function addToLike(index, isLiked, id) {
@@ -154,14 +154,12 @@ function addToLike(index, isLiked, id) {
     .then((res) => {
       console.log(res.data);
       if (res.data.statusCode === 400) {
-        useHistory.store.allHistory[index].product.likes =
-          !isLiked;
+        useHistory.store.allHistory[index].product.likes = !isLiked;
         authStore.store.loginModal = true;
       }
     })
     .catch((err) => {
-      useHistory.store.allHistory[index].product.likes =
-        !isLiked;
+      useHistory.store.allHistory[index].product.likes = !isLiked;
       authStore.store.loginModal = true;
       console.log(err);
     });

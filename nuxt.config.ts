@@ -13,6 +13,7 @@ export default defineNuxtConfig({
           href: "https://i.ibb.co/dQfTqMw/icon-1.png",
         },
       ],
+      script: [{ src: "https://code.jquery.com/jquery-3.6.0.min.js" }],
       meta: [
         {
           // Content Security Policy (CSP) meta tag

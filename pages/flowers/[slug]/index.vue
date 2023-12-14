@@ -40,7 +40,7 @@
           id="carouselMain"
         >
           <img
-            v-for="i in useProduct.state.getById?.image"
+            v-for="i in useProduct.state.getById?.images"
             :key="i"
             class="carouselImg 2xl:min-w-[522px] xl:min-w-[508px] lg:min-w-[452px] md:min-w-[324px] sm:min-w-[450px] min-w-[calc(100vw_-_40px)] lg:h-[524px] md:h-[424px] bg-white object-contain rounded-xl border border-gray-200 object-center"
             :src="baseUrlImage + i.image"
@@ -48,13 +48,13 @@
           />
         </div>
         <div
-          v-if="useProduct.state.getById?.image?.length > 1"
+          v-if="useProduct.state.getById?.images?.length > 1"
           id="carousel"
           class="grid grid-cols-5 w-full gap-[10px] mt-[10px]"
         >
           <img
             id="img"
-            v-for="(i, index) in useProduct.state.getById?.image"
+            v-for="(i, index) in useProduct.state.getById?.images"
             @click="store.slideStep = index + 1"
             :key="index"
             :class="store.slideStep == index + 1 ? 'border-black p-1' : ''"

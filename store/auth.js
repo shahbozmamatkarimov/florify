@@ -75,8 +75,8 @@ export const useAuthStore = defineStore("isLogged", () => {
           store.isVerified = true;
           store.isLoading = false;
           console.log("object");
-          localStorage.setItem("user_id", res.data.client.id);
-          localStorage.setItem("phone", res.data.client.phone);
+          localStorage.setItem("user_id", res.data.data.client.id);
+          localStorage.setItem("phone", res.data.data.client.phone);
           return;
         }
         store.isVerified = false;

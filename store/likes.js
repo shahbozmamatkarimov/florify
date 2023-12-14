@@ -24,7 +24,7 @@ export const useLikeStore = defineStore("add_to_like", () => {
     axios
       .get(
         baseUrl +
-          `/like/clientId/${client_id}:${store.pagination.currentPage}:${isLoading.store.limit}`
+          `/like/pagination/${client_id}/${store.pagination.currentPage}/${isLoading.store.limit}`
       )
       .then((res) => {
         console.log(res.data);

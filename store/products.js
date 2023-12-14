@@ -82,11 +82,11 @@ export const useProductsStore = defineStore("products", () => {
     const client_id = localStorage.getItem("user_id");
     axios
       .get(
-        baseUrl + `/product/categoryId/${id}/${client_id}/${page}/${isLoading.store.limit}`
+        baseUrl + `/product/categoryId/${id}/${page}/${isLoading.store.limit}`
       )
       .then((res) => {
         console.log(res);
-        
+
         if (client_id) {
           for (let i = 0; i < res.data.data.records?.length; i++) {
             for (let like of res.data.data?.records[i]?.likes) {
@@ -110,7 +110,7 @@ export const useProductsStore = defineStore("products", () => {
         }
         console.log(res.data);
         state.products[id] = res.data;
-        console.log(res.data);
+        console.log(state.products);
         isLoading.removeLoading("getProductByCategory");
         if (index + 1 === state.getDataCount) {
           isLoading.removeLoading("getAllProducts");
@@ -137,6 +137,25 @@ export const useProductsStore = defineStore("products", () => {
           console.log(state.categories);
           state.showProduct = [];
           state.todaysSlider = true;
+        }
+        const client_id = localStorage.getItem("user_id");
+
+        if (client_id) {
+          for (let i = 0; i < res.data.data.records?.length; i++) {
+            for (let like of res.data.data?.records[i]?.likes) {
+              if (like.client_id == client_id) {
+                res.data.data.records[i].likes = true;
+                break;
+              }
+            }
+          }
+        } else {
+          for (let i = 0; i < res.data.data.records?.length; i++) {
+            for (let like of res.data.data.records[i]?.likes) {
+              res.data.data.records[i].likes = false;
+              break;
+            }
+          }
         }
         state.showProduct.push(...res.data?.data.records);
         isLoading.removeLoading("getProductByCategory");
@@ -172,16 +191,17 @@ export const useProductsStore = defineStore("products", () => {
         state.categories[state.categoryPageId].en
       }`
     );
+    console.log('object');
     getProductByCategoryId(id, 1);
   }
 
   function getById(id) {
     state.isLoading = true;
     axios
-      .get(baseUrl + `/product/getById/${id}`)
+      .get(baseUrl + `/product/id/${id}`)
       .then((res) => {
         console.log(res.data);
-        state.getById = res.data;
+        state.getById = res.data.data.product;
         state.isLoading = false;
       })
       .catch((err) => {

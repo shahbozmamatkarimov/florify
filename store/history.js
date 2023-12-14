@@ -25,7 +25,7 @@ export const useHistoryStore = defineStore("watched", () => {
     axios
       .get(
         baseUrl +
-          `/watched/clientId/${client_id}:${store.pagination.currentPage}:${isLoading.store.limit}`
+          `/watched/pagination/${client_id}/${store.pagination.currentPage}/${isLoading.store.limit}`
       )
       .then((res) => {
         console.log(res.data);
@@ -60,18 +60,26 @@ export const useHistoryStore = defineStore("watched", () => {
 
   function addToWatched(product_id) {
     const client_id = localStorage.getItem("user_id");
-    axios
-      .post(baseUrl + "/watched", {
-        client_id,
-        product_id,
-      })
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        authStore.store.loginModal = true;
-        console.log(err);
-      });
+    if (client_id) {
+      axios
+        .post(baseUrl + "/watched", {
+          client_id,
+          product_id,
+        })
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => {
+          if (
+            err.response.data.message ==
+            "Mahsulot allaqachon ko'rilganlar ro'yxatiga qo'shilgan!"
+          ) {
+            return;
+          }
+          authStore.store.loginModal = true;
+          console.log(err);
+        });
+    }
   }
 
   return { store, getHistory, addToWatched };

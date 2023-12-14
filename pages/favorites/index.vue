@@ -40,7 +40,7 @@
             <img
               @click="$router.push(`./flowers/${i.product.id}`)"
               class="img rounded-t-lg 2xl:h-80 xl:h-64 cursor-pointer md:h-52 sm:h-44 h-44 w-full object-cover"
-              :src="`${baseUrlImage}${i.product.image[0]?.image}`"
+              :src="`${baseUrlImage}${i.product.images[0]?.image}`"
               alt=""
             />
             <div class="md:p-5 p-3">
@@ -73,6 +73,7 @@
                     alt=""
                   />
                   <img
+                    @click="() => addToCart(i.product.id)"
                     class="cursor-pointer sm:h-5 sm:w-5 md:max-h-6 md:max-w-6 max-h-4 max-w-4"
                     src="@/assets/svg/cart.svg"
                     alt=""
@@ -103,9 +104,10 @@
 
 <script setup>
 import axios from "axios";
-import { useLikeStore, useAuthStore, useLoadingStore } from "@/store";
+import { useLikeStore, useAddToCartStore, useAuthStore, useLoadingStore } from "@/store";
 
 const useLike = useLikeStore();
+const useAddToCart = useAddToCartStore();
 const authStore = useAuthStore();
 const isLoading = useLoadingStore();
 const runtimeConfig = useRuntimeConfig();
@@ -120,6 +122,13 @@ const store = reactive({
 function showMoreHistory() {
   useLike.store.pagination.currentPage += 1;
   useLike.getFavorites();
+}
+
+function addToCart(id) {
+  const user_id = localStorage.getItem("user_id");
+  useAddToCart.addcart.client_id = user_id;
+  useAddToCart.addcart.product_id = id;
+  useAddToCart.addToCart();
 }
 
 function addToLike(index, isLiked, id) {
