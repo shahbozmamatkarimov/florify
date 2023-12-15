@@ -6,18 +6,45 @@
           class="items-center grid md:grid-cols-3 grid-cols-5 sm:gap-6 gap-2 relative md:col-span-3 col-span-5"
         >
           <div class="flex items-center relative md:col-span-2 col-span-4">
-            <div
-              class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none"
-            >
-              <img class="location" src="../assets/svg/location.svg" alt="" />
+            <div class="relative w-full">
+              <div
+                class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none"
+              >
+                <img class="location" src="../assets/svg/location.svg" alt="" />
+              </div>
+              <input
+                type="text"
+                @input="searchAddress"
+                @focus="focused"
+                v-model="store.searchInput"
+                id="input-group-1"
+                class="border md:h-14 h-10 border-gray-300 placeholder-gray-800 md:text-lg rounded-xl outline-none block w-full pl-12 p-2.5"
+                :placeholder="$t('navbar.address')"
+                required
+              />
+              <div
+                v-if="productStore.state.isAddressModal"
+                class="p-6 absolute z-50 w-full bg-white rounded-b-xl"
+              >
+                <h1 class="text-xl leading-6 font-medium">Локация</h1>
+                <div
+                  class="space-y-4 mt-6 max-h-[calc(100vh_-_250px)] overflow-hidden overflow-y-auto"
+                >
+                  <div
+                    v-for="i in store.searchedData"
+                    @click="clickedModal('address',i.title?.text)"
+                    class="flex items-center gap-3 border-b pb-4 border-[#E6E6E6]"
+                  >
+                    <div class="space-y-1 font-medium">
+                      <p class="leading-[21px] text-[#5C0099] text-lg">
+                        {{ i.title?.text }}
+                      </p>
+                      <p class="leading-[19px]">{{ i.tags[0] }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <input
-              type="text"
-              id="input-group-1"
-              class="border md:h-14 h-10 border-gray-300 placeholder-gray-800 md:text-lg rounded-xl outline-none block w-full pl-12 p-2.5"
-              :placeholder="$t('navbar.address')"
-              required
-            />
           </div>
           <button
             class="locate md:h-14 h-10 text-center whitespace-nowrap flex items-center justify-center bg-[#5C0099] text-white rounded-xl"
@@ -29,11 +56,14 @@
           <form class="relative">
             <input
               v-model="productStore.search.search"
+              @input="productStore.searchProduct"
+              @focus="focused('product')"
               type="search"
-              class="border md:h-14 h-10 relative border-gray-300 placeholder-gray-800 md:text-lg rounded-xl outline-none block w-full p-2.5"
+              class="border md:h-14 h-10 z-50 relative border-gray-300 placeholder-gray-800 md:text-lg rounded-xl outline-none block w-full p-2.5"
               :placeholder="$t('navbar.search')"
               required
             />
+            <!-- {{ store.searchedData }} -->
             <button
               type="submit"
               class="flex justify-center items-center border border-gray-300 border-l-0 absolute top-0 right-0 h-full p-2.5 font-medium bg-[#F3F3F3] rounded-r-xl sm:w-16 w-10"
@@ -42,7 +72,8 @@
             </button>
           </form>
           <div
-            v-if="productStore.search.search?.length > 0"
+            v-if="productStore.state.isSearchingModal"
+            v-loading="isLoading.isLoadingType('getSearchProducts')"
             class="p-6 absolute z-50 w-full bg-white rounded-b-xl"
           >
             <h1 class="text-xl leading-6 font-medium">Популярное</h1>
@@ -50,19 +81,20 @@
               class="space-y-4 mt-6 max-h-[calc(100vh_-_250px)] overflow-hidden overflow-y-auto"
             >
               <div
-                v-for="i in 5"
+                v-for="i in productStore.state.search_products"
+                @click="clickedModal('product', i.id)"
                 class="flex items-center gap-3 border-b pb-4 border-[#E6E6E6]"
               >
                 <img
                   class="h-20 w-20 rounded-[10px]"
-                  src="@/assets/image/image1.png"
+                  :src="baseUrlImage + i.images[0].image"
                   alt=""
                 />
                 <div class="space-y-1 font-medium">
                   <p class="leading-[21px] text-[#5C0099] text-lg">
-                    Разноцветные тюльпаны
+                    {{ i.name }}
                   </p>
-                  <p class="leading-[19px]">3330077923</p>
+                  <p class="leading-[19px]">{{ i.id }}</p>
                 </div>
               </div>
               <p class="text-[#5C0099] text-xl leading-6 font-medium">
@@ -448,7 +480,43 @@ const store = reactive({
   otpStep: 1,
   width: "",
   quintity: 1,
+  searchInput: "",
+  searchedData: "",
 });
+
+function searchAddress() {
+  productStore.state.isAddressModal = true;
+  // https://yandex.ru/dev/geosearch/doc/ru/examples
+  // searchable map docs
+  fetch(
+    `https://suggest-maps.yandex.uz/v1/suggest?apikey=6005c090-df95-40ae-a9cd-3d972b1b46f3&text=${store.searchInput}&lang=uz_UZ`
+  )
+    .then((res) => res.json())
+    .then((res) => {
+      console.log(res);
+      store.searchedData = res.results;
+    })
+    .catch((err) => console.log(err));
+}
+
+function focused(search_type) {
+  isLoading.store.isOpen = true;
+  if (search_type == "product") {
+    productStore.state.isSearchingModal = true;
+  } else {
+    productStore.state.isAddressModal = true;
+  }
+}
+
+function clickedModal(click_type, value) {
+  if (click_type == "product") {
+    router.push(`/flowers/${value}`);
+    productStore.state.isSearchingModal = false;
+  } else {
+    store.searchInput = value;
+    productStore.state.isAddressModal = false;
+  }
+}
 
 function nextNumber(e, val) {
   if (val != 5) {

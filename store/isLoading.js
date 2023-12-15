@@ -9,6 +9,7 @@ export const useLoadingStore = defineStore("loading", () => {
     loadingTypes: [],
     page: 1,
     limit: 8,
+    isOpen: false,
   });
 
   function addLoading(type) {

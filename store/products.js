@@ -26,6 +26,10 @@ export const useProductsStore = defineStore("products", () => {
     isTodays: false,
     todaysSlider: false,
     addToProductDrawer: false,
+    search_products: [],
+    isSearchingModal: false,
+    isAddressModal: false,
+    addvertising: "",
   });
 
   const search = reactive({
@@ -53,7 +57,7 @@ export const useProductsStore = defineStore("products", () => {
       .then((res) => {
         console.log(res.data);
         res = res.data;
-        if (!res.data?.categories?.length) {
+        if (!res.data.statusCode == 200) {
           isLoading.removeLoading("getAllProducts");
           return;
         }
@@ -72,6 +76,7 @@ export const useProductsStore = defineStore("products", () => {
         }
       })
       .catch((err) => {
+        isLoading.removeLoading("getAllProducts");
         console.log(err);
       });
   }
@@ -119,6 +124,37 @@ export const useProductsStore = defineStore("products", () => {
       .catch((err) => {
         console.log(err);
         isLoading.removeLoading("getProductByCategory");
+      });
+  }
+
+  function searchProduct() {
+    state.isSearchingModal = true;
+    isLoading.addLoading("getSearchProducts");
+    axios
+      .get(baseUrl + `/product/search?query=${search.search}`)
+      .then((res) => {
+        console.log(res);
+        state.search_products = res.data?.data?.products;
+        isLoading.removeLoading("getSearchProducts");
+      })
+      .catch((err) => {
+        console.log(err);
+        isLoading.removeLoading("getSearchProducts");
+      });
+  }
+
+  function getAdvertising() {
+    isLoading.addLoading("getAdvertising");
+    axios
+      .get(baseUrl + "/advertising")
+      .then((res) => {
+        console.log(res);
+        isLoading.removeLoading("getAdvertising");
+        state.addvertising = res.data?.data?.advertisings[0];
+      })
+      .catch((err) => {
+        console.log(err);
+        isLoading.removeLoading("getAdvertising");
       });
   }
 
@@ -191,7 +227,7 @@ export const useProductsStore = defineStore("products", () => {
         state.categories[state.categoryPageId].en
       }`
     );
-    console.log('object');
+    console.log("object");
     getProductByCategoryId(id, 1);
   }
 
@@ -221,5 +257,7 @@ export const useProductsStore = defineStore("products", () => {
     getById,
     todays,
     search,
+    searchProduct,
+    getAdvertising,
   };
 });

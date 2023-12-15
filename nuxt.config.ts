@@ -45,5 +45,5 @@ export default defineNuxtConfig({
   //     })
   //   }
   // },
-  modules: ["@pinia/nuxt", "@element-plus/nuxt"],
+  modules: ["@pinia/nuxt", "@element-plus/nuxt", "nuxt-swiper"],
 });

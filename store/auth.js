@@ -1,10 +1,12 @@
 import { defineStore } from "pinia";
 import axios from "axios";
+import { useProductsStore } from "./products";
 
 export const useAuthStore = defineStore("isLogged", () => {
   const router = useRouter();
   const runtimeconfig = useRuntimeConfig();
   const baseUrl = runtimeconfig.public.baseURL;
+  const useProducts = useProductsStore();
 
   const store = reactive({
     phone: "+998",
@@ -33,9 +35,7 @@ export const useAuthStore = defineStore("isLogged", () => {
       )
       .then((res) => {
         console.log(res.data);
-        if (
-          res.data.statusCode == 201
-        ) {
+        if (res.data.statusCode == 201) {
           store.loginModal = false;
           store.otpModal = true;
           store.isVerified = true;
@@ -77,6 +77,8 @@ export const useAuthStore = defineStore("isLogged", () => {
           console.log("object");
           localStorage.setItem("user_id", res.data.data.client.id);
           localStorage.setItem("phone", res.data.data.client.phone);
+          localStorage.setItem("token", res.data.token);
+          useProducts.getAllProducts();
           return;
         }
         store.isVerified = false;

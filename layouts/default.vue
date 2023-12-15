@@ -84,35 +84,51 @@
       <slot />
     </div>
     <Footer class="md:block hidden" />
+
+    <div
+      @click="closeModal"
+      v-if="isLoading.store.isOpen"
+      class="absolute top-0 left-0 min-h-screen min-w-full"
+    ></div>
   </div>
 </template>
 
 <script setup>
+import { useLoadingStore, useProductsStore } from "@/store";
+
+const isLoading = useLoadingStore();
+const useProduct = useProductsStore();
 const options = [
   {
-    value: 'Option1',
-    label: 'Option1',
+    value: "Option1",
+    label: "Option1",
   },
   {
-    value: 'Option2',
-    label: 'Option2',
+    value: "Option2",
+    label: "Option2",
   },
   {
-    value: 'Option3',
-    label: 'Option3',
+    value: "Option3",
+    label: "Option3",
   },
   {
-    value: 'Option4',
-    label: 'Option4',
+    value: "Option4",
+    label: "Option4",
   },
   {
-    value: 'Option5',
-    label: 'Option5',
+    value: "Option5",
+    label: "Option5",
   },
-]
+];
 
-const value1 = ref([1,2,3,4,5,6,7]);
+const value1 = ref([1, 2, 3, 4, 5, 6, 7]);
 const value = ref("Whom");
+
+function closeModal() {
+  isLoading.store.isOpen = false;
+  useProduct.state.isSearchingModal = false;
+  useProduct.state.isAddressModal = false;
+}
 
 function handleChange() {
   console.log("hello world");

@@ -433,17 +433,7 @@ watch(
   }
 );
 
-async function getMap() {
-  fetch("https://maps.googleapis.com/maps/api/js?key=AIzaSyDFbokfydsBJEwU_wpsWLDbraKxFXjZ0FA&libraries=places&callback=initMap")
-  .then(res => res.json())
-  .then(res => {
-    console.log(res);
-  })
-  // console.log(JSON.parse(map));
-}
-
 onMounted(() => {
-  getMap()
   store.product_id = +router.currentRoute.value.params.slug;
   useProduct.getById(store.product_id);
   useHistory.addToWatched(store.product_id);
