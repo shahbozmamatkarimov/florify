@@ -59,7 +59,7 @@
               @input="productStore.searchProduct"
               @focus="focused('product')"
               type="search"
-              class="border md:h-14 h-10 z-50 relative border-gray-300 placeholder-gray-800 md:text-lg rounded-xl outline-none block w-full p-2.5"
+              class="border md:h-14 h-10 z-40 relative border-gray-300 placeholder-gray-800 md:text-lg rounded-xl outline-none block w-full p-2.5"
               :placeholder="$t('navbar.search')"
               required
             />
@@ -535,7 +535,7 @@ function pushToOrder() {
 }
 
 function changeQuantity(e, id) {
-  for (var i = 0; i < useAddToCart.store.products.length; i++) {
+  for (let i = 0; i < useAddToCart.store.products.length; i++) {
     if (useAddToCart.store.products[i].id == id) {
       if (e == "inc") {
         if (

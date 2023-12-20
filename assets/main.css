@@ -144,3 +144,21 @@ select {
     gap: 0.5rem;
   }
 }
+
+.el-input__wrapper{
+  height: 56px;
+  width: 100% !important;
+  border: 1px solid #D9D9D9 !important;
+  background: transparent !important;
+}
+
+.el-input__inner, .el-input__inner:focus {
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.el-date-editor.el-input, .el-date-editor.el-input__wrapper{
+  width: 100%  !important;
+  border: none !important;
+}

@@ -132,16 +132,16 @@
               class="flex items-center justify-around h-10 max-w-[120px] rounded-md overflow-hidden bg-[#EEEEEE] mt-1"
             >
               <button
-                @click="decrement"
+                @click="() => changeQuantity('dec')"
                 class="hover:bg-gray-200 h-full w-full"
               >
                 <img class="mx-auto" src="@/assets/svg/minus.svg" alt="-" />
               </button>
               <p class="w-full text-center text-xl leading-6">
-                {{ store.quintity }}
+                {{ store.quantity }}
               </p>
               <button
-                @click="increment"
+                @click="() => changeQuantity('inc')"
                 class="hover:bg-gray-200 h-full w-full"
               >
                 <img class="mx-auto" src="@/assets/svg/plus.svg" alt="+" />
@@ -151,13 +151,13 @@
         </ul>
         <div class="grid grid-cols-2 gap-5 my-5">
           <button
-            @click="pay"
+            @click="addToCart"
             class="md:text-md text-sm sm:h-16 h-12 bg-[#5C0099] active:opacity-50 text-white font-semibold rounded-xl border border-[#5C0099]"
           >
             Добавить в корзину
           </button>
           <button
-            @click="$router.push('/order')"
+            @click="() => addToCart('router')"
             class="md:text-md text-sm sm:h-16 h-12 text-[#5C0099] active:opacity-50 rounded-xl font-semibold border border-[#5C0099]"
           >
             Купить в 1 клик
@@ -268,10 +268,12 @@
 </template>
 
 <script setup>
-import { useProductsStore, useHistoryStore } from "@/store";
+import axios from "axios";
+import { useProductsStore, useHistoryStore, useAddToCartStore } from "@/store";
 
 const useProduct = useProductsStore();
 const useHistory = useHistoryStore();
+const useAddToCart = useAddToCartStore();
 
 const runtimeConfig = useRuntimeConfig();
 const baseUrl = runtimeConfig.public.baseURL;
@@ -281,146 +283,117 @@ const router = useRouter();
 const store = reactive({
   slideStep: 1,
   product_id: "",
-  quintity: 1,
+  quantity: 1,
   btn: "",
   language: "ru-RU",
 });
 
-const paymentStatus = ref(null);
-const initiatePayment = async (orderDetails) => {
-  // Call your backend API to get payment details
-  try {
-    // const response = await fetch("/api/payment/initiate", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(orderDetails),
-    // });
-
-    // const data = await response.json();
-
-    // Use the data from your backend to initiate the CloudPayments payment
-    const widget = new cp.CloudPayments();
-    widget.pay(
-      "auth", // или 'charge'
-      {
-        //options
-        publicId: "test_api_00000000000000000000001", //id из личного кабинета
-        description: "Оплата товаров в florify.uz", //назначение
-        amount: 10, //сумма
-        currency: "UZS", //валюта
-        accountId: "user@example.com", //идентификатор плательщика (необязательно)
-        invoiceId: "1234567", //номер заказа  (необязательно)
-        email: "user@example.com", //email плательщика (необязательно)
-        skin: "mini", //дизайн виджета (необязательно)
-        autoClose: 3, //время в секундах до авто-закрытия виджета (необязательный)
-        data: {
-          myProp: "myProp value",
-        },
-      },
-      {
-        onSuccess: function (options) {
-          console.log(options, "options1");
-          // success
-          //действие при успешной оплате
-        },
-        onFail: function (reason, options) {
-          console.log(reason, options, "options2");
-          // fail
-          //действие при неуспешной оплате
-        },
-        onComplete: function (paymentResult, options) {
-          console.log(paymentResult, options, "options3");
-          //Вызывается как только виджет получает от api.cloudpayments ответ с результатом транзакции.
-          //например вызов вашей аналитики Facebook Pixel
-        },
-      }
-    );
-    // const options = {
-    //   publicId: "YOUR_CLOUDPAYMENTS_PUBLIC_ID",
-    //   description: "Payment for Order",
-    //   amount: "data.amount",
-    //   currency: "USD", // Change as per your requirement
-    //   accountId: "data.accountId",
-    //   invoiceId: "data.invoiceId",
-    //   skin: "classic", // Choose the appropriate skin
-    //   data: { orderId: "data.orderId" },
-    // };
-
-    // window.cloudpayments.start(options, (event) => {
-    //   // Handle CloudPayments events (e.g., successful payment, failure, etc.)
-    //   if (event.name === "Success") {
-    //     paymentStatus.value = "success";
-    //   } else if (event.name === "Fail") {
-    //     paymentStatus.value = "fail";
-    //   }
-    // });
-  } catch (error) {
-    console.error("Error initiating payment:", error);
-    paymentStatus.value = "error";
+function addToCart(is_router) {
+  const id = router.currentRoute.value.params.slug;
+  let product = JSON.parse(localStorage.getItem("addToCart")) || [];
+  let is_defined = false;
+  for (let i = 0; i < product.length; i++) {
+    if (product[i].id == id) {
+      is_defined = true;
+    }
   }
-};
 
-function pay() {
-  const orderDetails = {
-    amount: "data.amount",
-    currency: "USD", // Change as per your requirement
-    accountId: "data.accountId",
-    invoiceId: "data.invoiceId",
-  };
+  if (is_defined) {
+    if (is_router == "router") {
+      router.push("/order");
+    }
+    return;
+  }
 
-  initiatePayment(orderDetails);
+  axios
+    .get(baseUrl + `/product/id/${id}`)
+    .then((res) => {
+      console.log(res.data);
+      if (res.data?.statusCode == 200) {
+        res.data.data.product.client_quantity = store.quantity;
+        product.push(res.data?.data?.product);
+        localStorage.setItem("addToCart", JSON.stringify(product));
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  if (is_router == "router") {
+    router.push("/order");
+  }
 }
 
-// function pay() {
-//   var widget = new cp.CloudPayments();
-//   widget.pay(
-//     "auth", // или 'charge'
-//     {
-//       //options
-//       publicId: "test_api_00000000000000000000001", //id из личного кабинета
-//       description: "Оплата товаров в example.com", //назначение
-//       amount: 100, //сумма
-//       currency: "UZS", //валюта
-//       accountId: "user@example.com", //идентификатор плательщика (необязательно)
-//       invoiceId: "1234567", //номер заказа  (необязательно)
-//       email: "user@example.com", //email плательщика (необязательно)
-//       skin: "mini", //дизайн виджета (необязательно)
-//       autoClose: 3, //время в секундах до авто-закрытия виджета (необязательный)
-//       data: {
-//         myProp: "myProp value",
-//       },
-//     },
-//     {
-//       onSuccess: function (options) {
-//         console.log(options);
-//         // success
-//         //действие при успешной оплате
-//       },
-//       onFail: function (reason, options) {
-//         console.log(reason, options);
-//         // fail
-//         //действие при неуспешной оплате
-//       },
-//       onComplete: function (paymentResult, options) {
-//         console.log(paymentResu,options);
-//         //Вызывается как только виджет получает от api.cloudpayments ответ с результатом транзакции.
-//         //например вызов вашей аналитики Facebook Pixel
-//       },
-//     }
-//   );
-// }
+function changeQuantity(e) {
+  useAddToCart.store.products =
+    JSON.parse(localStorage.getItem("addToCart")) || [];
+  const id = router.currentRoute.value.params.slug;
+  let is_quantity = true;
+  for (let i = 0; i < useAddToCart.store.products.length; i++) {
+    if (useAddToCart.store.products[i].id == id) {
+      is_quantity = false;
+      if (e == "inc") {
+        if (
+          useAddToCart.store.products[i].quantity !=
+          useAddToCart.store.products[i].client_quantity
+        ) {
+          useAddToCart.store.products[i].client_quantity += 1;
+          localStorage.setItem(
+            "addToCart",
+            JSON.stringify(useAddToCart.store.products)
+          );
+          store.quantity = useAddToCart.store.products[i].client_quantity;
+        }
+      } else if (e == "dec") {
+        if (useAddToCart.store.products[i].client_quantity > 1) {
+          useAddToCart.store.products[i].client_quantity -= 1;
+          localStorage.setItem(
+            "addToCart",
+            JSON.stringify(useAddToCart.store.products)
+          );
+          store.quantity = useAddToCart.store.products[i].client_quantity;
+        }
+      }
+      break;
+    }
+  }
+
+  if (is_quantity) {
+    if (e == "inc" && store.quantity < useProduct.state.getById?.quantity) {
+      store.quantity += 1;
+    } else if (e == "dec" && store.quantity > 1) {
+      store.quantity -= 1;
+    }
+  }
+}
+
+function getQuantity() {
+  useAddToCart.store.products =
+    JSON.parse(localStorage.getItem("addToCart")) || [];
+  const id = router.currentRoute.value.params.slug;
+  for (let i = 0; i < useAddToCart.store.products.length; i++) {
+    if (useAddToCart.store.products[i].id == id) {
+      if (
+        useAddToCart.store.products[i].quantity !=
+        useAddToCart.store.products[i].client_quantity
+      ) {
+        store.quantity = useAddToCart.store.products[i].client_quantity;
+        break;
+      }
+    } else {
+      store.quantity = 1;
+    }
+  }
+}
 
 function increment() {
-  if (store.quintity < useProduct.state.getById?.quantity) {
-    store.quintity++;
+  if (store.quantity < useProduct.state.getById?.quantity) {
+    store.quantity++;
   }
 }
 
 function decrement() {
-  if (store.quintity > 1) {
-    store.quintity--;
+  if (store.quantity > 1) {
+    store.quantity--;
   }
 }
 
@@ -435,6 +408,7 @@ watch(
 
 onMounted(() => {
   store.product_id = +router.currentRoute.value.params.slug;
+  getQuantity();
   useProduct.getById(store.product_id);
   useHistory.addToWatched(store.product_id);
 });

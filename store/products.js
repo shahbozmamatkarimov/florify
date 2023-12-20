@@ -232,6 +232,7 @@ export const useProductsStore = defineStore("products", () => {
   }
 
   function getById(id) {
+    const client_id = localStorage.getItem("user_id");
     state.isLoading = true;
     axios
       .get(baseUrl + `/product/id/${id}`)
@@ -239,6 +240,25 @@ export const useProductsStore = defineStore("products", () => {
         console.log(res.data);
         state.getById = res.data.data.product;
         state.isLoading = false;
+
+        if (client_id) {
+          for (let i = 0; i < state.getById?.length; i++) {
+            for (let like of state.getById[i]?.likes) {
+              if (like.client_id == client_id) {
+                state.getById[i].likes = true;
+                break;
+              }
+            }
+          }
+        } else {
+          for (let i = 0; i < state.getById?.length; i++) {
+            for (let like of state.getById[i]?.likes) {
+              state.getById[i].likes = false;
+              break;
+            }
+          }
+        }
+        console.log(state.getById);
       })
       .catch((err) => {
         state.isLoading = false;

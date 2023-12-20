@@ -165,7 +165,11 @@
               </h1>
 
               <label class="relative inline-flex items-center cursor-pointer">
-                <input type="checkbox" v-model="store.is_message" class="sr-only peer" />
+                <input
+                  type="checkbox"
+                  v-model="store.is_message"
+                  class="sr-only peer"
+                />
                 <div
                   class="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#5C0099]"
                 ></div>
@@ -182,12 +186,42 @@
               ></textarea>
             </div>
           </li>
-          <li>
+          <li class="pb-7">
             <h1 class="font-semibold text-xl pt-7">Дата и время доставки</h1>
-            <div class="grid sm:grid-cols-2 gap-5 my-5 sm:h-14">
-              <input
-                class="w-full bg-transparent border-2 border-[#D9D9D9] rounded"
+            <div class="flex pt-1 w-full gap-[23px] items-center">
+              <div class="relative w-full -mr-[5px]">
+                <img
+                  class="absolute z-10 top-[26px] left-3"
+                  src="@/assets/svg/calendar.svg"
+                  alt=""
+                />
+                <el-date-picker
+                  prefix-icon="false"
+                  type="date"
+                  class="rounded-[10px] bg-transparent"
+                  placeholder="11 / 11 / 2022"
+                  format="YYYY/MM/DD"
+                />
+              </div>
+              <div class="relative w-full">
+                <img
+                  class="absolute opacity-40 z-10 top-[26px] left-3"
+                  src="@/assets/svg/clock.svg"
+                  alt=""
+                />
+                <el-time-picker
+                  prefix-icon="false"
+                  class="rounded-[10px]"
+                  placeholder="10:00"
+                  format="HH:mm"
+                />
+              </div>
+              <!-- <el-date-picker
+                v-model="value1"
                 type="date"
+                class="w-full bg-transparent h-[46px] rounded"
+                placeholder="Pick a day"
+                size="medium"
               />
               <input
                 class="w-full bg-transparent border-2 border-[#D9D9D9] rounded"
@@ -195,7 +229,7 @@
                 step="3600"
                 min="00:00"
                 max="23:59"
-              />
+              /> -->
             </div>
           </li>
           <li>
@@ -203,22 +237,21 @@
               class="flex items-center text-lg gap-5 px-5 my-5 rounded text-[#45D469] bg-green-100 h-16"
             >
               <svg
-                class="sm:scale-0 scale-150"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
+                width="18"
+                height="13"
+                viewBox="0 0 18 13"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="M9.00015 16.17L5.53015 12.7C5.34317 12.513 5.08957 12.408 4.82515 12.408C4.56072 12.408 4.30712 12.513 4.12015 12.7C3.93317 12.887 3.82813 13.1406 3.82812 13.405C3.82813 13.5359 3.85391 13.6656 3.90402 13.7866C3.95412 13.9075 4.02756 14.0174 4.12015 14.11L8.30015 18.29C8.69015 18.68 9.32015 18.68 9.71015 18.29L20.2901 7.71002C20.4771 7.52304 20.5822 7.26944 20.5822 7.00502C20.5822 6.74059 20.4771 6.48699 20.2901 6.30002C20.1032 6.11304 19.8496 6.008 19.5851 6.008C19.3207 6.008 19.0671 6.11304 18.8801 6.30002L9.00015 16.17Z"
+                  d="M6.00015 10.17L2.53015 6.69995C2.34317 6.51298 2.08957 6.40793 1.82515 6.40793C1.56072 6.40793 1.30712 6.51298 1.12015 6.69995C0.933168 6.88693 0.828125 7.14053 0.828125 7.40495C0.828125 7.53589 0.853914 7.66553 0.904019 7.7865C0.954124 7.90746 1.02756 8.01737 1.12015 8.10995L5.30015 12.29C5.69015 12.68 6.32015 12.68 6.71015 12.29L17.2901 1.70996C17.4771 1.52298 17.5822 1.26938 17.5822 1.00496C17.5822 0.740529 17.4771 0.486933 17.2901 0.299955C17.1032 0.112978 16.8496 0.00793457 16.5851 0.00793457C16.3207 0.00793457 16.0671 0.112978 15.8801 0.299955L6.00015 10.17Z"
                   fill="#45D469"
                 />
               </svg>
               Доставим заказ 16 июля с 10:00 до 12:00
             </p>
           </li>
-          <li class="flex gap-3 items-center">
+          <!-- <li class="flex gap-3 items-center">
             <input
               class="border-2 border-[#D9D9D9] rounded"
               id="check"
@@ -227,37 +260,8 @@
             <label class="text-lg" for="check"
               >Хочу получать информация о скидках и акциях</label
             >
-          </li>
+          </li> -->
         </ul>
-        <hr class="my-5" />
-        <h1 class="text-2xl font-semibold my-5">Способ оплаты</h1>
-        <div class="grid sm:h-20 sm:grid-cols-2 gap-5">
-          <label
-            @click="store.payment = 1"
-            :class="{ 'ring-2 ring-[#5C0099]': store.payment == 1 }"
-            class="flex h-20 justify-between items-center cursor-pointer active:ring-2 px-5 py-2 rounded bg-[#F1F1F1]"
-          >
-            <div>
-              <h1 class="py-2">Картой онлайн</h1>
-              <div class="flex items-center gap-5">
-                <img src="../../assets/svg/humo.svg" alt="" />
-                <img src="../../assets/svg/uzcard.svg" alt="" />
-              </div>
-            </div>
-            <input type="radio" name="select" />
-          </label>
-          <label
-            @click="store.payment = 2"
-            :class="{ 'ring-2 ring-[#5C0099]': store.payment == 2 }"
-            class="flex justify-between items-center cursor-pointer h-20 px-5 py-2 rounded border-2 border-[#F1F1F1]"
-          >
-            <div>
-              <h1>При получении</h1>
-              <p>Наличными или картой</p>
-            </div>
-            <input type="radio" name="select" />
-          </label>
-        </div>
       </div>
       <div class="xl:mt-16">
         <div
