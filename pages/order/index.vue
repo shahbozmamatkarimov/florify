@@ -314,7 +314,7 @@
             <p>Общая стоимость</p>
             <p class="font-semibold">800 000 сум</p>
           </div>
-          <button
+          <button @click="addToPayment"
             class="sm:h-16 h-10 sm:my-5 my-2 flex justify-center sm:text-md text-sm items-center w-full font-semibold text-white rounded-xl bg-[#5C0099]"
           >
             Оформить заказ
@@ -330,11 +330,16 @@
 </template>
 
 <script setup>
+const router = useRouter();
 const store = reactive({
   payment: 0,
   for: 1,
   is_message: false,
 });
+
+function addToPayment() {
+  router.push('/payment')
+}
 </script>
 
 <style lang="scss" scoped>
