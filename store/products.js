@@ -224,7 +224,7 @@ export const useProductsStore = defineStore("products", () => {
     }
     router.push(
       `/?page=${state.categoryPageId + 1}&categories=${
-        state.categories[state.categoryPageId].en
+        state.categories[state.categoryPageId].uz
       }`
     );
     console.log("object");

@@ -11,17 +11,6 @@ const paymentStatus = ref(null);
 const initiatePayment = async (orderDetails) => {
   // Call your backend API to get payment details
   try {
-    // const response = await fetch("/api/payment/initiate", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(orderDetails),
-    // });
-
-    // const data = await response.json();
-
-    // Use the data from your backend to initiate the CloudPayments payment
     const widget = new cp.CloudPayments();
     widget.pay(
       "auth", // или 'charge'
@@ -49,7 +38,7 @@ const initiatePayment = async (orderDetails) => {
         onFail: function (reason, options) {
           console.log(reason, options, "options2");
           // fail
-          //действие при неуспешной оплате
+          // действие при неуспешной оплате
         },
         onComplete: function (paymentResult, options) {
           console.log(paymentResult, options, "options3");
@@ -58,25 +47,6 @@ const initiatePayment = async (orderDetails) => {
         },
       }
     );
-    const options = {
-      publicId: "YOUR_CLOUDPAYMENTS_PUBLIC_ID",
-      description: "Payment for Order",
-      amount: "data.amount",
-      currency: "USD", // Change as per your requirement
-      accountId: "data.accountId",
-      invoiceId: "data.invoiceId",
-      skin: "classic", // Choose the appropriate skin
-      data: { orderId: "data.orderId" },
-    };
-
-    window?.cloudpayments?.start(options, (event) => {
-      // Handle CloudPayments events (e.g., successful payment, failure, etc.)
-      if (event.name === "Success") {
-        paymentStatus.value = "success";
-      } else if (event.name === "Fail") {
-        paymentStatus.value = "fail";
-      }
-    });
   } catch (error) {
     console.error("Error initiating payment:", error);
     paymentStatus.value = "error";

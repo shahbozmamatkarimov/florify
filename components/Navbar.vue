@@ -133,15 +133,12 @@
                 : ''
             "
             class="cursor-pointer whitespace-nowrap hover:text-[#5C0099]"
-          >
+          >{{ $t('en') }}
             <router-link v-if="$t('en') == 'In'" to="/">
               {{ i.uz }}
             </router-link>
             <router-link v-else-if="$t('en') == 'Ан'" to="/">
               {{ i.ru }}
-            </router-link>
-            <router-link v-if="$t('en') == 'En'" to="/">
-              {{ i.en }}
             </router-link>
           </li>
           <li
@@ -329,7 +326,7 @@
         <h1 class="font-semibold text-2xl">Состав заказа</h1>
         <img
           @click="productStore.state.addToProductDrawer = false"
-          class="h-6 w-6 rounded-lg cursor-pointer"
+          class="h-6 w-6 rounded-lg object-cover cursor-pointer"
           src="../assets/svg/x.svg"
           alt="x"
         />
@@ -337,37 +334,13 @@
       <div
         class="space-y-4 w-full mt-6 -mb-2 max-h-[calc(100vh_-_125px)] overflow-hidden overflow-y-auto"
       >
-        <div
-          v-if="isLoading.isLoadingType('addToCart')"
-          class="animate-pulse"
-          v-for="i in 5"
-        >
-          <div class="tableImg flex w-full text-start">
-            <div class="bg-gray-200 h-20 min-w-[80px] rounded-[10px]"></div>
-            <div class="pl relative pl-3 w-full">
-              <div class="flex w-full items-start justify-between">
-                <h1
-                  class="h-6 rounded-[5px] bg-gray-200 xl:w-[70%] w-[90%]"
-                ></h1>
-              </div>
-              <p class="bg-gray-200 rounded-[5px] h-5 w-24 mt-3"></p>
-              <p
-                class="flex justify-between sm:text-md text-sm w-full absolute bottom-0"
-              >
-                <span class="bg-gray-200 rounded-[5px] h-5 w-9"></span
-                ><span class="bg-gray-200 rounded-[5px] h-5 w-24 mr-3"></span>
-              </p>
-            </div>
-          </div>
-          <hr class="sm:my-5 my-4 w-full" />
-        </div>
-        <div v-else v-for="i in useAddToCart.store.products">
+        <div v-for="i in useAddToCart.store.products">
           <div class="tableImg flex w-full text-start">
             <img
               v-if="i.images[0]?.image"
-              class="h-20 w-20 rounded-[10px]"
+              class="h-20 w-20 rounded-[10px] object-cover"
               :src="baseUrlImage + i.images[0]?.image"
-              alt="Jese image"
+              alt=""
             />
             <div
               v-else

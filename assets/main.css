@@ -162,3 +162,8 @@ select {
   width: 100%  !important;
   border: none !important;
 }
+
+.time .el-input__wrapper {
+  border: 0 !important;
+  box-shadow: none !important;
+}

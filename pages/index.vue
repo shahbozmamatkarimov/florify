@@ -78,22 +78,29 @@
           class="relative w-full carousel animate-pulse lg:h-[300px] bg-gray-200 md:h-60 sm:h-48 h-52 overflow-hidden rounded-xl"
         ></div>
         <div
-          v-if="!isLoading.isLoadingType('getAdvertising')"
+          v-if="
+            !isLoading.isLoadingType('getAdvertising') &&
+            productStore.state.addvertising?.image
+          "
           class="relative w-[320px] lg:min-w-[320px] md:min-w-[250px] min-w-[200px] lg:h-[300px] rounded-[10px] md:h-60 sm:h-48 sm:block hidden"
         >
           <p
+            v-if="productStore.state.addvertising?.image"
             class="absolute right-0 px-4 py-2 bg-[#FFA500] rounded-es-xl rounded-se-xl"
           >
-            -{{ productStore.state.addvertising.discount }}%
+            -{{ productStore.state.addvertising?.discount }}%
           </p>
           <img
-            class="h-full w-full object-cover rounded-xl"
-            :src="baseUrlImage + productStore.state.addvertising.image"
-            alt="img"
+            class="h-full w-full object-cover bg-gray-100 border-0 rounded-xl"
+            :src="baseUrlImage + productStore.state.addvertising?.image"
+            alt=""
           />
         </div>
         <div
-          v-else
+          v-else-if="
+            isLoading.isLoadingType('getAdvertising') &&
+            !productStore.state.addvertising?.image
+          "
           class="relative animate-pulse bg-gray-200 w-[320px] lg:min-w-[320px] md:min-w-[250px] min-w-[200px] lg:h-[300px] rounded-[10px] md:h-60 sm:h-48 sm:block hidden"
         ></div>
       </section>
