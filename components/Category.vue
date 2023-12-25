@@ -1,6 +1,11 @@
 <template>
   <main class="container">
-    <placeholderMain v-if="isLoading.isLoadingType('getProductByCategory') && !productStore?.state?.categories[productStore.state.categoryPageId]" />
+    <placeholderMain
+      v-if="
+        isLoading.isLoadingType('getProductByCategory') &&
+        !productStore?.state?.categories[productStore.state.categoryPageId]
+      "
+    />
     <section
       v-if="
         productStore?.state?.categories[productStore.state.categoryPageId] ||
@@ -29,7 +34,7 @@
           }}
         </p>
         <div
-          v-if="i.products?.length"
+          v-if="productStore.state.products[i.id]?.data?.records?.length"
           class="grid lg:grid-cols-4 grid-cols-3 cards my-5 md:gap-7 gap-5"
         >
           <div
@@ -188,7 +193,12 @@
 <script setup>
 import axios from "axios";
 // import { initFlowbite } from "flowbite";
-import { useProductsStore, useAuthStore, useLoadingStore, useAddToCartStore } from "@/store";
+import {
+  useProductsStore,
+  useAuthStore,
+  useLoadingStore,
+  useAddToCartStore,
+} from "@/store";
 
 const isLoading = useLoadingStore();
 const productStore = useProductsStore();
@@ -198,7 +208,7 @@ const authStore = useAuthStore();
 const baseUrl = runtimeConfig.public.baseURL;
 const baseUrlImage = ref(runtimeConfig.public.baseURL?.slice(0, -3));
 const router = useRouter();
-isLoading.addLoading('getProductByCategory')
+isLoading.addLoading("getProductByCategory");
 
 const store = reactive({
   width: "",

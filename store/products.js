@@ -34,6 +34,7 @@ export const useProductsStore = defineStore("products", () => {
 
   const search = reactive({
     search: "",
+    pagination: {},
   });
 
   const todays = reactive({
@@ -82,7 +83,6 @@ export const useProductsStore = defineStore("products", () => {
   }
 
   function getProductByCategoryId(id, page, index) {
-    console.log(page);
     isLoading.addLoading("getProductByCategory");
     const client_id = localStorage.getItem("user_id");
     axios
@@ -127,14 +127,22 @@ export const useProductsStore = defineStore("products", () => {
       });
   }
 
-  function searchProduct() {
+  function searchProduct(is_show) {
     state.isSearchingModal = true;
+    if (is_show != "show_more") {
+      search.pagination.currentPage = 1;
+    }
     isLoading.addLoading("getSearchProducts");
     axios
-      .get(baseUrl + `/product/search?query=${search.search}`)
+      .get(baseUrl + `/product/search/${search.pagination.currentPage}?query=${search.search}`)
       .then((res) => {
         console.log(res);
-        state.search_products = res.data?.data?.products;
+        if (is_show == "show_more") {
+          state.search_products.push(...res.data?.data?.records);
+        } else {
+          state.search_products = res.data?.data?.records;
+        }
+        search.pagination = res.data?.data?.pagination;
         isLoading.removeLoading("getSearchProducts");
       })
       .catch((err) => {

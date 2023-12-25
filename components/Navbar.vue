@@ -32,7 +32,7 @@
                 >
                   <div
                     v-for="i in store.searchedData"
-                    @click="clickedModal('address',i.title?.text)"
+                    @click="clickedModal('address', i.title?.text)"
                     class="flex items-center gap-3 border-b pb-4 border-[#E6E6E6]"
                   >
                     <div class="space-y-1 font-medium">
@@ -86,7 +86,7 @@
                 class="flex items-center gap-3 border-b pb-4 border-[#E6E6E6]"
               >
                 <img
-                  class="h-20 w-20 rounded-[10px]"
+                  class="h-20 w-20 rounded-[10px] object-cover"
                   :src="baseUrlImage + i.images[0].image"
                   alt=""
                 />
@@ -97,8 +97,14 @@
                   <p class="leading-[19px]">{{ i.id }}</p>
                 </div>
               </div>
-              <p class="text-[#5C0099] text-xl leading-6 font-medium">
-                Показать все результаты (4)
+              <p v-if="productStore.search.pagination.currentPage < productStore.search.pagination.total_pages"
+                @click="showSearchRes"
+                class="text-[#5C0099] text-xl leading-6 font-medium"
+              >
+                Показать все результаты ({{
+                  productStore.search.pagination.total_count -
+                  productStore.search.pagination.currentPage * 10
+                }})
               </p>
             </div>
           </div>
@@ -133,7 +139,7 @@
                 : ''
             "
             class="cursor-pointer whitespace-nowrap hover:text-[#5C0099]"
-          >{{ $t('en') }}
+          >
             <router-link v-if="$t('en') == 'In'" to="/">
               {{ i.uz }}
             </router-link>
@@ -507,6 +513,23 @@ function pushToOrder() {
   router.push("/order");
 }
 
+function showSearchRes() {
+  productStore.search.pagination.currentPage += 1;
+  productStore.searchProduct("show_more");
+}
+
+function increment() {
+  // if (store.quintity < productStore.state.getById?.quantity) {
+  store.quintity++;
+  // }
+}
+
+function decrement() {
+  if (store.quintity > 1) {
+    store.quintity--;
+  }
+}
+
 function changeQuantity(e, id) {
   for (let i = 0; i < useAddToCart.store.products.length; i++) {
     if (useAddToCart.store.products[i].id == id) {
@@ -567,18 +590,6 @@ onBeforeMount(() => {
     isLoading.store.limit = 8;
   }
 });
-
-function increment() {
-  // if (store.quintity < productStore.state.getById?.quantity) {
-  store.quintity++;
-  // }
-}
-
-function decrement() {
-  if (store.quintity > 1) {
-    store.quintity--;
-  }
-}
 
 onMounted(() => {
   isMount.value = true;

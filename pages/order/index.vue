@@ -590,7 +590,8 @@ function addToPayment() {
     axios
       .post(baseUrl + "/orders", { ...store, client_id, items })
       .then((res) => {
-        router.push("/payment");
+        const order_id = res.data?.data?.order.id
+        router.push(`/payment?order_id=${order_id}&amount=${useAddToCart.store.total_price}`);
         console.log(res);
       })
       .catch((err) => {

@@ -3,22 +3,31 @@
 </template>
 
 <script setup>
+import { usePaymentStore } from "@/store";
 definePageMeta({
   layout: false,
 });
+
+const usePayment = usePaymentStore();
+
+const router = useRouter();
 
 const paymentStatus = ref(null);
 const initiatePayment = async (orderDetails) => {
   // Call your backend API to get payment details
   try {
     const widget = new cp.CloudPayments();
+    console.log(router.currentRoute.value.query.amount);
+    usePayment.payment.amount = +router.currentRoute.value.query.amount;
+    usePayment.payment.order_id = router.currentRoute.value.query.order_id;
     widget.pay(
       "auth", // или 'charge'
       {
         //options
+        // 9860030321826932 06/26
         publicId: "test_api_00000000000000000000001", //id из личного кабинета
         description: "Оплата товаров в florify.uz", //назначение
-        amount: 10, //сумма
+        amount: +router.currentRoute.value.query.amount, //сумма
         currency: "UZS", //валюта
         accountId: "user@example.com", //идентификатор плательщика (необязательно)
         invoiceId: "1234567", //номер заказа  (необязательно)
@@ -33,7 +42,6 @@ const initiatePayment = async (orderDetails) => {
         onSuccess: function (options) {
           console.log(options, "options1");
           // success
-          //действие при успешной оплате
         },
         onFail: function (reason, options) {
           console.log(reason, options, "options2");
@@ -42,6 +50,11 @@ const initiatePayment = async (orderDetails) => {
         },
         onComplete: function (paymentResult, options) {
           console.log(paymentResult, options, "options3");
+          usePayment.payment.info.email = paymentResult.email;
+          usePayment.payment.status = paymentResult.success
+            ? "SUCCESS"
+            : "FAIL";
+          usePayment.sendPaymentData();
           //Вызывается как только виджет получает от api.cloudpayments ответ с результатом транзакции.
           //например вызов вашей аналитики Facebook Pixel
         },
@@ -64,7 +77,7 @@ function pay() {
   initiatePayment(orderDetails);
 }
 
-onBeforeMount(() => {
+onMounted(() => {
   pay();
 });
 </script>
