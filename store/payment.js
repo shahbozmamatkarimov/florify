@@ -29,16 +29,18 @@ export const usePaymentStore = defineStore("payment", () => {
       .then((res) => {
         console.log(res);
         if (res.data?.data?.transaction?.status == "FAIL") {
-          router.push("/order");
-          localStorage.setItem("transaction_id", res.data.data.transaction.id);
+          localStorage.setItem(
+            `transaction_id${payment.order_id}`,
+            res.data.data.transaction.id
+          );
         } else if (res.data?.data?.transaction?.status == "SUCCESS") {
           localStorage.removeItem("addToCart");
-          router.push("/");
         }
+        router.push("/orders");
       })
       .catch((err) => {
         console.log(err);
-        router.push("/order");
+        router.push("/orders");
       });
   }
 

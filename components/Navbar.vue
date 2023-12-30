@@ -35,7 +35,7 @@
                     @click="clickedModal('address', i.title?.text)"
                     class="flex items-center gap-3 border-b pb-4 border-[#E6E6E6]"
                   >
-                    <div class="space-y-1 font-medium">
+                    <div class="space-y-1 font-medium cursor-pointer">
                       <p class="leading-[21px] text-[#5C0099] text-lg">
                         {{ i.title?.text }}
                       </p>
@@ -83,7 +83,7 @@
               <div
                 v-for="i in productStore.state.search_products"
                 @click="clickedModal('product', i.id)"
-                class="flex items-center gap-3 border-b pb-4 border-[#E6E6E6]"
+                class="flex items-center cursor-pointer gap-3 border-b pb-4 border-[#E6E6E6]"
               >
                 <img
                   class="h-20 w-20 rounded-[10px] object-cover"
@@ -204,7 +204,7 @@
             </svg>
             {{ $t("navbar.watched") }}
           </li>
-          <li class="cursor-pointer whitespace-nowrap hover:text-[#5C0099]">
+          <li @click="$router.push('orders')" class="cursor-pointer whitespace-nowrap hover:text-[#5C0099]">
             {{ $t("navbar.orders") }}
           </li>
           <li

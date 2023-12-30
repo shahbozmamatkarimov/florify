@@ -1,7 +1,7 @@
 <template>
-  <main class="container mx-auto xl:px-28 md:px-10 px-5">
+  <main>
     <!----------------------- Breadcrumb ---------------------------->
-    <section>
+    <section class="container mx-auto xl:px-28 md:px-10 px-5">
       <nav class="sm:flex hidden py-6" aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1 md:space-x-3">
           <li
@@ -29,7 +29,9 @@
     </section>
     <!----------------------- Breadcrumb end---------------------------->
 
-    <section class="flex md:flex-row flex-col gap-10 w-full">
+    <section
+      class="container mx-auto xl:px-28 md:px-10 px-5 flex md:flex-row flex-col gap-10 w-full"
+    >
       <!---------------------- carousel -------------------------->
       <div
         class="2xl:max-w-[522px] xl:max-w-[508px] lg:max-w-[452px] md:max-w-[324px] sm:max-w-[450px] max-w-[calc(100vw_-_40px)] w-full overflow-hidden"
@@ -80,8 +82,44 @@
                 useProduct.state.getById?.id
               }}</span>
             </h2>
-            <p class="flex items-center gap-3">
-              <i class="bx bx-heart text-lg"></i>В желания
+            <p
+              v-if="true"
+              @click="addToLikeProduct(true, useProduct.state.getById?.id)"
+              class="flex items-center gap-3 cupoi"
+            >
+              <img
+                v-if="useProduct.state.getById?.likes !== true"
+                :id="useProduct.state.getById?.id"
+                @click="
+                  () =>
+                    addToLike(
+                      index,
+                      true,
+                      useProduct.state.getById?.id,
+                      'history'
+                    )
+                "
+                class="cursor-pointer md:h-6 duration-1000 md:w-6 h-4 w-4"
+                src="@/assets/svg/heart.svg"
+                alt=""
+              />
+              <img
+                v-else
+                @click="
+                  () =>
+                    addToLike(
+                      index,
+                      false,
+                      useProduct.state.getById?.id,
+                      'history'
+                    )
+                "
+                :id="'id' + useProduct.state.getById?.id"
+                class="cursor-pointer duration-1000 md:h-6 md:w-6 h-4 w-4"
+                src="@/assets/svg/redHeart.svg"
+                alt=""
+              />
+              В желания
             </p>
           </li>
           <li class="leading-[19px] lg:text-2xl text-lg font-semibold">
@@ -177,42 +215,150 @@
       <!---------------------- about flower end -------------------------->
     </section>
 
+    <section class="mt-20">
+      <h1
+        class="container mx-auto xl:px-28 md:px-10 px-5 mb-10 text-2xl leading-7 font-semibold"
+      >
+        {{ store.prodcut_comments?.length }} oтзывa o дocтaвкe тoвaрoв в
+        Ташкенте
+      </h1>
+      <div class="marquee" v-show="!isLoading.isLoadingType('getComments')">
+        <ul class="marquee-content">
+          <li v-for="i in 100">
+            <div
+              v-for="i in store.prodcut_comments"
+              class="comments flex gap-3 bg-white min-w-[440px] w-[440px] rounded-xl p-5"
+            >
+              <div
+                class="flex items-center justify-center h-[52px] min-w-[52px] w-[52px] rounded-full text-white text-[28px] font-semibold bg-[#F1C8C2]"
+              >
+                <p class="leading-[34px]">У</p>
+              </div>
+              <div>
+                <div>
+                  <h1 class="leading-5">Ўғилой</h1>
+                </div>
+                <div class="flex mt-[6px] items-center gap-1">
+                  <div v-for="i in 5">
+                    <img
+                      v-show="2 >= i"
+                      class="h-4 w-4 cursor-pointer"
+                      src="@/assets/svg/star_yellow.svg"
+                      alt=""
+                    />
+                    <img
+                      class="h-4 w-4 cursor-pointer"
+                      v-show="2 < i"
+                      src="@/assets/svg/light_star.svg"
+                      alt=""
+                    />
+                  </div>
+                  <p class="ml-4 text-[#999999]">25 апреля 2023 г.</p>
+                </div>
+                <pre
+                  class="mt-5 leading-6 break-words whitespace-pre-line h-[72px] overflow-hidden overflow-y-auto"
+                  >{{ i.text }}</pre
+                >
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div
+        class="flex items-center gap-5 animate-pulse"
+        v-show="isLoading.isLoadingType('getComments')"
+      >
+        <div
+          v-for="i in 10"
+          class="bg-gray-200 rounded-xl min-w-[440px] h-[220px]"
+        ></div>
+      </div>
+    </section>
+
     <!------------------------ same flowers ----------------------------->
 
-    <section>
-      <h1 class="sm:text-3xl sm:pt-16 pt-12 sm:pb-2 text-md">
+    <section class="container mx-auto xl:px-28 md:px-10 px-5">
+      <h1 class="sm:text-3xl mt-10 sm:pb-2 text-md">
         Другие товары этого магазина
       </h1>
       <div class="flex overflow-hidden overflow-x-auto cards gap-5">
         <div
-          v-for="i in 10"
+          v-if="isLoading.isLoadingType('getSalesmanProducts')"
+          v-for="i in 25"
           :key="i"
           class="card 2xl:min-w-[310px] xl:min-w-[247px] lg:min-w-[220px] md:min-w-[212px] sm:min-w-[185px] min-w-[150px] my-5 hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
         >
+          <div
+            class="img border bg-gray-200 animate-pulse rounded-t-lg 2xl:h-80 xl:h-64 md:h-52 sm:h-44 h-44 w-full object-cover"
+          ></div>
+          <div class="md:p-5 p-3 mt-4">
+            <h5
+              class="bg-gray-200 rounded-2xl max-w-[96px] -mt-1 mb-1 h-5 animate-pulse"
+            ></h5>
+            <div class="flex justify-between items-center">
+              <p
+                class="bg-gray-200 rounded-2xl max-w-[112px] w-full h-5 animate-pulse"
+              ></p>
+              <div class="flex items-center sm:gap-3 gap-1">
+                <img
+                  class="animate-pulse -mr-1 md:max-h-6 md:max-w-6 max-h-4 max-w-4"
+                  src="@/assets/svg/heartLoad.svg"
+                  alt=""
+                />
+
+                <img
+                  class="animate-pulse md:max-h-6 md:max-w-6 max-h-4 max-w-4"
+                  src="@/assets/svg/cartLoad.svg"
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          v-else-if="product?.id != $router.currentRoute.value.params.slug"
+          v-for="(product, index) in useProduct.state.salesmanProducts"
+          :key="product.id"
+          class="card 2xl:min-w-[310px] xl:min-w-[247px] lg:min-w-[220px] md:min-w-[212px] sm:min-w-[185px] min-w-[150px] my-5 hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
+        >
           <img
-            class="img rounded-t-lg 2xl:h-72 xl:h-64 md:h-52 sm:h-44 h-40 w-full object-cover"
-            src="@/assets/image/image2.png"
+            @click="$router.push(`/flowers/${product.id}`)"
+            class="img rounded-t-lg 2xl:h-80 xl:h-64 cursor-pointer md:h-52 sm:h-44 h-44 w-full object-cover"
+            :src="`${baseUrlImage}${product?.images[0]?.image}`"
             alt=""
           />
           <div class="md:p-5 p-3">
             <h5
               class="mb-2 sm:text-xl text-sm text-[#1F9D6D] tracking-tight font-medium"
             >
-              Фрида Кало
+              {{ product.name }}
             </h5>
             <div class="flex justify-between items-center">
-              <p class="sm:text-md text-xs whitespace-nowrap">
-                <span class="md:inline-block hidden">от</span> 1 350 000
-                <span class="sm:inline hidden">сум</span>
+              <p class="font-semibold sm:text-lg text-xs whitespace-nowrap">
+                <span class="md:inline-block hidden"></span>
+                {{ product.price }}
+                <span class="sm:inline hidden">{{ $t("home.sum") }}</span>
               </p>
               <div class="flex items-center sm:gap-3 gap-1">
                 <img
-                  class="cursor-pointer"
+                  v-if="product.likes !== true"
+                  :id="product.id"
+                  @click="() => addToLike(index, true, product.id)"
+                  class="cursor-pointer md:h-6 duration-1000 md:w-6 h-4 w-4"
                   src="@/assets/svg/heart.svg"
                   alt=""
                 />
                 <img
-                  class="cursor-pointer sm:h-5 sm:w-5 h-3 w-3"
+                  v-else
+                  @click="() => addToLike(index, false, product.id)"
+                  :id="'id' + product.id"
+                  class="cursor-pointer duration-1000 md:h-6 md:w-6 h-4 w-4"
+                  src="@/assets/svg/redHeart.svg"
+                  alt=""
+                />
+                <img
+                  @click="() => addToCartSalesman(product.id)"
+                  class="cursor-pointer sm:h-5 sm:w-5 md:max-h-6 md:max-w-6 max-h-4 max-w-4"
                   src="@/assets/svg/cart.svg"
                   alt=""
                 />
@@ -222,39 +368,90 @@
         </div>
       </div>
     </section>
-    <section class="pb-20">
+    <section class="pb-20 container mx-auto xl:px-28 md:px-10 px-5">
       <h1 class="sm:text-3xl pb-2 text-md">Просмотренные товары</h1>
       <div class="flex overflow-hidden overflow-x-auto cards gap-5">
         <div
-          v-for="i in 10"
+          v-if="isLoading.isLoadingType('getAllHistory')"
+          v-for="i in 25"
           :key="i"
           class="card 2xl:min-w-[310px] xl:min-w-[247px] lg:min-w-[220px] md:min-w-[212px] sm:min-w-[185px] min-w-[150px] my-5 hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
         >
+          <div
+            class="img border bg-gray-200 animate-pulse rounded-t-lg 2xl:h-80 xl:h-64 md:h-52 sm:h-44 h-44 w-full object-cover"
+          ></div>
+          <div class="md:p-5 p-3 mt-4">
+            <h5
+              class="bg-gray-200 rounded-2xl max-w-[96px] -mt-1 mb-1 h-5 animate-pulse"
+            ></h5>
+            <div class="flex justify-between items-center">
+              <p
+                class="bg-gray-200 rounded-2xl max-w-[112px] w-full h-5 animate-pulse"
+              ></p>
+              <div class="flex items-center sm:gap-3 gap-1">
+                <img
+                  class="animate-pulse -mr-1 md:max-h-6 md:max-w-6 max-h-4 max-w-4"
+                  src="@/assets/svg/heartLoad.svg"
+                  alt=""
+                />
+
+                <img
+                  class="animate-pulse md:max-h-6 md:max-w-6 max-h-4 max-w-4"
+                  src="@/assets/svg/cartLoad.svg"
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          v-else-if="product?.id != $router.currentRoute.value.params.slug"
+          v-for="(product, index) in useHistory.store.allHistory"
+          :key="product.id"
+          class="card 2xl:min-w-[310px] xl:min-w-[247px] lg:min-w-[220px] md:min-w-[212px] sm:min-w-[185px] min-w-[150px] my-5 hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
+        >
           <img
-            class="img rounded-t-lg 2xl:h-72 xl:h-64 md:h-52 sm:h-44 h-44 w-full object-cover"
-            src="@/assets/image/image5.png"
+            @click="$router.push(`/flowers/${product.product.id}`)"
+            class="img rounded-t-lg 2xl:h-80 xl:h-64 cursor-pointer md:h-52 sm:h-44 h-44 w-full object-cover"
+            :src="`${baseUrlImage}${product.product?.images[0]?.image}`"
             alt=""
           />
           <div class="md:p-5 p-3">
             <h5
               class="mb-2 sm:text-xl text-sm text-[#1F9D6D] tracking-tight font-medium"
             >
-              Фрида
+              {{ product.product.name }}
             </h5>
             <div class="flex justify-between items-center">
-              <p class="sm:text-md text-xs whitespace-nowrap">
-                <span class="md:inline-block hidden">от</span> 1 350 000
-                <span class="sm:inline hidden">сум</span>
+              <p class="font-semibold sm:text-lg text-xs whitespace-nowrap">
+                <span class="md:inline-block hidden"></span>
+                {{ product.product.price }}
+                <span class="sm:inline hidden">{{ $t("home.sum") }}</span>
               </p>
               <div class="flex items-center sm:gap-3 gap-1">
                 <img
-                  class="cursor-pointer"
+                  v-if="product.product.likes !== true"
+                  :id="product.product.id"
+                  @click="
+                    () => addToLike(index, true, product.product.id, 'history')
+                  "
+                  class="cursor-pointer md:h-6 duration-1000 md:w-6 h-4 w-4"
                   src="@/assets/svg/heart.svg"
                   alt=""
                 />
-
                 <img
-                  class="cursor-pointer sm:h-5 sm:w-5 h-3 w-3"
+                  v-else
+                  @click="
+                    () => addToLike(index, false, product.product.id, 'history')
+                  "
+                  :id="'id' + product.product.id"
+                  class="cursor-pointer duration-1000 md:h-6 md:w-6 h-4 w-4"
+                  src="@/assets/svg/redHeart.svg"
+                  alt=""
+                />
+                <img
+                  @click="() => addToCartSalesman(product.product.id)"
+                  class="cursor-pointer sm:h-5 sm:w-5 md:max-h-6 md:max-w-6 max-h-4 max-w-4"
                   src="@/assets/svg/cart.svg"
                   alt=""
                 />
@@ -269,11 +466,20 @@
 
 <script setup>
 import axios from "axios";
-import { useProductsStore, useHistoryStore, useAddToCartStore } from "@/store";
+import {
+  useProductsStore,
+  useHistoryStore,
+  useAddToCartStore,
+  useLoadingStore,
+} from "@/store";
 
 const useProduct = useProductsStore();
 const useHistory = useHistoryStore();
 const useAddToCart = useAddToCartStore();
+const isLoading = useLoadingStore();
+isLoading.addLoading("getProductByCategory");
+isLoading.addLoading("getAllHistory");
+isLoading.addLoading("getComments");
 
 const runtimeConfig = useRuntimeConfig();
 const baseUrl = runtimeConfig.public.baseURL;
@@ -286,6 +492,7 @@ const store = reactive({
   quantity: 1,
   btn: "",
   language: "ru-RU",
+  prodcut_comments: [],
 });
 
 function addToCart(is_router) {
@@ -397,6 +604,92 @@ function decrement() {
   }
 }
 
+function addToCartSalesman(id) {
+  const user_id = localStorage.getItem("user_id");
+  useAddToCart.addcart.client_id = user_id;
+  useAddToCart.addcart.product_id = id;
+  useAddToCart.addToCart();
+}
+
+function addToLike(index, isLiked, id, type) {
+  if (type == "history") {
+    useHistory.store.allHistory[index].product.likes = isLiked;
+  } else {
+    useProduct.state.salesmanProducts[index].likes = isLiked;
+  }
+
+  let method = "POST";
+  if (isLiked) {
+    method = "post";
+  } else {
+    method = "delete";
+  }
+  let product_id = id;
+  const client_id = localStorage.getItem("user_id");
+  axios({
+    method,
+    url: baseUrl + "/like",
+    data: { client_id, product_id },
+  })
+    .then((res) => {
+      console.log(res.data);
+      if (res.data.statusCode === 400) {
+        if (type == "history") {
+          useHistory.store.allHistory[index].product.likes = !isLiked;
+          authStore.store.loginModal = true;
+        } else {
+          useProduct.state.salesmanProducts[index].likes = !isLiked;
+          authStore.store.loginModal = true;
+        }
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      if (
+        err.response.data.message ==
+        "Mahsulot allaqachon sevimlilar ro'yxatiga qo'shilgan!"
+      ) {
+      } else {
+        if (type == "history") {
+          useHistory.store.allHistory[index].product.likes = !isLiked;
+          authStore.store.loginModal = true;
+        } else {
+          useProduct.state.salesmanProducts[index].likes = !isLiked;
+          authStore.store.loginModal = true;
+        }
+      }
+    });
+}
+
+function getComments() {
+  isLoading.addLoading("getComments");
+  const product_id = router.currentRoute.value.params.slug;
+  axios
+    .get(baseUrl + "/comment/productId/" + product_id)
+    .then((res) => {
+      console.log(res);
+      store.prodcut_comments = res?.data?.data?.comments;
+      console.log(store.prodcut_comments);
+      const root = document.documentElement;
+      // const marqueeElementsDisplayed = getComputedStyle(root).getPropertyValue(
+      //   "--marquee-elements-displayed"
+      // );
+      const marqueeContent = document.querySelector("ul.marquee-content");
+      marqueeContent.addEventListener("scroll", () => {
+        console.log("object");
+      });
+      const content_length = marqueeContent.querySelectorAll(".comments");
+      console.log(content_length);
+      console.log(marqueeContent);
+      root.style.setProperty("--marquee-elements", 300);
+      isLoading.removeLoading("getComments");
+    })
+    .catch((err) => {
+      isLoading.removeLoading("getComments");
+      console.log(err);
+    });
+}
+
 watch(
   () => store.slideStep,
   () => {
@@ -409,8 +702,10 @@ watch(
 onMounted(() => {
   store.product_id = +router.currentRoute.value.params.slug;
   getQuantity();
+  getComments();
   useProduct.getById(store.product_id);
   useHistory.addToWatched(store.product_id);
+  useHistory.getUserHistory();
 });
 </script>
 

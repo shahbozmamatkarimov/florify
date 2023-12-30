@@ -30,6 +30,7 @@ export const useProductsStore = defineStore("products", () => {
     isSearchingModal: false,
     isAddressModal: false,
     addvertising: "",
+    salesmanProducts: [],
   });
 
   const search = reactive({
@@ -134,7 +135,10 @@ export const useProductsStore = defineStore("products", () => {
     }
     isLoading.addLoading("getSearchProducts");
     axios
-      .get(baseUrl + `/product/search/${search.pagination.currentPage}?query=${search.search}`)
+      .get(
+        baseUrl +
+          `/product/search/${search.pagination.currentPage}?query=${search.search}`
+      )
       .then((res) => {
         console.log(res);
         if (is_show == "show_more") {
@@ -246,6 +250,7 @@ export const useProductsStore = defineStore("products", () => {
       .get(baseUrl + `/product/id/${id}`)
       .then((res) => {
         console.log(res.data);
+        getSalesmanProducts(res.data.data?.product.salesman_id);
         state.getById = res.data.data.product;
         state.isLoading = false;
 
@@ -274,6 +279,47 @@ export const useProductsStore = defineStore("products", () => {
       });
   }
 
+  function getSalesmanProducts(salesmanId) {
+    isLoading.addLoading("getSalesmanProducts");
+    const client_id = localStorage.getItem("user_id");
+    axios
+      .get(
+        baseUrl + `/product/salesmanId/${salesmanId}/1/25/on_sale`
+      )
+      .then((res) => {
+        if (
+          res.message === "Token vaqti tugagan!" ||
+          res.message === "Token topilmadi!"
+        ) {
+          router.push("/login");
+        }
+        console.log(res);
+        state.salesmanProducts = res.data?.data?.records;
+        if (client_id) {
+          for (let i = 0; i < state.salesmanProducts?.length; i++) {
+            for (let like of state.salesmanProducts[i]?.likes) {
+              if (like.client_id == client_id) {
+                state.salesmanProducts[i].likes = true;
+                break;
+              }
+            }
+          }
+        } else {
+          for (let i = 0; i < state.salesmanProducts?.length; i++) {
+            for (let like of state.salesmanProducts[i]?.likes) {
+              state.salesmanProducts[i].likes = false;
+              break;
+            }
+          }
+        }
+        isLoading.removeLoading("getSalesmanProducts");
+      })
+      .catch((err) => {
+        console.log(err);
+        isLoading.removeLoading("getSalesmanProducts");
+      });
+  }
+
   return {
     state,
     getAllProducts,
@@ -287,5 +333,6 @@ export const useProductsStore = defineStore("products", () => {
     search,
     searchProduct,
     getAdvertising,
+    getSalesmanProducts,
   };
 });

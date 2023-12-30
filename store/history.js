@@ -82,5 +82,39 @@ export const useHistoryStore = defineStore("watched", () => {
     }
   }
 
-  return { store, getHistory, addToWatched };
+  function getUserHistory() {
+    isLoading.addLoading("getAllHistory");
+    const client_id = localStorage.getItem("user_id");
+    axios
+      .get(baseUrl + `/watched/pagination/${client_id}/1/25`)
+      .then((res) => {
+        console.log(res, '----------------------------------------------------------------');
+        const client_id = localStorage.getItem("user_id");
+        if (client_id) {
+          for (let i = 0; i < res.data.data.records?.length; i++) {
+            for (let like of res.data.data.records[i].product.likes) {
+              if (like.client_id == client_id) {
+                res.data.data.records[i].product.likes = true;
+                break;
+              }
+            }
+          }
+        } else {
+          for (let i = 0; i < res.data.data.records?.length; i++) {
+            for (let like of res.data.data.records[i].product.likes) {
+              res.data.data.records[i].product.likes = false;
+              break;
+            }
+          }
+        }
+        store.allHistory = res.data.data.records;
+        isLoading.removeLoading("getAllHistory");
+      })
+      .catch((err) => {
+        isLoading.removeLoading("getAllHistory");
+        console.log(err);
+      });
+  }
+
+  return { store, getHistory, addToWatched, getUserHistory };
 });

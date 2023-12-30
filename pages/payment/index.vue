@@ -19,7 +19,13 @@ const initiatePayment = async (orderDetails) => {
     const widget = new cp.CloudPayments();
     console.log(router.currentRoute.value.query.amount);
     usePayment.payment.amount = +router.currentRoute.value.query.amount;
-    usePayment.payment.order_id = router.currentRoute.value.query.order_id;
+    usePayment.payment.order_id = +router.currentRoute.value.query.order_id;
+    const is_cancelled = router.currentRoute.value.query.status;
+    if (is_cancelled) {
+      usePayment.payment.id = localStorage.getItem(
+        `transaction_id${usePayment.payment.order_id}`
+      );
+    }
     widget.pay(
       "auth", // или 'charge'
       {
