@@ -470,6 +470,7 @@ const store = reactive({
   full_address: "",
   comment_for_courier: "",
   delivery_time: "",
+  postcard_text: "",
   payment_type: "ONLINE",
 });
 
@@ -563,6 +564,7 @@ function addToPayment() {
       items.push({ product_id: i.id, quantity: i.client_quantity });
     }
     console.log(items);
+    console.log(store);
     axios
       .post(
         baseUrl + "/orders",
