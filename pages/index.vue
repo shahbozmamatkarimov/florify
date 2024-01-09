@@ -111,7 +111,7 @@
         <div
           v-show="
             productStore.state.products[i.id]?.data?.records?.length &&
-            !productStore.state.isLoading
+            !isLoading.isLoadingType('getAllProducts')
           "
           v-for="(i, index) in productStore.state.categories"
           :key="i.id"
@@ -342,8 +342,8 @@ watch(
 onMounted(() => {
   useImageCounter.imageCount();
   productStore.getAdvertising();
+  productStore.getAllProducts();
   if (router.currentRoute.value?.query?.page) {
-    console.log("object");
     const image = document.querySelector(".mainSlider");
     image.style.transform = `translateX(-${
       router.currentRoute.value?.query?.page * 100

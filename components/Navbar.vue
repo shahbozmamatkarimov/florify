@@ -204,7 +204,7 @@
             </svg>
             {{ $t("navbar.watched") }}
           </li>
-          <li @click="$router.push('orders')" class="cursor-pointer whitespace-nowrap hover:text-[#5C0099]">
+          <li @click="$router.push('/orders')" class="cursor-pointer whitespace-nowrap hover:text-[#5C0099]">
             {{ $t("navbar.orders") }}
           </li>
           <li

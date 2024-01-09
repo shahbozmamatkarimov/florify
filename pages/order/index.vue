@@ -1,6 +1,6 @@
 <template>
   <main class="container mx-auto xl:px-28 md:px-10 px-5 pb-[15rem]">
-    <section class="grid xl:grid-cols-2 gap-16">
+    <form @submit.prevent="addToPayment" class="grid xl:grid-cols-2 gap-16">
       <div>
         <h1 class="font-semibold sm:text-2xl text-xl py-5">
           Оформление заказа
@@ -15,6 +15,7 @@
               class="grid grid-cols-2 gap-5 sm:h-[53px]"
             >
               <button
+                type="button"
                 @click="store.to_whom_bouquet = 'another'"
                 :class="
                   store.to_whom_bouquet == 'another'
@@ -26,6 +27,7 @@
                 Другой человек
               </button>
               <button
+                type="button"
                 @click="store.to_whom_bouquet = 'myself'"
                 :class="
                   store.to_whom_bouquet == 'myself'
@@ -73,6 +75,8 @@
         <div class="grid sm:grid-cols-2 gap-5 sm:h-[53px]">
           <input
             type="tel"
+            minlength="13"
+            maxlength="13"
             v-model="store.customer_phone"
             class="h-full bg-transparent border-2 border-[#D9D9D9] rounded"
             placeholder="+998 __ ___-__-__"
@@ -80,7 +84,7 @@
           />
         </div>
 
-        <div v-show="store.to_whom_bouquet == 'another'">
+        <div v-if="store.to_whom_bouquet == 'another'">
           <div>
             <h1 class="font-semibold sm:text-xl text-xl py-5">
               Контакты получателя
@@ -101,6 +105,8 @@
             />
             <input
               type="tel"
+              minlength="13"
+              maxlength="13"
               v-model="store.receiver_phone"
               class="h-full bg-transparent border-2 border-[#D9D9D9] rounded"
               placeholder="+998 __ ___-__-__"
@@ -126,16 +132,16 @@
             </select>
           </li> -->
           <li>
-            <h1 class="font-semibold text-xl pt-3 pb-5">Адрес доставки</h1>
-            {{ address.shipping_address }} {{ store.full_address }}
+            <h1 class="font-semibold text-xl pt-3 pb-5">Адрес доставки *</h1>
             <input
               @input="checkAddress"
               v-model="address.shipping_address"
               type="text"
               class="md:h-14 h-10 w-full bg-transparent placeholder-[#454545] border-2 border-[#D9D9D9] rounded"
               placeholder="Улица и номер дома"
+              required
             />
-            <p class="text-[#5C0099] pl-4 pb-4">Укажите, пожалуйста, фамилия</p>
+            <p class="text-[#5C0099] pl-4 pb-4">Укажите, пожалуйста, адрес получателя</p>
             <div>
               <ul>
                 <li
@@ -203,6 +209,7 @@
                 >Текст открытки…</label
               >
               <textarea
+                v-model="store.postcard_text"
                 id="convert"
                 class="h-20 bg-transparent w-full rounded border-2 border-[#D9D9D9]"
                 placeholder="Мой дорогой..."
@@ -210,7 +217,7 @@
             </div>
           </li>
           <li class="pb-7">
-            <h1 class="font-semibold text-xl pt-7">Дата и время доставки</h1>
+            <h1 class="font-semibold text-xl pt-7">Дата и время доставки *</h1>
             <div class="flex pt-1 w-full gap-[23px] items-center">
               <div class="relative w-full -mr-[5px]">
                 <img
@@ -400,7 +407,7 @@
             </p>
           </div>
           <button
-            @click="addToPayment"
+            type="submit"
             :class="is_submit ? '' : 'opacity-50'"
             class="sm:h-16 h-10 sm:my-5 my-2 flex justify-center sm:text-md text-sm items-center w-full font-semibold text-white rounded-xl bg-[#5C0099]"
           >
@@ -412,7 +419,7 @@
           </h1>
         </div>
       </div>
-    </section>
+    </form>
   </main>
 </template>
 

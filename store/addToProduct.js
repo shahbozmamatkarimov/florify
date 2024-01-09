@@ -19,7 +19,8 @@ export const useAddToCartStore = defineStore("addtocart", () => {
   function totalPrice() {
     store.total_price = 0;
     for (let i = 0; i < store.products.length; i++) {
-      store.total_price += store.products[i].price;
+      console.log(store.products[i]);
+      store.total_price += store.products[i].price * store.products[i].client_quantity;
     }
   }
 

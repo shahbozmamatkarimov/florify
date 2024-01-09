@@ -1,5 +1,4 @@
 <template>
-  <button @click="store.comment_modal = true">Open comment modal</button>
   <main
     class="flex gap-32 container mx-auto xl:px-28 md:px-10 px-5 pb-[15rem] mt-[60px]"
   >
@@ -99,6 +98,7 @@
                   </h1>
                   <p>{{ i.product?.price }} сум x {{ i.quantity }} шт</p>
                   <button
+                    @click="sendCommentModal(i.product?.id)"
                     class="border-b whitespace-nowrap border-[#5C0099] right-5 absolute leading-[19px] text-[#5C0099]"
                   >
                     Оставить отзыв
@@ -258,7 +258,7 @@ function getOrders() {
     .then((res) => {
       store.isLoading = false;
       console.log(res);
-      store.orders = res.data?.data?.orders;
+      store.orders = res.data;
     })
     .catch((err) => {
       console.log(err);
@@ -266,7 +266,13 @@ function getOrders() {
     });
 }
 
+function sendCommentModal(id) {
+  store.comment_modal = true;
+  store.product_id = id;
+}
+
 function sendComment() {
+  store.comment_modal = false;
   const client_id = localStorage.getItem("user_id");
   const product_id = store.product_id;
   axios

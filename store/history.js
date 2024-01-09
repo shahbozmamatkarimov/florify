@@ -25,14 +25,14 @@ export const useHistoryStore = defineStore("watched", () => {
     axios
       .get(
         baseUrl +
-          `/watched/pagination/${client_id}/${store.pagination.currentPage}/${isLoading.store.limit}`
+          `/watched/pagination/${store.pagination.currentPage}/${isLoading.store.limit}`
       )
       .then((res) => {
         console.log(res.data);
         const client_id = localStorage.getItem("user_id");
         if (client_id) {
-          for (let i = 0; i < res.data.data.records?.length; i++) {
-            for (let like of res.data.data.records[i].product.likes) {
+          for (let i = 0; i < res?.data?.data?.records?.length; i++) {
+            for (let like of res.data?.data?.records[i]?.product?.likes) {
               if (like.client_id == client_id) {
                 res.data.data.records[i].product.likes = true;
                 break;
@@ -40,16 +40,16 @@ export const useHistoryStore = defineStore("watched", () => {
             }
           }
         } else {
-          for (let i = 0; i < res.data.data.records?.length; i++) {
-            for (let like of res.data.data.records[i].product.likes) {
+          for (let i = 0; i < res?.data?.data?.records?.length; i++) {
+            for (let like of res.data?.data?.records[i]?.product?.likes) {
               res.data.data.records[i].product.likes = false;
               break;
             }
           }
         }
         console.log(res);
-        store.allHistory.push(...res.data.data.records);
-        store.pagination = res.data.data.pagination;
+        store.allHistory.push(...res.data?.data?.records);
+        store.pagination = res.data?.data?.pagination;
         isLoading.removeLoading("getAllHistory");
       })
       .catch((err) => {
@@ -86,7 +86,7 @@ export const useHistoryStore = defineStore("watched", () => {
     isLoading.addLoading("getAllHistory");
     const client_id = localStorage.getItem("user_id");
     axios
-      .get(baseUrl + `/watched/pagination/${client_id}/1/25`)
+      .get(baseUrl + `/watched/pagination/1/25`)
       .then((res) => {
         console.log(res, '----------------------------------------------------------------');
         const client_id = localStorage.getItem("user_id");

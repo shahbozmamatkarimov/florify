@@ -82,11 +82,7 @@
                 useProduct.state.getById?.id
               }}</span>
             </h2>
-            <p
-              v-if="true"
-              @click="addToLikeProduct(true, useProduct.state.getById?.id)"
-              class="flex items-center gap-3 cupoi"
-            >
+            <p v-if="true" class="flex items-center gap-3 cupoi">
               <img
                 v-if="useProduct.state.getById?.likes !== true"
                 :id="useProduct.state.getById?.id"
@@ -96,7 +92,7 @@
                       index,
                       true,
                       useProduct.state.getById?.id,
-                      'history'
+                      'getById'
                     )
                 "
                 class="cursor-pointer md:h-6 duration-1000 md:w-6 h-4 w-4"
@@ -111,7 +107,7 @@
                       index,
                       false,
                       useProduct.state.getById?.id,
-                      'history'
+                      'getById'
                     )
                 "
                 :id="'id' + useProduct.state.getById?.id"
@@ -201,7 +197,7 @@
             Купить в 1 клик
           </button>
         </div>
-        <div>
+        <!-- <div>
           <h1 class="font-bold text-lg">Сocтaв</h1>
           <ul class="ul pl-8 leading-9">
             <li>Ваксфлауэр - 2 шт.</li>
@@ -209,7 +205,7 @@
             <li>Роза пионовидная - 11 шт.</li>
             <li>Упаковка дизайнерская - 1 шт.</li>
           </ul>
-        </div>
+        </div> -->
       </div>
 
       <!---------------------- about flower end -------------------------->
@@ -253,7 +249,9 @@
                       alt=""
                     />
                   </div>
-                  <p class="ml-4 text-[#999999]">25 апреля 2023 г.</p>
+                  <p class="ml-4 text-[#999999]">
+                    {{ setCommentDate(i.createdAt) }}
+                  </p>
                 </div>
                 <pre
                   class="mt-5 leading-6 break-words whitespace-pre-line h-[72px] overflow-hidden overflow-y-auto"
@@ -614,6 +612,8 @@ function addToCartSalesman(id) {
 function addToLike(index, isLiked, id, type) {
   if (type == "history") {
     useHistory.store.allHistory[index].product.likes = isLiked;
+  } else if (type == "getById") {
+    useProduct.state.getById.likes = isLiked;
   } else {
     useProduct.state.salesmanProducts[index].likes = isLiked;
   }
@@ -653,6 +653,8 @@ function addToLike(index, isLiked, id, type) {
         if (type == "history") {
           useHistory.store.allHistory[index].product.likes = !isLiked;
           authStore.store.loginModal = true;
+        } else if (type == "getById") {
+          useProduct.state.getById.likes = isLiked;
         } else {
           useProduct.state.salesmanProducts[index].likes = !isLiked;
           authStore.store.loginModal = true;
@@ -690,6 +692,41 @@ function getComments() {
     });
 }
 
+function setCommentDate(date) {
+  // Assuming i.createdAt is a valid timestamp or date object
+  var createdAt = new Date(date);
+
+  // Formatting the date as DD MMMM yyyy
+  var day = createdAt.getDate();
+  var month = getMonthName(createdAt.getMonth());
+  var year = createdAt.getFullYear();
+
+  var formattedDate = day + " " + month + " " + year + " г.";
+
+  console.log(formattedDate);
+  return formattedDate;
+
+  // Function to get the month name in Russian
+}
+
+function getMonthName(monthIndex) {
+  var months = [
+    "января",
+    "февраля",
+    "марта",
+    "апреля",
+    "мая",
+    "июня",
+    "июля",
+    "августа",
+    "сентября",
+    "октября",
+    "ноября",
+    "декабря",
+  ];
+  return months[monthIndex];
+}
+
 watch(
   () => store.slideStep,
   () => {
@@ -704,7 +741,6 @@ onMounted(() => {
   getQuantity();
   getComments();
   useProduct.getById(store.product_id);
-  useHistory.addToWatched(store.product_id);
   useHistory.getUserHistory();
 });
 </script>

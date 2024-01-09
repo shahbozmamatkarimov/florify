@@ -51,6 +51,9 @@ const initiatePayment = async (orderDetails) => {
         },
         onFail: function (reason, options) {
           console.log(reason, options, "options2");
+          if (reason == "User has cancelled") {
+            router.push("/orders");
+          }
           // fail
           // действие при неуспешной оплате
         },

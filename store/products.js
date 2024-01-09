@@ -255,21 +255,14 @@ export const useProductsStore = defineStore("products", () => {
         state.isLoading = false;
 
         if (client_id) {
-          for (let i = 0; i < state.getById?.length; i++) {
-            for (let like of state.getById[i]?.likes) {
-              if (like.client_id == client_id) {
-                state.getById[i].likes = true;
-                break;
-              }
-            }
-          }
-        } else {
-          for (let i = 0; i < state.getById?.length; i++) {
-            for (let like of state.getById[i]?.likes) {
-              state.getById[i].likes = false;
+          for (let like of state.getById?.likes) {
+            if (like?.client_id == client_id) {
+              state.getById.likes = true;
               break;
             }
           }
+        } else {
+          state.getById.likes = false;
         }
         console.log(state.getById);
       })
@@ -283,9 +276,7 @@ export const useProductsStore = defineStore("products", () => {
     isLoading.addLoading("getSalesmanProducts");
     const client_id = localStorage.getItem("user_id");
     axios
-      .get(
-        baseUrl + `/product/salesmanId/${salesmanId}/1/25/on_sale`
-      )
+      .get(baseUrl + `/product/salesmanId/${salesmanId}/1/25/on_sale`)
       .then((res) => {
         if (
           res.message === "Token vaqti tugagan!" ||
