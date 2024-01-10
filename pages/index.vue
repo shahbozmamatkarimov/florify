@@ -6,78 +6,90 @@
       :class="productStore.state.sliderStep == 0 ? '' : 'h-0'"
       class="min-w-[100%]"
     >
-      <section class="flex md:gap-7 gap-5 sm:py-10 py-5">
-        <Swiper
+      <section class="flex md:gap-7 gap-5">
+        <div
+          class="w-full bg-transparent h-full"
           v-if="!isLoading.isLoadingType('getAllProducts')"
-          :modules="[SwiperAutoplay, SwiperEffectCreative]"
-          :slides-per-view="1"
-          :loop="true"
-          :effect="'creative'"
-          spaceBetween="30"
-          :centeredSlides="true"
-          :autoplay="{
-            delay: 4000,
-            disableOnInteraction: false,
-          }"
-          :creative-effect="{
-            prev: {
-              shadow: false,
-              translate: ['-50%', 0, -1],
-            },
-            next: {
-              translate: ['100%', 0, 0],
-            },
-          }"
         >
-          <SwiperSlide
-            v-for="slide in productStore.state.categories"
-            :key="slide"
+          <Swiper
+            @slide-change-transition-end="slidechange"
+            :modules="[SwiperAutoplay, SwiperEffectCreative]"
+            :slides-per-view="1"
+            :loop="true"
+            :effect="'creative'"
+            spaceBetween="30"
+            :centeredSlides="true"
+            :autoplay="{
+              delay: 4000,
+              disableOnInteraction: false,
+            }"
+            :creative-effect="{
+              prev: {
+                shadow: false,
+                translate: ['-50%', 0, -1],
+              },
+              next: {
+                translate: ['100%', 0, 0],
+              },
+            }"
           >
-            <div
-              class="relative w-full carousel lg:h-[300px] md:h-60 sm:h-48 h-52 overflow-hidden rounded-xl"
+            <SwiperSlide
+              v-for="slide in productStore.state.categories"
+              :key="slide"
             >
-              <img
-                :src="baseUrlImage + slide.image"
-                class="absolute block w-full h-full object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                alt="..."
-              />
               <div
-                class="flex flex-col items-center text-center justify-center h-full w-1/2 absolute"
+                class="relative w-full carousel lg:h-[340px] md:h-[300px] sm:h-[250px] h-[200px] overflow-hidden rounded-[20px]"
               >
-                <p class="xl:text-5xl px-2 md:text-3xl sm:text-2xl text-xl">
-                  Букеты <br />
-                  <span class="whitespace-nowrap"
-                    >для <span class="text-[#B03A29]">Любимой</span></span
-                  >
-                </p>
-                <p
-                  class="flex items-center cursor-pointer gap-3 md:py-10 sm:py-4 py-2 font-medium md:text-xl sm:text-md text-sm"
+                <img
+                  :src="baseUrlImage + slide.image"
+                  class="absolute block w-full h-full object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                  alt="..."
+                />
+                <div
+                  class="flex flex-col items-center text-center justify-center h-full w-1/2 absolute"
                 >
-                  Подробнее
-                  <svg
-                    width="33"
-                    height="21"
-                    viewBox="0 0 33 21"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
+                  <p class="xl:text-5xl px-2 md:text-3xl sm:text-2xl text-xl">
+                    Букеты <br />
+                    <span class="whitespace-nowrap"
+                      >для <span class="text-[#B03A29]">Любимой</span></span
+                    >
+                  </p>
+                  <p
+                    class="flex items-center cursor-pointer gap-3 md:py-10 sm:py-4 py-2 font-medium md:text-xl sm:text-md text-sm"
                   >
-                    <path
-                      d="M0.555359 11C0.555359 11 36.5554 11 32.0554 11M32.0554 11C27.5554 11 18.5554 9 18.5554 1M32.0554 11C27.5554 10.8333 18.5554 12.8 18.5554 20"
-                      stroke="#454545"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
-                </p>
+                    Подробнее
+                    <svg
+                      width="33"
+                      height="21"
+                      viewBox="0 0 33 21"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0.555359 11C0.555359 11 36.5554 11 32.0554 11M32.0554 11C27.5554 11 18.5554 9 18.5554 1M32.0554 11C27.5554 10.8333 18.5554 12.8 18.5554 20"
+                        stroke="#454545"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </p>
+                </div>
               </div>
-            </div>
-          </SwiperSlide>
-        </Swiper>
+            </SwiperSlide>
+          </Swiper>
+          <div class="flex justify-center items-center mt-4 mb-11 gap-[10px]">
+            <p
+              :class="store.slideStep == i ? 'bg-[#323232]' : 'bg-[#D9D9D9]'"
+              class="h-[10px] w-[10px] rounded-full"
+              v-for="i in productStore.state.categories?.length"
+            ></p>
+          </div>
+        </div>
         <div
           v-else
-          class="relative w-full carousel animate-pulse lg:h-[300px] bg-gray-200 md:h-60 sm:h-48 h-52 overflow-hidden rounded-xl"
+          class="relative w-full carousel animate-pulse bg-gray-200 lg:h-[340px] md:h-[300px] sm:h-[250px] h-[200px] overflow-hidden rounded-[20px]"
         ></div>
-        <div
+        <!-- <div
           v-if="
             !isLoading.isLoadingType('getAdvertising') &&
             productStore.state.addvertising?.image
@@ -102,7 +114,22 @@
             !productStore.state.addvertising?.image
           "
           class="relative animate-pulse bg-gray-200 w-[320px] lg:min-w-[320px] md:min-w-[250px] min-w-[200px] lg:h-[300px] rounded-[10px] md:h-60 sm:h-48 sm:block hidden"
-        ></div>
+        ></div> -->
+      </section>
+      <section class="flex items-center overflow-hidden overflow-x-auto mb-10 gap-4">
+        <div
+          v-for="i in 10"
+          class="relative rounded-2xl overflow-hidden h-[200px] min-w-[200px] w-[200px]"
+        >
+          <h1 class="w-1/2 absolute top-5 left-5 text-lg leading-[21px]">
+            Hовый год
+          </h1>
+          <img
+            class="h-full w-full object-cover"
+            src="@/assets/image/image1.png"
+            alt=""
+          />
+        </div>
       </section>
 
       <placeholderMain v-if="isLoading.isLoadingType('getAllProducts')" />
@@ -236,6 +263,18 @@ const baseUrlImage = ref(runtimeConfig.public.baseURL?.slice(0, -3));
 const router = useRouter();
 isLoading.addLoading("getAllProducts");
 isLoading.addLoading("getAdvertising");
+
+const store = reactive({
+  slideStep: 1,
+});
+
+function slidechange() {
+  if (store.slideStep != productStore.state.categories?.length) {
+    store.slideStep++;
+  } else {
+    store.slideStep = 1;
+  }
+}
 
 function paginationNext(id) {
   const pageInfo = productStore.state.products[id]?.data?.pagination;

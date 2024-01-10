@@ -17,10 +17,14 @@ pre {
   font-family: "HarmoniaSansProCyr", sans-serif;
 }
 
+body, html {
+  background: #F9F9F9;
+}
+
 .swiper {
   width: 100%;
   height: 100%;
-  border-radius: 12px;
+  border-radius: 20px;
 }
 
 .swiper-slide {
