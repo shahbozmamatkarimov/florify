@@ -89,7 +89,7 @@
               <div v-for="i in i.items" class="flex gap-4 p-5 relative">
                 <img
                   class="h-[100px] w-[100px] rounded-[4px] object-cover"
-                  src="@/assets/images/carousel.png"
+                  :src="baseUrlImage + i.product?.images[0]?.image"
                   alt=""
                 />
                 <div class="space-y-[10px]">

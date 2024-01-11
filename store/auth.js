@@ -86,8 +86,7 @@ export const useAuthStore = defineStore("isLogged", () => {
       })
       .catch((err) => {
         console.log(err);
-        store.loginModal = true;
-        store.otpModal = false;
+        store.isLoading = false;
       });
   }
 

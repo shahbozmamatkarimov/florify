@@ -38,46 +38,19 @@
               :key="slide"
             >
               <div
-                class="relative w-full carousel lg:h-[340px] md:h-[300px] sm:h-[250px] h-[200px] overflow-hidden rounded-[20px]"
+                class="relative w-full carousel lg:h-[340px] md:h-[300px] sm:h-[250px] h-[200px] min-h-[120px] overflow-hidden md:rounded-[20px] rounded-[10px]"
               >
                 <img
                   :src="baseUrlImage + slide.image"
                   class="absolute block w-full h-full object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
                   alt="..."
                 />
-                <div
-                  class="flex flex-col items-center text-center justify-center h-full w-1/2 absolute"
-                >
-                  <p class="xl:text-5xl px-2 md:text-3xl sm:text-2xl text-xl">
-                    Букеты <br />
-                    <span class="whitespace-nowrap"
-                      >для <span class="text-[#B03A29]">Любимой</span></span
-                    >
-                  </p>
-                  <p
-                    class="flex items-center cursor-pointer gap-3 md:py-10 sm:py-4 py-2 font-medium md:text-xl sm:text-md text-sm"
-                  >
-                    Подробнее
-                    <svg
-                      width="33"
-                      height="21"
-                      viewBox="0 0 33 21"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M0.555359 11C0.555359 11 36.5554 11 32.0554 11M32.0554 11C27.5554 11 18.5554 9 18.5554 1M32.0554 11C27.5554 10.8333 18.5554 12.8 18.5554 20"
-                        stroke="#454545"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                    </svg>
-                  </p>
-                </div>
               </div>
             </SwiperSlide>
           </Swiper>
-          <div class="flex justify-center items-center mt-4 mb-11 gap-[10px]">
+          <div
+            class="md:flex hidden justify-center items-center mt-4 mb-11 gap-[10px]"
+          >
             <p
               :class="store.slideStep == i ? 'bg-[#323232]' : 'bg-[#D9D9D9]'"
               class="h-[10px] w-[10px] rounded-full"
@@ -85,10 +58,20 @@
             ></p>
           </div>
         </div>
-        <div
-          v-else
-          class="relative w-full carousel animate-pulse bg-gray-200 lg:h-[340px] md:h-[300px] sm:h-[250px] h-[200px] overflow-hidden rounded-[20px]"
-        ></div>
+        <div class="w-full" v-else>
+          <div
+            class="relative w-full carousel animate-pulse bg-gray-200 lg:h-[340px] md:h-[300px] sm:h-[250px] h-[200px] overflow-hidden rounded-[20px]"
+          ></div>
+          <div
+            class="md:flex hidden justify-center items-center mt-4 mb-11 gap-[10px]"
+          >
+            <p
+              :class="i == 1 ? 'bg-[#323232]' : 'bg-[#D9D9D9]'"
+              class="h-[10px] w-[10px] rounded-full"
+              v-for="i in 5"
+            ></p>
+          </div>
+        </div>
         <!-- <div
           v-if="
             !isLoading.isLoadingType('getAdvertising') &&
@@ -116,20 +99,42 @@
           class="relative animate-pulse bg-gray-200 w-[320px] lg:min-w-[320px] md:min-w-[250px] min-w-[200px] lg:h-[300px] rounded-[10px] md:h-60 sm:h-48 sm:block hidden"
         ></div> -->
       </section>
-      <section class="flex items-center overflow-hidden overflow-x-auto mb-10 gap-4">
+      <section
+        v-if="productStore.state.categories?.length"
+        class="flex items-center overflow-hidden overflow-x-auto mb-10 md:mt-0 mt-6 gap-4"
+      >
         <div
-          v-for="i in 10"
-          class="relative rounded-2xl overflow-hidden h-[200px] min-w-[200px] w-[200px]"
+          v-for="(i, index) in productStore.state.categories"
+          @click="productStore.getOneProduct(i.id, index + 1)"
+          class="relative cursor-pointer md:rounded-2xl rounded-lg overflow-hidden md:h-[200px] md:min-w-[200px] md:w-[200px] h-[100px] min-w-[100px] w-[100px]"
         >
-          <h1 class="w-1/2 absolute top-5 left-5 text-lg leading-[21px]">
-            Hовый год
+          <h1
+            v-if="$t('uz') == 'Уз'"
+            class="w-1/2 absolute break-words top-5 left-5 md:text-lg text-sm leading-[21px]"
+          >
+            {{ i.ru }}
+          </h1>
+          <h1
+            v-else
+            class="w-1/2 absolute break-words top-5 left-5 md:text-lg text-sm leading-[21px]"
+          >
+            {{ i.uz }}
           </h1>
           <img
             class="h-full w-full object-cover"
-            src="@/assets/image/image1.png"
+            :src="baseUrlImage + i.image"
             alt=""
           />
         </div>
+      </section>
+      <section
+        v-else
+        class="flex items-center overflow-hidden overflow-x-auto mb-10 md:mt-0 mt-6 gap-4"
+      >
+        <div
+          v-for="i in 10"
+          class="relative bg-gray-200 animate-pulse cursor-pointer md:rounded-2xl rounded-lg overflow-hidden md:h-[200px] md:min-w-[200px] md:w-[200px] h-[100px] min-w-[100px] w-[100px]"
+        ></div>
       </section>
 
       <placeholderMain v-if="isLoading.isLoadingType('getAllProducts')" />
@@ -165,49 +170,71 @@
               v-for="(product, index) in productStore.state.products[i.id]?.data
                 ?.records"
               :key="product.id"
-              class="card max-w-sm hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
+              class="relative card max-w-sm md:w-full w-[160px] md:p-0 p-[6px] hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
             >
               <img
                 @click="$router.push(`/flowers/${product.id}`)"
-                class="img rounded-t-lg 2xl:h-80 xl:h-64 cursor-pointer md:h-52 sm:h-44 h-44 w-full object-cover"
+                class="img md:rounded-b-none rounded-b-lg rounded-t-lg 2xl:h-80 xl:h-64 cursor-pointer md:h-52 sm:h-36 h-44 w-full object-cover"
                 :src="`${baseUrlImage}${product?.images[0]?.image}`"
                 alt=""
               />
-              <div class="md:p-5 p-3">
+              <div class="md:p-5 p-[6px]">
                 <h5
-                  class="mb-2 sm:text-xl text-sm text-[#1F9D6D] tracking-tight font-medium"
+                  class="mb-4 sm:text-xl text-sm text-[#1F9D6D] tracking-tight font-medium"
                 >
                   {{ product.name }}
                 </h5>
+                <div
+                  class="flex gap-1.5 mb-5 items-center bg-[#FCEAC9B2] px-2 py-1 rounded-[5px] max-w-fit"
+                >
+                  <img
+                    class="md:min-w-[12px] min-w-[9px] -mt-[1px] md:h-[14px] h-[11px]"
+                    src="@/assets/svg/cart.svg"
+                    alt=""
+                  />
+                  <p class="md:text-lg text-[10px] leading-3">
+                    {{ product.number_of_sales }} ta buyurtma
+                  </p>
+                </div>
                 <div class="flex justify-between items-center">
                   <p class="font-semibold sm:text-lg text-xs whitespace-nowrap">
                     <span class="md:inline-block hidden"></span>
                     {{ product.price }}
                     <span class="sm:inline hidden">{{ $t("home.sum") }}</span>
                   </p>
-                  <div class="flex items-center sm:gap-3 gap-1">
-                    <img
+                  <div class="flex rounded-full sm:gap-3 gap-1">
+                    <div
                       v-if="product.likes !== true"
                       :id="product.id"
                       @click="() => addToLike(index, i.id, true, product.id)"
-                      class="cursor-pointer md:h-6 duration-1000 md:w-6 h-4 w-4"
-                      src="@/assets/svg/heart.svg"
-                      alt=""
-                    />
-                    <img
+                      class="absolute cursor-pointer duration-1000 flex top-5 right-5 bg-white rounded-full items-center justify-center md:h-9 md:w-9 h-8 w-8"
+                    >
+                      <img
+                        class="md:h-5 md:w-5 h-4 w-4"
+                        src="@/assets/svg/heart.svg"
+                        alt=""
+                      />
+                    </div>
+                    <div
                       v-else
                       @click="() => addToLike(index, i.id, false, product.id)"
                       :id="'id' + product.id"
-                      class="cursor-pointer duration-1000 md:h-6 md:w-6 h-4 w-4"
-                      src="@/assets/svg/redHeart.svg"
-                      alt=""
-                    />
-                    <img
-                      @click="() => addToCart(product.id)"
-                      class="cursor-pointer sm:h-5 sm:w-5 md:max-h-6 md:max-w-6 max-h-4 max-w-4"
-                      src="@/assets/svg/cart.svg"
-                      alt=""
-                    />
+                      class="absolute cursor-pointer duration-1000 flex top-5 right-5 bg-white rounded-full items-center justify-center md:h-9 md:w-9 h-8 w-8"
+                    >
+                      <img
+                        class="duration-1000 md:h-5 md:w-5 h-4 w-4"
+                        src="@/assets/svg/redHeart.svg"
+                        alt=""
+                      />
+                    </div>
+                    <div class="border border-[#EEEEEE] rounded-full p-1">
+                      <img
+                        @click="() => addToCart(product.id)"
+                        class="cursor-pointer sm:h-5 sm:w-5 md:max-h-6 md:max-w-6 max-h-4 max-w-4"
+                        src="@/assets/svg/cart.svg"
+                        alt=""
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -364,6 +391,10 @@ watch(
       image.style.transform = `translateX(-${
         (productStore.state.categories?.length + 1) * 100
       }%)`;
+    } else {
+      const image = document.querySelector(".mainSlider");
+      image.style.transform = `translateX(0%)`;
+      productStore.state.sliderStep = 0;
     }
   }
 );

@@ -1,12 +1,12 @@
 <template>
-  <div class="bg-[#F9F9F9]">
+  <div>
     <header>
       <Header />
     </header>
     <nav>
       <Navbar />
     </nav>
-    <div class="overflow-hidden max-w-screen container mx-auto">
+    <div class="overflow-hidden mb:pb-0 pb-20 md:mt-[94px] mt-[160px] max-w-screen container mx-auto">
       <!-- <section
         v-if="$router.currentRoute.value.fullPath == '/'"
         class="container mx-auto xl:px-28 md:px-10 px-5 pb-5"
@@ -84,6 +84,7 @@
       <slot />
     </div>
     <Footer class="md:block hidden" />
+    <MobileFooter class="md:hidden block" />
 
     <div
       @click="closeModal"

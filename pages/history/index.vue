@@ -33,49 +33,71 @@
           <div
             v-for="(i, index) in useHistory.store.allHistory"
             :key="i.id"
-            class="card max-w-sm hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
+            class="relative card max-w-sm md:w-full w-[160px] md:p-0 p-[6px] hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
           >
             <img
               @click="$router.push(`./flowers/${i.product?.id}`)"
-              class="img rounded-t-lg 2xl:h-80 xl:h-64 cursor-pointer md:h-52 sm:h-44 h-44 w-full object-cover"
+              class="img md:rounded-b-none rounded-b-lg rounded-t-lg 2xl:h-80 xl:h-64 cursor-pointer md:h-52 sm:h-36 h-44 w-full object-cover"
               :src="`${baseUrlImage}${i.product?.images[0]?.image}`"
               alt=""
             />
-            <div class="md:p-5 p-3">
+            <div class="md:p-5 p-[6px]">
               <h5
-                class="mb-2 sm:text-xl text-sm text-[#1F9D6D] tracking-tight font-medium"
+                class="mb-4 sm:text-xl text-sm text-[#1F9D6D] tracking-tight font-medium"
               >
                 {{ i.product?.name }}
               </h5>
+              <div
+                class="flex gap-1.5 mb-5 items-center bg-[#FCEAC9B2] px-2 py-1 rounded-[5px] max-w-fit"
+              >
+                <img
+                  class="md:min-w-[12px] min-w-[9px] -mt-[1px] md:h-[14px] h-[11px]"
+                  src="@/assets/svg/cart.svg"
+                  alt=""
+                />
+                <p class="md:text-lg text-[10px] leading-3">
+                  {{ i.product.number_of_sales }} ta buyurtma
+                </p>
+              </div>
               <div class="flex justify-between items-center">
                 <p class="font-semibold sm:text-lg text-xs whitespace-nowrap">
                   <span class="md:inline-block hidden"></span>
-                  {{ i.product?.price }}
+                  {{ i.price }}
                   <span class="sm:inline hidden">{{ $t("home.sum") }}</span>
                 </p>
-                <div class="flex items-center sm:gap-3 gap-1">
-                  <img
+                <div class="flex rounded-full sm:gap-3 gap-1">
+                  <div
                     v-if="i.product.likes !== true"
                     :id="i.product.id"
                     @click="() => addToLike(index, true, i.product.id)"
-                    class="cursor-pointer md:h-6 duration-1000 md:w-6 h-4 w-4"
-                    src="@/assets/svg/heart.svg"
-                    alt=""
-                  />
-                  <img
+                    class="absolute cursor-pointer duration-1000 flex top-5 right-5 bg-white rounded-full items-center justify-center md:h-9 md:w-9 h-8 w-8"
+                  >
+                    <img
+                      class="md:h-5 md:w-5 h-4 w-4"
+                      src="@/assets/svg/heart.svg"
+                      alt=""
+                    />
+                  </div>
+                  <div
                     v-else
                     @click="() => addToLike(index, false, i.product.id)"
                     :id="'id' + i.product.id"
-                    class="cursor-pointer duration-1000 md:h-6 md:w-6 h-4 w-4"
-                    src="@/assets/svg/redHeart.svg"
-                    alt=""
-                  />
-                  <img
+                    class="absolute cursor-pointer duration-1000 flex top-5 right-5 bg-white rounded-full items-center justify-center md:h-9 md:w-9 h-8 w-8"
+                  >
+                    <img
+                      class="duration-1000 md:h-5 md:w-5 h-4 w-4"
+                      src="@/assets/svg/redHeart.svg"
+                      alt=""
+                    />
+                  </div>
+                  <div class="border border-[#EEEEEE] rounded-full p-1">
+                    <img
                     @click="() => addToCart(i.product.id)"
-                    class="cursor-pointer sm:h-5 sm:w-5 md:max-h-6 md:max-w-6 max-h-4 max-w-4"
-                    src="@/assets/svg/cart.svg"
-                    alt=""
-                  />
+                      class="cursor-pointer sm:h-5 sm:w-5 md:max-h-6 md:max-w-6 max-h-4 max-w-4"
+                      src="@/assets/svg/cart.svg"
+                      alt=""
+                    />
+                  </div>
                 </div>
               </div>
             </div>

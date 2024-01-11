@@ -1,6 +1,6 @@
 <template>
   <main>
-    <nav class="navbar container mx-auto xl:px-28 md:px-10 px-5 mt-[70px]">
+    <!-- <nav class="navbar container mx-auto xl:px-28 md:px-10 px-5 mt-[70px]">
       <div class="grid grid-cols-5 sm:py-5 py-3 sm:gap-6 gap-2">
         <form
           class="items-center grid md:grid-cols-3 grid-cols-5 sm:gap-6 gap-2 relative md:col-span-3 col-span-5"
@@ -63,7 +63,6 @@
               :placeholder="$t('navbar.search')"
               required
             />
-            <!-- {{ store.searchedData }} -->
             <button
               type="submit"
               class="flex justify-center items-center border border-gray-300 border-l-0 absolute top-0 right-0 h-full p-2.5 font-medium bg-[#F3F3F3] rounded-r-xl sm:w-16 w-10"
@@ -220,7 +219,7 @@
           </li>
         </ul>
       </div>
-    </nav>
+    </nav> -->
 
     <el-dialog
       v-if="isMount"
@@ -434,6 +433,148 @@
         </h1>
       </div>
     </el-drawer>
+
+    <!-- menu drawer -->
+    <el-drawer
+      v-if="isMount"
+      class="sm:min-w-[400px] min-w-full px-5 py-5 menu_drawer"
+      v-model="productStore.state.menu"
+      :with-header="false"
+    >
+      <img
+        @click="productStore.state.menu = false"
+        class="h-6 w-6 rounded-lg object-cover cursor-pointer"
+        src="../assets/svg/x.svg"
+        alt="x"
+      />
+      <ul class="mt-10 space-y-6 font-medium leading-[19px]">
+        <li>
+          <router-link
+            class="hover:text-[#5C0099] hover:font-semibold"
+            to="/favorites"
+            >{{ $t("navbar.favorites") }}</router-link
+          >
+        </li>
+        <li>
+          <router-link
+            class="hover:text-[#5C0099] hover:font-semibold"
+            to="/orders"
+            >{{ $t("navbar.orders") }}</router-link
+          >
+        </li>
+        <li>
+          <router-link
+            class="hover:text-[#5C0099] hover:font-semibold"
+            to="/history"
+            >{{ $t("navbar.watched") }}</router-link
+          >
+        </li>
+        <li>
+          <router-link
+            class="hover:text-[#5C0099] hover:font-semibold"
+            to="/about"
+            >{{ $t("about") }}</router-link
+          >
+        </li>
+        <li>
+          <router-link
+            class="hover:text-[#5C0099] hover:font-semibold"
+            to="/buy_and_order"
+            >{{ $t("payment_and_delivery") }}</router-link
+          >
+        </li>
+        <li>
+          <router-link
+            class="hover:text-[#5C0099] hover:font-semibold"
+            to="/quality_assurance"
+            >{{ $t("quality_assurance") }}</router-link
+          >
+        </li>
+        <li>
+          <router-link
+            class="hover:text-[#5C0099] hover:font-semibold"
+            to="/contact"
+            >{{ $t("contact") }}</router-link
+          >
+        </li>
+        <li
+          class="flex lang_select cursor-pointer items-center gap-2 hover:text-[#5C0099] hover:font-semibold"
+        >
+          <div class="xl:flex hidden items-center">
+            <el-dropdown @command="(command) => ($i18n.locale = command)">
+              <div class="text-white outline-none cursor-pointer" @click.prevent>
+                <p
+                  v-if="$t('en') === 'In'"
+                  class="flex items-center text-black leading-4 gap-2"
+                >
+                  Русский
+                  <svg
+                    width="18"
+                    height="19"
+                    viewBox="0 0 18 19"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M7.125 5L11.625 9.5L7.125 14"
+                      stroke="black"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </p>
+                <p
+                  v-else-if="$t('en') === 'Ан'"
+                  class="flex items-center text-black leading-4 gap-2"
+                >
+                  Uzbekcha
+                  <svg
+                    width="18"
+                    height="19"
+                    viewBox="0 0 18 19"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M7.125 5L11.625 9.5L7.125 14"
+                      stroke="black"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </p>
+              </div>
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <el-dropdown-item command="uz">
+                    <div class="flex gap-2">
+                      <img
+                        class="w-6 h-6 object-cover rounded-full"
+                        src="../assets/lang/uz.svg"
+                        alt=""
+                      />
+                      Uzbekcha
+                    </div>
+                  </el-dropdown-item>
+                  <el-dropdown-item command="ru">
+                    <div class="flex w-12 gap-2">
+                      <img
+                        class="w-6 h-6 object-cover rounded-full"
+                        src="../assets/lang/ru.svg"
+                        alt=""
+                      />
+                      Русский
+                    </div>
+                  </el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
+          </div>
+        </li>
+      </ul>
+    </el-drawer>
   </main>
 </template>
 
@@ -591,6 +732,11 @@ onBeforeMount(() => {
   }
 });
 
+watch(
+  () => router.currentRoute.value,
+  () => (productStore.state.menu = false)
+);
+
 onMounted(() => {
   isMount.value = true;
   productStore.getAllProducts();
@@ -609,9 +755,17 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+.router-link-exact-active {
+  color: #5c0099;
+  font-weight: bold;
+}
 .category::-webkit-scrollbar {
   width: 10px;
   height: 10px;
+}
+
+.lang_select:hover svg {
+  transform: rotate(90deg);
 }
 
 @media (max-width: 500px) {
@@ -628,6 +782,12 @@ onMounted(() => {
 
   .location {
     height: 15px;
+  }
+}
+
+@media (max-width: 400px) {
+  .menu_drawer {
+    min-width: 100% !important;
   }
 }
 

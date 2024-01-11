@@ -1,47 +1,124 @@
 <template>
-  <div class="fixed top-0 z-50 w-full">
+  <div class="fixed top-0 z-50 w-full -mt-[1px]">
     <div class="flex flex-wrap h-[70px]">
       <section class="relative w-full mx-auto">
+        <nav class="flex items-center md:hidden h-[76px] bg-white">
+          <div class="flex items-center justify-between container md:px-10 px-5 mx-auto">
+            <div class="flex items-center gap-2">
+              <img
+                class="lg:hidden block logo h-[40px] cursor-pointer"
+                src="../public/logo_mobile.svg"
+                alt="logo"
+              />
+              <div>
+                <h1>Florify</h1>
+                <p class="text-xs">Ilovadan oson foydalaning</p>
+              </div>
+            </div>
+            <button class="px-[14px] h-9 bg-[#5C0099] text-white rounded-lg">
+              Yuklab olish
+            </button>
+          </div>
+        </nav>
         <!-- navbar -->
-        <nav class="flex h-[70px] justify-between bg-white w-screen">
+        <nav class="flex h-[70px] -mt-[1px] justify-between bg-white w-screen">
           <div
             class="container mx-auto xl:px-28 md:px-10 px-5 py-6 flex w-full items-center justify-between"
           >
             <ul class="flex justify-between w-full px-4 mx-auto">
-              <li class="w-full max-w-fit">
+              <li class="md:block hidden w-full max-w-fit">
                 <router-link to="/">
                   <img
-                    class="logo h-[40px] cursor-pointer"
+                    class="lg:block hidden logo h-[40px] cursor-pointer"
                     src="../public/icon.svg"
+                    alt="logo"
+                  />
+                  <img
+                    class="lg:hidden block logo h-[40px] cursor-pointer"
+                    src="../public/logo_mobile.svg"
                     alt="logo"
                   />
                 </router-link>
               </li>
-              <li class="flex items-center w-full max-w-fit gap-2">
+              <li class="xl:flex hidden items-center w-full max-w-fit gap-2">
                 <img src="@/assets/svg/locate.svg" alt="" />
                 <p>Город:</p>
                 <p class="leading-5 border-b border-black">Ташкент</p>
               </li>
-              <li class="flex max-w-fit">
-                <img class="-mr-8 z-10" src="@/assets/svg/search.svg" alt="" />
+              <li class="relative flex sm:max-w-fit sm:w-auto w-full">
+                <img class="sm:-mr-8 -mr-11 z-10" src="@/assets/svg/search.svg" alt="" />
                 <input
+                  v-model="useProduct.search.search"
+                  @input="useProduct.searchProduct"
+                  @focus="focused('product')"
                   type="text"
-                  placeholder="Цветы и букеты"
-                  class="w-[400px] pl-11 text-[#454545] text-lg rounded-lg bg-[#F4F7F9] border-none outline-none ring-0"
+                  :placeholder="$t('navbar.search')"
+                  class="sm:w-[400px] w-full search_input sm:pl-11 pl-14 md:h-[46px] h-[50px] text-[#454545] text-lg rounded-lg bg-[#F4F7F9] border-none outline-none ring-0"
                 />
+                <div
+                  v-if="useProduct.state.isSearchingModal"
+                  v-loading="isLoading.isLoadingType('getSearchProducts')"
+                  class="p-6 mt-12 -ml-3 absolute z-50 w-[400px] bg-white rounded-b-xl"
+                >
+                  <h1 class="text-xl leading-6 font-medium">Популярное</h1>
+                  <div
+                    class="space-y-4 mt-6 max-h-[calc(100vh_-_250px)] overflow-hidden overflow-y-auto"
+                  >
+                    <div
+                      v-for="i in useProduct.state.search_products"
+                      @click="clickedModal('product', i.id)"
+                      class="flex items-center cursor-pointer gap-3 border-b pb-4 border-[#E6E6E6]"
+                    >
+                      <img
+                        class="h-20 w-20 rounded-[10px] object-cover"
+                        :src="baseUrlImage + i.images[0].image"
+                        alt=""
+                      />
+                      <div class="space-y-1 font-medium">
+                        <p class="leading-[21px] text-[#5C0099] text-lg">
+                          {{ i.name }}
+                        </p>
+                        <p class="leading-[19px]">{{ i.id }}</p>
+                      </div>
+                    </div>
+                    <p
+                      v-if="
+                        useProduct.search.pagination.currentPage <
+                        useProduct.search.pagination.total_pages
+                      "
+                      @click="showSearchRes"
+                      class="text-[#5C0099] text-xl leading-6 font-medium"
+                    >
+                      Показать все результаты ({{
+                        useProduct.search.pagination.total_count -
+                        useProduct.search.pagination.currentPage * 10
+                      }})
+                    </p>
+                  </div>
+                </div>
               </li>
-              <ul class="flex items-center max-w-fit w-full gap-10">
-                <li class="flex items-center w-full max-w-fit gap-3">
+              <ul
+                class="flex cursor-pointer items-center max-w-fit w-full gap-10"
+              >
+                <li
+                  @click="authStore.store.loginModal = true"
+                  class="sm:flex hidden items-center w-full max-w-fit gap-3"
+                >
                   <img src="@/assets/svg/login.svg" alt="" />
-                  <p>Вход</p>
+                  <p class="2xl:block hidden">{{ $t("login") }}</p>
                 </li>
-                <li class="flex items-center w-full max-w-fit gap-3">
+                <li
+                  @click="addToCart"
+                  class="sm:flex hidden cursor-pointer items-center w-full max-w-fit gap-3"
+                >
                   <img src="@/assets/svg/cartWhite.svg" alt="" />
-                  <p>Kорзина</p>
+                  <p class="2xl:block hidden">{{ $t("basket") }}</p>
                 </li>
-                <li class="flex items-center w-full max-w-fit gap-3">
-                  <img src="@/assets/svg/menu.svg" alt="" />
-                  <p>Bсе</p>
+                <li @click="useProduct.state.menu = true"
+                  class="flex cursor-pointer items-center w-full max-w-fit gap-3"
+                >
+                  <img class="sm:h-6 sm:w-6 sm:p-0 p-2 h-12 w-12" src="@/assets/svg/menu.svg" alt="" />
+                  <p class="2xl:block hidden">{{ $t("navbar.all") }}</p>
                 </li>
               </ul>
             </ul>
@@ -49,222 +126,43 @@
         </nav>
       </section>
     </div>
-
-    <section>
-      <div class="fixed top-20 z-50 w-full">
-        <div class="flex flex-wrap h-[70px]">
-          <section class="relative mx-auto">
-            <!-- navbar -->
-            <nav
-              class="navbar flex h-[70px] justify-between bg-gray-900 text-white w-screen"
-            >
-              <div
-                class="container mx-auto xl:px-28 md:px-10 px-5 py-6 flex w-full items-center justify-between"
-              >
-                <router-link to="/">
-                  <img
-                    class="logo h-[40px] cursor-pointer"
-                    src="../public/logo.webp"
-                    alt="logo"
-                  />
-                </router-link>
-                <!-- Nav Links -->
-                <ul
-                  class="hidden xl:flex px-4 text-lg mx-auto font-semibold font-heading space-x-12"
-                >
-                  <li>
-                    <router-link class="hover:text-gray-200" to="/about">{{
-                      $t("about")
-                    }}</router-link>
-                  </li>
-                  <li>
-                    <router-link
-                      class="hover:text-gray-200"
-                      to="/buy_and_order"
-                      >{{ $t("payment_and_delivery") }}</router-link
-                    >
-                  </li>
-                  <li>
-                    <router-link
-                      class="hover:text-gray-200"
-                      to="/quality_assurance"
-                      >{{ $t("quality_assurance") }}</router-link
-                    >
-                  </li>
-                  <li>
-                    <router-link class="hover:text-gray-200" to="/contact">{{
-                      $t("contact")
-                    }}</router-link>
-                  </li>
-                </ul>
-                <!-- Header Icons -->
-                <div class="flex items-center">
-                  <div
-                    @click="addToCart"
-                    class="flex items-center gap-2 cursor-pointer sm:mr-7 mr-3"
-                  >
-                    <img src="../assets/svg/cartWhite.svg" alt="cart" />
-                    <p
-                      class="font-semibold hover:text-gray-200 sm:block hidden"
-                    >
-                      {{ $t("basket") }}
-                    </p>
-                  </div>
-                  <div
-                    @click="authStore.store.loginModal = true"
-                    class="sm:flex hidden items-center gap-2 xl:mr-0 mr-10 hover:text-gray-200 cursor-pointer"
-                  >
-                    <img src="../assets/svg/user.svg" alt="" />
-                    <p class="font-semibold sm:block hidden">
-                      {{ $t("login") }}
-                    </p>
-                  </div>
-                  <div class="xl:flex hidden items-center ml-7">
-                    <el-dropdown
-                      @command="(command) => ($i18n.locale = command)"
-                    >
-                      <div class="text-white cursor-pointer" @click.prevent>
-                        <p
-                          v-if="$t('en') === 'In'"
-                          class="flex items-center leading-4 w-12 gap-2"
-                        >
-                          <img
-                            class="w-6 h-6 object-cover rounded-full"
-                            src="../assets/lang/uz.svg"
-                            alt=""
-                          />
-                          {{ $t("uz") }}
-                        </p>
-                        <p
-                          v-else-if="$t('en') === 'Ан'"
-                          class="flex items-center leading-4 w-12 gap-2"
-                        >
-                          <img
-                            class="w-6 h-6 object-cover rounded-full"
-                            src="../assets/lang/ru.svg"
-                            alt=""
-                          />
-                          {{ $t("ru") }}
-                        </p>
-                        <p
-                          v-else
-                          class="flex items-center leading-4 w-12 gap-2"
-                        >
-                          <img
-                            class="w-6 h-6 object-cover rounded-full"
-                            src="../assets/lang/en.svg"
-                            alt=""
-                          />
-                          {{ $t("en") }}
-                        </p>
-                      </div>
-                      <template #dropdown>
-                        <el-dropdown-menu>
-                          <el-dropdown-item command="uz">
-                            <div class="flex w-12 gap-2">
-                              <img
-                                class="w-6 h-6 object-cover rounded-full"
-                                src="../assets/lang/uz.svg"
-                                alt=""
-                              />
-                              {{ $t("uz") }}
-                            </div>
-                          </el-dropdown-item>
-                          <el-dropdown-item command="en">
-                            <div class="flex w-12 gap-2">
-                              <img
-                                class="w-6 h-6 object-cover rounded-full"
-                                src="../assets/lang/en.svg"
-                                alt=""
-                              />
-                              {{ $t("en") }}
-                            </div>
-                          </el-dropdown-item>
-                          <el-dropdown-item command="ru">
-                            <div class="flex w-12 gap-2">
-                              <img
-                                class="w-6 h-6 object-cover rounded-full"
-                                src="../assets/lang/ru.svg"
-                                alt=""
-                              />
-                              {{ $t("ru") }}
-                            </div>
-                          </el-dropdown-item>
-                        </el-dropdown-menu>
-                      </template>
-                    </el-dropdown>
-                  </div>
-                  <div>
-                    <!-- Responsive navbar -->
-                    <p
-                      @click="
-                        store.toggle = !store.toggle;
-                        store.lang = false;
-                      "
-                      class="navbar-burger hover:text-gray-200 text-3xl pt-2 cursor-pointer self-center xl:hidden"
-                    >
-                      <i class="bx bx-menu"></i>
-                    </p>
-                    <ul
-                      :class="store.toggle ? 'h-0' : 'h-56'"
-                      class="overflow-hidden duration-500 container xl:hidden flex flex-col w-full right-0 left-0 top-[70px] bg-white text-gray-700 shadow-md rounded z-50 absolute mx-auto font-semibold font-heading"
-                    >
-                      <li
-                        class="flex justify-between font-semibold items-center"
-                      >
-                        <router-link
-                          @click="store.toggle = true"
-                          class="w-full hover:bg-gray-200 p-3 rounded-md inline-block"
-                          to="/about"
-                          >O нас</router-link
-                        >
-                      </li>
-                      <li>
-                        <router-link
-                          @click="store.toggle = true"
-                          class="w-full hover:bg-gray-200 p-3 rounded-md inline-block"
-                          to="/buy_and_order"
-                          >Оплата и доставка</router-link
-                        >
-                      </li>
-                      <li>
-                        <router-link
-                          @click="store.toggle = true"
-                          class="w-full hover:bg-gray-200 p-3 rounded-md inline-block"
-                          to="/quality_assurance"
-                          >Гарантия качества</router-link
-                        >
-                      </li>
-                      <li>
-                        <router-link
-                          @click="store.toggle = true"
-                          class="w-full hover:bg-gray-200 p-3 rounded-md inline-block"
-                          to="/contact"
-                          >Контакты</router-link
-                        >
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </nav>
-          </section>
-        </div>
-      </div>
-    </section>
   </div>
 </template>
 
 <script setup>
-import { useAuthStore, useProductsStore, useAddToCartStore } from "@/store";
+import {
+  useAuthStore,
+  useProductsStore,
+  useAddToCartStore,
+  useLoadingStore,
+} from "@/store";
 
 const authStore = useAuthStore();
+const isLoading = useLoadingStore();
 const useProduct = useProductsStore();
 const useAddToCart = useAddToCartStore();
+const runtimeConfig = useRuntimeConfig();
+const router = useRouter();
+const baseUrlImage = ref(runtimeConfig.public.baseURL?.slice(0, -3));
+
 const store = reactive({
   toggle: true,
   lang: false,
 });
+
+function focused(search_type) {
+  isLoading.store.isOpen = true;
+  if (search_type == "product") {
+    useProduct.state.isSearchingModal = true;
+  } else {
+    useProduct.state.isAddressModal = true;
+  }
+}
+
+function clickedModal(click_type, value) {
+  router.push(`/flowers/${value}`);
+  useProduct.state.isSearchingModal = false;
+}
 
 const addToCart = () => {
   useProduct.state.addToProductDrawer = true;

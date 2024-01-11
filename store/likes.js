@@ -31,14 +31,8 @@ export const useLikeStore = defineStore("add_to_like", () => {
         const client_id = localStorage.getItem("user_id");
         if (client_id) {
           for (let i = 0; i < res.data.data.records?.length; i++) {
+            console.log(i);
             res.data.data.records[i].product.likes = true;
-          }
-        } else {
-          for (let i = 0; i < res.data.data.records?.length; i++) {
-            for (let like of res.data.data.records[i].product.likes) {
-              res.data.data.records[i].product.likes = false;
-              break;
-            }
           }
         }
         store.allFavorites.push(...res.data.data.records);

@@ -31,6 +31,7 @@ export const useProductsStore = defineStore("products", () => {
     isAddressModal: false,
     addvertising: "",
     salesmanProducts: [],
+    menu: false,
   });
 
   const search = reactive({
