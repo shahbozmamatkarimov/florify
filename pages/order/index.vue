@@ -564,7 +564,7 @@ function isFullDetails() {
 function addToPayment() {
   const token = localStorage.getItem("token");
   if (is_submit.value) {
-    const client_id = localStorage.getItem("user_id");
+    const client_id = isLoading.store.salesman_id;
     let items = [];
     const orders = JSON.parse(localStorage.getItem("addToCart"));
     for (let i of orders) {

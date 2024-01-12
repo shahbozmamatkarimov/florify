@@ -237,12 +237,19 @@
           Напишите номер своего мобильного телефона и вам придет СМС с кодом для
           входа
         </p>
+        <h1 v-if="isLoading.store.isLogin" class="leading-[21px]">Username *</h1>
+        <input v-if="isLoading.store.isLogin"
+          v-model="authStore.store.name"
+          class="h-14 mt-[6px] mb-[55px] rounded-[10px] w-full"
+          type="text"
+          placeholder="John Doe"
+        />
         <h1 class="leading-[21px]">Номер телефона *</h1>
         <input
           v-model="authStore.store.phone"
           :class="!authStore.store.isVerified ? 'border !border-[#EC3434]' : ''"
           class="h-14 mt-[6px] mb-[55px] rounded-[10px] w-full"
-          type="text"
+          type="tel"
           placeholder="+998 99 999 99 99"
         />
         <label for="1">

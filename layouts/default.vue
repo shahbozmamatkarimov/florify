@@ -83,8 +83,8 @@
       </section> -->
       <slot />
     </div>
-    <Footer class="md:block hidden" />
-    <MobileFooter class="md:hidden block" />
+    <Footer class="sm:block hidden" />
+    <MobileFooter class="sm:hidden block" />
 
     <div
       @click="closeModal"

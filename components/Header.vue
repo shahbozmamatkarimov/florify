@@ -3,7 +3,9 @@
     <div class="flex flex-wrap h-[70px]">
       <section class="relative w-full mx-auto">
         <nav class="flex items-center md:hidden h-[76px] bg-white">
-          <div class="flex items-center justify-between container md:px-10 px-5 mx-auto">
+          <div
+            class="flex items-center justify-between container md:px-10 px-5 mx-auto"
+          >
             <div class="flex items-center gap-2">
               <img
                 class="lg:hidden block logo h-[40px] cursor-pointer"
@@ -25,7 +27,9 @@
           <div
             class="container mx-auto xl:px-28 md:px-10 px-5 py-6 flex w-full items-center justify-between"
           >
-            <ul class="flex justify-between w-full px-4 mx-auto">
+            <ul
+              class="flex justify-between w-full sm:px-4 sm:ml-0 ml-5 sm:mr-0 -mr-5 mx-auto"
+            >
               <li class="md:block hidden w-full max-w-fit">
                 <router-link to="/">
                   <img
@@ -46,7 +50,11 @@
                 <p class="leading-5 border-b border-black">Ташкент</p>
               </li>
               <li class="relative flex sm:max-w-fit sm:w-auto w-full">
-                <img class="sm:-mr-8 -mr-11 z-10" src="@/assets/svg/search.svg" alt="" />
+                <img
+                  class="sm:-mr-8 -mr-11 z-10"
+                  src="@/assets/svg/search.svg"
+                  alt=""
+                />
                 <input
                   v-model="useProduct.search.search"
                   @input="useProduct.searchProduct"
@@ -98,7 +106,7 @@
                 </div>
               </li>
               <ul
-                class="flex cursor-pointer items-center max-w-fit w-full gap-10"
+                class="sm:flex hidden cursor-pointer items-center max-w-fit w-full gap-10"
               >
                 <li
                   @click="authStore.store.loginModal = true"
@@ -109,15 +117,23 @@
                 </li>
                 <li
                   @click="addToCart"
-                  class="sm:flex hidden cursor-pointer items-center w-full max-w-fit gap-3"
+                  class="relative sm:flex hidden cursor-pointer items-center w-full max-w-fit gap-3"
                 >
+                  <!-- <p
+                    class="h-2 w-2 bg-[#FF6161] absolute left-4 top-1 rounded-full"
+                  ></p> -->
                   <img src="@/assets/svg/cartWhite.svg" alt="" />
                   <p class="2xl:block hidden">{{ $t("basket") }}</p>
                 </li>
-                <li @click="useProduct.state.menu = true"
-                  class="flex cursor-pointer items-center w-full max-w-fit gap-3"
+                <li
+                  @click="useProduct.state.menu = true"
+                  class="sm:flex hidden cursor-pointer items-center w-full max-w-fit gap-3"
                 >
-                  <img class="sm:h-6 sm:w-6 sm:p-0 p-2 h-12 w-12" src="@/assets/svg/menu.svg" alt="" />
+                  <img
+                    class="sm:h-6 sm:w-6 sm:p-0 p-2 h-12 w-12"
+                    src="@/assets/svg/menu.svg"
+                    alt=""
+                  />
                   <p class="2xl:block hidden">{{ $t("navbar.all") }}</p>
                 </li>
               </ul>
@@ -164,10 +180,24 @@ function clickedModal(click_type, value) {
   useProduct.state.isSearchingModal = false;
 }
 
+// function checkCart() {}
+
 const addToCart = () => {
   useProduct.state.addToProductDrawer = true;
   useAddToCart.getAddToCart();
 };
+
+onMounted(() => {
+  if (window.innerWidth > 639) {
+    router.push("/");
+  }
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 639) {
+      router.push("/");
+    }
+  });
+});
 </script>
 
 <style lang="scss" scoped>

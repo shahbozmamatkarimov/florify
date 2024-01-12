@@ -21,7 +21,7 @@ export const useHistoryStore = defineStore("watched", () => {
 
   function getHistory() {
     isLoading.addLoading("getAllHistory");
-    const client_id = localStorage.getItem("user_id");
+    const client_id = isLoading.store.salesman_id;
     axios
       .get(
         baseUrl +
@@ -29,7 +29,7 @@ export const useHistoryStore = defineStore("watched", () => {
       )
       .then((res) => {
         console.log(res.data);
-        const client_id = localStorage.getItem("user_id");
+        const client_id = isLoading.store.salesman_id;
         if (client_id) {
           for (let i = 0; i < res?.data?.data?.records?.length; i++) {
             for (let like of res.data?.data?.records[i]?.product?.likes) {
@@ -59,7 +59,7 @@ export const useHistoryStore = defineStore("watched", () => {
   }
 
   function addToWatched(product_id) {
-    const client_id = localStorage.getItem("user_id");
+    const client_id = isLoading.store.salesman_id;
     if (client_id) {
       axios
         .post(baseUrl + "/watched", {
@@ -84,12 +84,12 @@ export const useHistoryStore = defineStore("watched", () => {
 
   function getUserHistory() {
     isLoading.addLoading("getAllHistory");
-    const client_id = localStorage.getItem("user_id");
+    const client_id = isLoading.store.salesman_id;
     axios
       .get(baseUrl + `/watched/pagination/1/25`)
       .then((res) => {
         console.log(res, '----------------------------------------------------------------');
-        const client_id = localStorage.getItem("user_id");
+        const client_id = isLoading.store.salesman_id;
         if (client_id) {
           for (let i = 0; i < res.data.data.records?.length; i++) {
             for (let like of res.data.data.records[i].product.likes) {

@@ -320,7 +320,7 @@ function isLoadingModal(id) {
 }
 
 function addToCart(id) {
-  const user_id = localStorage.getItem("user_id");
+  const user_id = isLoading.store.salesman_id;
   useAddToCart.addcart.client_id = user_id;
   useAddToCart.addcart.product_id = id;
   useAddToCart.addToCart();
@@ -336,7 +336,7 @@ function addToLike(index, category_id, isLiked, id) {
     method = "delete";
   }
   let product_id = id;
-  const client_id = localStorage.getItem("user_id");
+  const client_id = isLoading.store.salesman_id;
   axios({
     method,
     url: baseUrl + "/like",

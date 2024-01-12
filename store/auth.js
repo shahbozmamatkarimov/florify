@@ -1,15 +1,18 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import { useProductsStore } from "./products";
+import { useLoadingStore } from "./isLoading";
 
 export const useAuthStore = defineStore("isLogged", () => {
   const router = useRouter();
   const runtimeconfig = useRuntimeConfig();
   const baseUrl = runtimeconfig.public.baseURL;
   const useProducts = useProductsStore();
+  const isLoading = useLoadingStore();
 
   const store = reactive({
     phone: "+998",
+    name: "",
     otp: [],
     loginModal: false,
     otpModal: false,
@@ -26,6 +29,7 @@ export const useAuthStore = defineStore("isLogged", () => {
         baseUrl + "/otp/sendOtp",
         {
           phone: store.phone,
+          name: store.name,
         },
         {
           headers: {
@@ -71,6 +75,7 @@ export const useAuthStore = defineStore("isLogged", () => {
       .then((res) => {
         console.log(res.data);
         if (res.data.statusCode == 200) {
+          isLoading.store.isLogin = true;
           store.otpModal = false;
           store.isVerified = true;
           store.isLoading = false;

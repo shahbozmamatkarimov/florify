@@ -15,7 +15,7 @@
       <li class="w-[75px]">
         <router-link
           class="flex flex-col gap-[2px] items-center justify-center"
-          to="/"
+          to="/order"
         >
           <img src="@/assets/footer/cart.svg" alt="" />
           <p class="text-[10px] leading-3">Savatcha</p>
@@ -24,7 +24,7 @@
       <li class="w-[75px]">
         <router-link
           class="flex flex-col gap-[2px] items-center justify-center"
-          to="/"
+          to="/favorites"
         >
           <img src="@/assets/footer/heart.svg" alt="" />
           <p class="text-[10px] leading-3">Tanlanganlar</p>
@@ -33,7 +33,7 @@
       <li class="flex flex-col gap-[2px] items-center justify-center w-[75px]">
         <router-link
           class="flex flex-col gap-[2px] items-center justify-center"
-          to="/"
+          to="/profile"
         >
           <img src="@/assets/footer/profile.svg" alt="" />
           <p class="text-[10px] leading-3">Profil</p>

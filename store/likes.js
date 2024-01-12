@@ -20,7 +20,7 @@ export const useLikeStore = defineStore("add_to_like", () => {
 
   function getFavorites() {
     isLoading.addLoading("getAllFavorites");
-    const client_id = localStorage.getItem("user_id");
+    const client_id = isLoading.store.salesman_id;
     axios
       .get(
         baseUrl +
@@ -28,7 +28,7 @@ export const useLikeStore = defineStore("add_to_like", () => {
       )
       .then((res) => {
         console.log(res.data);
-        const client_id = localStorage.getItem("user_id");
+        const client_id = isLoading.store.salesman_id;
         if (client_id) {
           for (let i = 0; i < res.data.data.records?.length; i++) {
             console.log(i);

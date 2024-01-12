@@ -10,6 +10,8 @@ export const useLoadingStore = defineStore("loading", () => {
     page: 1,
     limit: 8,
     isOpen: false,
+    isLogin: false,
+    salesman_id: "",
   });
 
   function addLoading(type) {

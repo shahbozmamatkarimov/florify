@@ -273,7 +273,7 @@ function sendCommentModal(id) {
 
 function sendComment() {
   store.comment_modal = false;
-  const client_id = localStorage.getItem("user_id");
+  const client_id = isLoading.store.salesman_id;
   const product_id = store.product_id;
   axios
     .post(baseUrl + "/comment", {

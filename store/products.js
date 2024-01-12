@@ -86,7 +86,7 @@ export const useProductsStore = defineStore("products", () => {
 
   function getProductByCategoryId(id, page, index) {
     isLoading.addLoading("getProductByCategory");
-    const client_id = localStorage.getItem("user_id");
+    const client_id = isLoading.store.salesman_id;
     axios
       .get(
         baseUrl + `/product/categoryId/${id}/${page}/${isLoading.store.limit}`
@@ -187,7 +187,7 @@ export const useProductsStore = defineStore("products", () => {
           state.showProduct = [];
           state.todaysSlider = true;
         }
-        const client_id = localStorage.getItem("user_id");
+        const client_id = isLoading.store.salesman_id;
 
         if (client_id) {
           for (let i = 0; i < res.data.data.records?.length; i++) {
@@ -245,7 +245,7 @@ export const useProductsStore = defineStore("products", () => {
   }
 
   function getById(id) {
-    const client_id = localStorage.getItem("user_id");
+    const client_id = isLoading.store.salesman_id;
     state.isLoading = true;
     axios
       .get(baseUrl + `/product/id/${id}`)
@@ -275,7 +275,7 @@ export const useProductsStore = defineStore("products", () => {
 
   function getSalesmanProducts(salesmanId) {
     isLoading.addLoading("getSalesmanProducts");
-    const client_id = localStorage.getItem("user_id");
+    const client_id = isLoading.store.salesman_id;
     axios
       .get(baseUrl + `/product/salesmanId/${salesmanId}/1/25/on_sale`)
       .then((res) => {
