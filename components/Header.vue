@@ -186,18 +186,6 @@ const addToCart = () => {
   useProduct.state.addToProductDrawer = true;
   useAddToCart.getAddToCart();
 };
-
-onMounted(() => {
-  if (window.innerWidth > 639) {
-    router.push("/");
-  }
-
-  window.addEventListener("resize", () => {
-    if (window.innerWidth > 639) {
-      router.push("/");
-    }
-  });
-});
 </script>
 
 <style lang="scss" scoped>

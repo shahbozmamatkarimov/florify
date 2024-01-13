@@ -69,6 +69,18 @@ import { useAuthStore, useLoadingStore } from "@/store";
 
 const useAuth = useAuthStore();
 const isLoading = useLoadingStore();
+
+onMounted(() => {
+  if (window.innerWidth > 639) {
+    router.push("/");
+  }
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 639) {
+      router.push("/");
+    }
+  });
+});
 </script>
 
 <style lang="scss" scoped></style>

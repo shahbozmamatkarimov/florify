@@ -141,7 +141,9 @@
               placeholder="Улица и номер дома"
               required
             />
-            <p class="text-[#5C0099] pl-4 pb-4">Укажите, пожалуйста, адрес получателя</p>
+            <p class="text-[#5C0099] pl-4 pb-4">
+              Укажите, пожалуйста, адрес получателя
+            </p>
             <div>
               <ul>
                 <li
@@ -425,8 +427,9 @@
 
 <script setup>
 import axios from "axios";
-import { useAddToCartStore } from "@/store";
+import { useAddToCartStore, useLoadingStore } from "@/store";
 const useAddToCart = useAddToCartStore();
+const isLoading = useLoadingStore();
 const router = useRouter();
 const runtimeConfig = useRuntimeConfig();
 const baseUrl = runtimeConfig.public.baseURL;
