@@ -8,7 +8,8 @@
           class="flex flex-col gap-[2px] items-center justify-center"
           to="/"
         >
-          <img src="@/assets/footer/logo.svg" alt="" />
+          <img class="active" src="@/assets/footer/logo.svg" alt="" />
+          <img class="_active hidden h-6 w-6 mb-1 mt-1.5" src="@/assets/footer/_logo.svg" alt="" />
           <p class="text-[10px] leading-3">Asosiy</p>
         </router-link>
       </li>
@@ -17,7 +18,8 @@
           class="flex flex-col gap-[2px] items-center justify-center"
           to="/order"
         >
-          <img src="@/assets/footer/cart.svg" alt="" />
+          <img class="active" src="@/assets/footer/cart.svg" alt="" />
+          <img class="_active hidden" src="@/assets/footer/_cart.svg" alt="" />
           <p class="text-[10px] leading-3">Savatcha</p>
         </router-link>
       </li>
@@ -26,7 +28,8 @@
           class="flex flex-col gap-[2px] items-center justify-center"
           to="/favorites"
         >
-          <img src="@/assets/footer/heart.svg" alt="" />
+          <img class="active" src="@/assets/footer/heart.svg" alt="" />
+          <img class="_active hidden" src="@/assets/footer/_heart.svg" alt="" />
           <p class="text-[10px] leading-3">Tanlanganlar</p>
         </router-link>
       </li>
@@ -35,7 +38,8 @@
           class="flex flex-col gap-[2px] items-center justify-center"
           to="/profile"
         >
-          <img src="@/assets/footer/profile.svg" alt="" />
+          <img class="active" src="@/assets/footer/profile.svg" alt="" />
+          <img class="_active hidden" src="@/assets/footer/_profile.svg" alt="" />
           <p class="text-[10px] leading-3">Profil</p>
         </router-link>
       </li>
@@ -45,4 +49,14 @@
 
 <script setup></script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.router-link-exact-active {
+  color: #5C0099;
+  .active {
+    display: none;
+  }
+  ._active {
+    display: block;
+  }
+}
+</style>

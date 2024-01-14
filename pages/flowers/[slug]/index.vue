@@ -21,7 +21,7 @@
           </li>
         </ol>
       </nav>
-      <button
+      <button @click="$router.back()"
         class="flex items-center justify-center bg-gray-200 rounded-md px-5 my-3 py-1 gap-2 sm:hidden"
       >
         <i class="bx bx-arrow-back pt-1"></i> назад
@@ -139,7 +139,7 @@
                 <i class="bx bxs-star text-[#FFA500]"></i>0.0 Оценок пока нет
               </p>
             </div>
-            <p>Более 1500 заказов</p>
+            <p>Более {{useProduct.state.getById?.number_of_sales}} заказов</p>
           </li>
           <li class="flex flex-wrap">
             <p class="w-24">Продавец:</p>
@@ -276,7 +276,7 @@
     <!------------------------ same flowers ----------------------------->
 
     <section class="container mx-auto xl:px-28 md:px-10 px-5">
-      <h1 class="sm:text-3xl mt-10 sm:pb-2 text-md">
+      <h1 class="sm:text-3xl mt-10 sm:pb-2 text-2xl">
         Другие товары этого магазина
       </h1>
       <div class="flex overflow-hidden overflow-x-auto cards gap-5">
@@ -367,7 +367,7 @@
       </div>
     </section>
     <section class="pb-20 container mx-auto xl:px-28 md:px-10 px-5">
-      <h1 class="sm:text-3xl pb-2 text-md">Просмотренные товары</h1>
+      <h1 class="sm:text-3xl pb-2 text-2xl">Просмотренные товары</h1>
       <div class="flex overflow-hidden overflow-x-auto cards gap-5">
         <div
           v-if="isLoading.isLoadingType('getAllHistory')"

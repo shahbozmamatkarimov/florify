@@ -1,16 +1,8 @@
 <template>
   <main
-    class="flex gap-32 container mx-auto xl:px-28 md:px-10 px-5 pb-[15rem] mt-[60px]"
+    class="md:flex gap-32 container mx-auto xl:px-28 md:px-10 px-5 pb-[15rem] mt-[60px]"
   >
-    <aside class="text-xl leading-6 space-y-7 whitespace-nowrap">
-      <h1 class="text-[#242424] font-bold">Мои заказы</h1>
-      <ul class="space-y-7">
-        <li>Избранное</li>
-        <li>Отзывы на товары</li>
-        <li>Личные данные</li>
-        <li>Служба поддержки</li>
-      </ul>
-    </aside>
+    <Tabs />
     <section class="w-full">
       <h1 class="text-2xl font-medium leading-7">Мои заказы</h1>
       <nav>
@@ -23,13 +15,13 @@
         </ul>
       </nav>
 
-      <div class="grid grid-cols-2 mt-6 gap-5">
+      <div class="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-2 sm:space-y-0 space-y-5 mt-6 gap-5">
         <div
           v-if="store.isLoading"
           v-for="i in 6"
           class="h-[300px] rounded-[4px] animate-pulse bg-gray-200"
         ></div>
-        <div v-else v-for="i in store.orders">
+        <div v-else class="sm:border-none border" v-for="i in store.orders">
           <div class="bg-white rounded-[4px]">
             <ul
               class="flex items-center justify-between border-b border-[#E6E6E6] p-5"

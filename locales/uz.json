@@ -40,8 +40,8 @@
   "contacts": {
     "home": "Asosiy",
     "contact": "Bog'lanish",
-    "description": "Biz kuniga 24 soat, haftada etti kun ishlaymiz",
-    "address": "Yuridik manzil",
+    "description": "Biz 24/7 ishlaymiz",
+    "address": "Manzil",
     "phone": "Telefon raqami",
     "email": "Elektron pochta"
   },
@@ -106,12 +106,33 @@
     "about3": [
       "28-31 dekabr, 13-14 fevral, 6-7-8 mart — buyurtmalar soni bir necha baravar ko'payadigan kunlar. Oldindan berilgan bayramlar uchun barcha buyurtmalar belgilangan vaqtda amalga oshiriladi.",
       "Shu kunlarda biz buyurtmalarni aniq vaqtda yetkazib berishni va'da qilmasdan qabul qilamiz."
-    ],    "title4": "Maxfiylik",
+    ],
+    "title4": "Maxfiylik",
     "about4": [
       "Siz taqdim etgan barcha ma'lumotlar qat'iy maxfiy bo'lib, uchinchi shaxslarga berilmaydi.",
       "Istalgan vaqtda siz arizangizning holatini shaxsiy kabinetingizdan yoki \"buyurtma holati\" havolasi orqali aniqlab olishingiz mumkin. Aslini olib qaraganda yetkazib berish davomida, biz sizga elektron pochta yoki SMS orqali xabar yuboramiz."
     ],
     "title5": "To'lov",
     "about5": "Buyurtmani o'zingiz uchun qulay tarzda ro'yxatdan o'tkazgandan so'ng darhol to'lang. Bundan tashqari, agar siz buyurtmani keyinroq to'lashga qaror qilsangiz, biz kerakli havolalar bilan tasdiqlash xatini yuboramiz."
+  },
+  "quality": {
+    "title1": "Sifat kafolati",
+    "about1": "Baxtli mijozlar kompaniya muvaffaqiyatining kalitidir. Bizdan gullarga buyurtma berish sizga qulay va foydali bo'lishi uchun biz barcha imkoniyatni yaratdik. Biz bilamizki, guldastalar bilan birgalikda siz o'zingizning mehribon va yorqin his-tuyg'ularingizni yetkazasiz, shuning uchun biz gullarni qabul qiluvchiga ushbu sovg'ani uzoq va iliq eslab qolish uchun qo'limizdan kelganini qilishimizga kafolat beramiz.",
+    "title2": "Kafolatlangan mukammal sifat",
+    "about2": "Biz kuryerlarning ishini(muntazam sinov buyurtmalari) va barcha mahsulotlarimiz sifatini doimiy ravishda kuzatib boramiz. Biz uchun asosiy narsa — biz taqdim etayotgan tovarlar va xizmatlarning barcha talablariga javob beradigan darajadagi benuqson sifatdir.",
+    "title3": "Sizning istagingizdagi buyurtmani yetkazib beramiz",
+    "about3": [
+      "Bizning tarmog'imiz ishtirokchilari bizdan guldastalar va kompozitsiyalarning bosma kataloglarini olishadi. Sizning tanlagan  buyurtmangiz floristga guldasta tasviri, katalogdagi raqami, har bir gulning tavsifi bilan birga beriladi.",
+      "Qabul qiluvchiga buyurtma, ya'ni to'liq mos keladigan guldastani yetkazib berish biz uchun juda muhimdir."
+    ],
+    "title4": "Barcha mijozlarimiz uchun qulay narx",
+    "about4": [
+      "Biz sizning e'tiboringizga turli xil narx nuqtalarida guldastalar va gullarni taqdim etamiz, shunda siz har doim kerakli narsani tanlashingiz mumkin.",
+      "Eng tanish bo'lgan gullarni yaxshilab va  ekzotik gullarni soddalashtirgan holda go'zallik yaratamiz. Doimiy yuqori sifatli, oqilona narx siyosati bizning ustuvor vazifamizdir."
+    ],
+    "title5": "Qisqa vaqtda yetkazib beramiz",
+    "about5": "Buyurtmangiz o'z vaqtida manziliga yetib borishini kafolatlaymiz.",
+    "title6": "Istagingizdagi guldasta ideali",
+    "about6": "Biz uchun asosiy narsa shundaki, bizning xizmatlarimizdan foydalanadigan odamlar qoniqishadi. Agar siz yetkazib berilgan guldastadan qoniqmasangiz, yetkazib berilgan kundan boshlab 24 soat ichida biz bilan bog'lanish huquqiga egasiz va biz sizning noroziligingiz sabablarini aniqlamagah holda guldastani yangisiga almashtiramiz."
   }
 }

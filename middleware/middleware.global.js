@@ -13,6 +13,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
         const decodedPayload = JSON.parse(atob(exp));
         console.log(decodedPayload);
         isLoading.store.salesman_id = decodedPayload.id;
+        isLoading.store.name = decodedPayload.name;
         const experition = decodedPayload.exp;
         const now = +Date.now().toString().slice(0, 10);
         if (now >= experition) {

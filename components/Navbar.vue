@@ -237,13 +237,6 @@
           Напишите номер своего мобильного телефона и вам придет СМС с кодом для
           входа
         </p>
-        <h1 v-if="isLoading.store.isLogin" class="leading-[21px]">Username *</h1>
-        <input v-if="isLoading.store.isLogin"
-          v-model="authStore.store.name"
-          class="h-14 mt-[6px] mb-[55px] rounded-[10px] w-full"
-          type="text"
-          placeholder="John Doe"
-        />
         <h1 class="leading-[21px]">Номер телефона *</h1>
         <input
           v-model="authStore.store.phone"
@@ -251,6 +244,7 @@
           class="h-14 mt-[6px] mb-[55px] rounded-[10px] w-full"
           type="tel"
           placeholder="+998 99 999 99 99"
+          required
         />
         <label for="1">
           <button
@@ -280,11 +274,19 @@
         v-loading="authStore.store.isLoading"
         @submit.prevent="authStore.verifyOtp()"
       >
-        <h1 class="font-semibold text-2xl leading-7">Tasdiqlash kodi</h1>
-        <p class="leading-6 mt-[14px] mb-5">
-          Tasdiqlash kodi +998 99 *** ** 03 raqamiga yuborilgan
+        <!-- <h1 class="font-semibold text-2xl leading-7">Tasdiqlash kodi</h1> -->
+        <h1 class="leading-[21px]">Username *</h1>
+        <input
+          v-model="authStore.store.name"
+          class="h-14 mt-[6px] mb-[55px] rounded-[10px] w-full"
+          type="text"
+          placeholder="John Doe"
+          required
+        />
+        <p class="leading-6 -mt-5 mb-5">
+          Tasdiqlash kodi {{ authStore.store.phone }} raqamiga yuborilgan
         </p>
-        <div class="flex items-center justify-center text-2xl gap-[10px]">
+        <div class="flex items-center justify-start text-2xl gap-[10px]">
           <input
             id="1"
             @input="(e) => nextNumber(e, 2)"
@@ -292,6 +294,7 @@
             class="otp h-14 w-14 mt-[6px] mb-[55px] text-center rounded-[10px]"
             maxlength="1"
             type="text"
+            required
           />
           <input
             @input="(e) => nextNumber(e, 3)"
@@ -300,6 +303,7 @@
             class="otp h-14 w-14 mt-[6px] mb-[55px] text-center rounded-[10px]"
             maxlength="1"
             type="text"
+            required
           />
           <input
             @input="(e) => nextNumber(e, 4)"
@@ -308,6 +312,7 @@
             class="otp h-14 w-14 mt-[6px] mb-[55px] text-center rounded-[10px]"
             maxlength="1"
             type="text"
+            required
           />
           <input
             @input="(e) => nextNumber(e, 5)"
@@ -316,6 +321,7 @@
             class="otp h-14 w-14 mt-[6px] mb-[55px] text-center rounded-[10px]"
             maxlength="1"
             type="text"
+            required
           />
         </div>
         <button
@@ -455,7 +461,7 @@
         alt="x"
       />
       <ul class="mt-10 space-y-6 font-medium leading-[19px]">
-        <li>
+        <!-- <li>
           <router-link
             class="hover:text-[#5C0099] hover:font-semibold"
             to="/favorites"
@@ -475,7 +481,7 @@
             to="/history"
             >{{ $t("navbar.watched") }}</router-link
           >
-        </li>
+        </li> -->
         <li>
           <router-link
             class="hover:text-[#5C0099] hover:font-semibold"
@@ -509,7 +515,10 @@
         >
           <div class="xl:flex hidden items-center">
             <el-dropdown @command="(command) => ($i18n.locale = command)">
-              <div class="text-white outline-none cursor-pointer" @click.prevent>
+              <div
+                class="text-white outline-none cursor-pointer"
+                @click.prevent
+              >
                 <p
                   v-if="$t('en') === 'In'"
                   class="flex items-center text-black leading-4 gap-2"

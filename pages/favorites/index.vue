@@ -1,27 +1,8 @@
 <template>
-  <main class="container mx-auto xl:px-28 md:px-10 px-5 pb-20">
-    <!----------------------- Breadcrumb ---------------------------->
-    <section>
-      <nav class="flex py-6" aria-label="Breadcrumb">
-        <ol class="inline-flex items-center space-x-1 md:space-x-3">
-          <li
-            class="inline-flex cursor-pointer items-center font-semibold text-[#5C0099] hover:text-blue-600"
-          >
-            {{ $t("contacts.home") }}
-          </li>
-          <li>/</li>
-          <li
-            class="ml-1 cursor-pointer font-medium text-gray-700 hover:text-blue-600 md:ml-2"
-          >
-            <!-- {{ $t("contacts.contact") }} -->
-            Избранное
-          </li>
-        </ol>
-      </nav>
-    </section>
-    <h1 class="font-medium text-2xl">Мои желания</h1>
-    <!----------------------- Breadcrumb end---------------------------->
-
+  <main
+    class="md:flex gap-32 container mx-auto xl:px-28 md:px-10 px-5 pb-[15rem] mt-[60px]"
+  >
+    <Tabs />
     <placeholder-slug
       v-if="
         isLoading.isLoadingType('getAllFavorites') &&
@@ -30,17 +11,17 @@
     />
     <section v-else>
       <div>
-        <div class="grid lg:grid-cols-4 grid-cols-3 cards my-5 md:gap-7 gap-5">
+        <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-3 cards my-5 md:gap-7 gap-5">
           <div
             v-for="(i, index) in useLike.store.allFavorites"
             :key="i.id"
             class="relative card max-w-sm md:w-full w-[160px] md:p-0 p-[6px] hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
           >
             <img
-            @click="$router.push(`./flowers/${i.product.id}`)"
-            class="img md:rounded-b-none rounded-b-lg rounded-t-lg 2xl:h-80 xl:h-64 cursor-pointer md:h-52 sm:h-36 h-44 w-full object-cover"
-            :src="`${baseUrlImage}${i.product.images[0]?.image}`"
-            alt=""
+              @click="$router.push(`./flowers/${i.product.id}`)"
+              class="img md:rounded-b-none rounded-b-lg rounded-t-lg 2xl:h-80 xl:h-64 cursor-pointer md:h-52 sm:h-36 h-44 w-full object-cover"
+              :src="`${baseUrlImage}${i.product.images[0]?.image}`"
+              alt=""
             />
             <div class="md:p-5 p-[6px]">
               <h5
@@ -93,7 +74,7 @@
                   </div>
                   <div class="border border-[#EEEEEE] rounded-full p-1">
                     <img
-                    @click="() => addToCart(i.product.id)"
+                      @click="() => addToCart(i.product.id)"
                       class="cursor-pointer sm:h-5 sm:w-5 md:max-h-6 md:max-w-6 max-h-4 max-w-4"
                       src="@/assets/svg/cart.svg"
                       alt=""
@@ -140,9 +121,9 @@ const runtimeConfig = useRuntimeConfig();
 const baseUrl = runtimeConfig.public.baseURL;
 const baseUrlImage = ref(runtimeConfig.public.baseURL?.slice(0, -3));
 isLoading.addLoading("getAllFavorites");
-if (!isLoading.store.isLogin) {
-  authStore.store.loginModal = true
-}
+// if (isLoading.store.isLogin) {
+//   authStore.store.loginModal = true;
+// }
 const store = reactive({
   data: 8,
 });

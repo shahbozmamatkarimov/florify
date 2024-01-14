@@ -5,6 +5,7 @@
       <nav class="flex py-6" aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1 md:space-x-3">
           <li
+            @click="$router.push('/')"
             class="inline-flex cursor-pointer items-center font-semibold text-[#5C0099] hover:text-blue-600"
           >
             {{ $t("contacts.home") }}
@@ -48,12 +49,12 @@
               <li
                 class="2xl:mb-7 lg:mb-5 sm:mb-1 sm:min-h-[4rem] min-h-[3.5rem]"
               >
-              {{ $t("contacts.phone") }}
+                {{ $t("contacts.phone") }}
               </li>
               <li
                 class="2xl:mb-7 lg:mb-5 sm:mb-1 sm:min-h-[4rem] min-h-[3.5rem]"
               >
-              {{ $t("contacts.email") }}
+                {{ $t("contacts.email") }}
               </li>
             </ul>
             <ul>

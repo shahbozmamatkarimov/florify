@@ -211,7 +211,7 @@
             </div>
             <div v-show="store.is_message">
               <label for="convert" class="text-gray-700 py-2"
-                >{{$t('order.convert_text')}}…</label
+                >{{ $t("order.convert_text") }}…</label
               >
               <textarea
                 v-model="store.postcard_text"
@@ -418,11 +418,12 @@
             </p>
           </div>
           <button
-            type="submit"
+            type="submit" v-loading="isLoading.isLoadingType('payment')"
             :class="is_submit ? '' : 'opacity-50'"
+            :style="isLoading.isLoadingType('payment')?'pointer-events:none':''"
             class="sm:h-16 h-10 sm:my-5 my-2 flex justify-center sm:text-md text-sm items-center w-full font-semibold text-white rounded-xl bg-[#5C0099]"
           >
-          {{ $t("order.order") }}
+            {{ $t("order.order") }}
           </button>
           <h1 class="sm:text-md text-sm">
             {{ $t("order.warning") }}
@@ -435,9 +436,10 @@
 
 <script setup>
 import axios from "axios";
-import { useAddToCartStore, useLoadingStore } from "@/store";
+import { useAddToCartStore, useLoadingStore, useAuthStore } from "@/store";
 const useAddToCart = useAddToCartStore();
 const isLoading = useLoadingStore();
+const useAuth = useAuthStore();
 const router = useRouter();
 const runtimeConfig = useRuntimeConfig();
 const baseUrl = runtimeConfig.public.baseURL;
@@ -574,33 +576,41 @@ function isFullDetails() {
 
 function addToPayment() {
   const token = localStorage.getItem("token");
-  if (is_submit.value) {
-    const client_id = isLoading.store.salesman_id;
-    let items = [];
-    const orders = JSON.parse(localStorage.getItem("addToCart"));
-    for (let i of orders) {
-      items.push({ product_id: i.id, quantity: i.client_quantity });
+  if (token) {
+    if (is_submit.value) {
+      const client_id = isLoading.store.salesman_id;
+      let items = [];
+      const orders = JSON.parse(localStorage.getItem("addToCart"));
+      for (let i of orders) {
+        items.push({ product_id: i.id, quantity: i.client_quantity });
+      }
+      console.log(items);
+      console.log(store);
+      isLoading.addLoading("payment");
+      axios
+        .post(
+          baseUrl + "/orders",
+          { ...store, client_id, items },
+          {
+            headers: { Authorization: "Bearer " + token },
+          }
+        )
+        .then((res) => {
+          const order_id = res.data?.data?.order.id;
+          router.push(
+            `/payment?order_id=${order_id}&amount=${useAddToCart.store.total_price}`
+          );
+          console.log(res);
+          isLoading.removeLoading("payment");
+        })
+        .catch((err) => {
+          console.log(err);
+          useAuth.store.loginModal = true;
+          isLoading.removeLoading("payment");
+        });
     }
-    console.log(items);
-    console.log(store);
-    axios
-      .post(
-        baseUrl + "/orders",
-        { ...store, client_id, items },
-        {
-          headers: { Authorization: "Bearer " + token },
-        }
-      )
-      .then((res) => {
-        const order_id = res.data?.data?.order.id;
-        router.push(
-          `/payment?order_id=${order_id}&amount=${useAddToCart.store.total_price}`
-        );
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  } else {
+    useAuth.store.loginModal = true;
   }
 }
 

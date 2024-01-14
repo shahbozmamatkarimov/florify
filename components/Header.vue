@@ -7,7 +7,7 @@
             class="flex items-center justify-between container md:px-10 px-5 mx-auto"
           >
             <div class="flex items-center gap-2">
-              <img
+              <img @click="$router.push('/')"
                 class="lg:hidden block logo h-[40px] cursor-pointer"
                 src="../public/logo_mobile.svg"
                 alt="logo"
@@ -109,11 +109,12 @@
                 class="sm:flex hidden cursor-pointer items-center max-w-fit w-full gap-10"
               >
                 <li
-                  @click="authStore.store.loginModal = true"
+                  @click="checkAuth"
                   class="sm:flex hidden items-center w-full max-w-fit gap-3"
                 >
                   <img src="@/assets/svg/login.svg" alt="" />
-                  <p class="2xl:block hidden">{{ $t("login") }}</p>
+                  <p v-if="!isLoading.store.isLogin" class="2xl:block hidden">{{ $t("login") }}</p>
+                  <p v-if="isLoading.store.isLogin" class="2xl:block hidden w-[100px] truncate">{{ isLoading.store.name }}</p>
                 </li>
                 <li
                   @click="addToCart"
@@ -178,6 +179,14 @@ function focused(search_type) {
 function clickedModal(click_type, value) {
   router.push(`/flowers/${value}`);
   useProduct.state.isSearchingModal = false;
+}
+
+function checkAuth() {
+  if (!isLoading.store.isLogin) {
+    authStore.store.loginModal = true
+  } else {
+    router.push("/favorites")
+  }
 }
 
 // function checkCart() {}

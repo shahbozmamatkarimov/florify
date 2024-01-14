@@ -11,13 +11,13 @@
       <ul>
         <li>О сервисе</li>
         <li>
-          <router-link to="/about"> О нас </router-link>
+          <router-link to="/about"> {{$t("about")}} </router-link>
         </li>
         <li>
-          <router-link to="/about"> Контакты </router-link>
+          <router-link to="/contact"> {{$t("contact")}} </router-link>
         </li>
         <li>
-          <router-link to="/about"> Гарантия качества </router-link>
+          <router-link to="/quality_assurance"> {{$t("quality_assurance") }} </router-link>
         </li>
         <li
           v-for="(i, index) in productStore.state.categories"
@@ -54,9 +54,19 @@
       <div class="lg:block hidden"></div>
       <ul class="text-end contact">
         <li>Свяжитесь с нами</li>
-        <li>{{ store.contacts.phone }}</li>
-        <li>{{ store.contacts.additional_phone }}</li>
-        <li class="break-words">{{ store.contacts.email }}</li>
+        <li>
+          <a :href="`tel:${store.contacts.phone}`">{{
+            store.contacts.phone
+          }}</a>
+        </li>
+        <li>
+          <a :href="`tel:${store.contacts.additional_phone}`">{{
+            store.contacts.additional_phone
+          }}</a>
+        </li>
+        <li class="break-words"><a :href="`mailto:${store.contacts.email}`">{{
+          store.contacts.email
+        }}</a></li>
       </ul>
     </div>
     <div class="container mx-auto overflow-hidden xl:px-28 md:px-10 px-5">

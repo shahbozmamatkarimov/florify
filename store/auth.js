@@ -18,6 +18,7 @@ export const useAuthStore = defineStore("isLogged", () => {
     otpModal: false,
     isVerified: true,
     isLoading: false,
+    registerModal: false,
   });
 
   function handleSubmit() {
@@ -57,6 +58,7 @@ export const useAuthStore = defineStore("isLogged", () => {
 
   function verifyOtp() {
     store.isLoading = true;
+    console.log(store.name);
     console.log(store.phone);
     console.log(store.otp);
     axios
@@ -64,6 +66,7 @@ export const useAuthStore = defineStore("isLogged", () => {
         baseUrl + "/client/register",
         {
           phone: store.phone,
+          name: store.name,
           code: store.otp.join(""),
         },
         {
@@ -74,16 +77,17 @@ export const useAuthStore = defineStore("isLogged", () => {
       )
       .then((res) => {
         console.log(res.data);
-        if (res.data.statusCode == 200) {
+        if (res.data.statusCode == 201) {
+        isLoading.store.salesman_id = res.data?.data?.client?.id;
           isLoading.store.isLogin = true;
+          store.registerModal = false;
           store.otpModal = false;
           store.isVerified = true;
           store.isLoading = false;
           console.log("object");
-          localStorage.setItem("user_id", res.data.data.client.id);
-          localStorage.setItem("phone", res.data.data.client.phone);
+          // localStorage.setItem("phone", res.data.data.client.phone);
           localStorage.setItem("token", res.data.token);
-          useProducts.getAllProducts();
+          store.registerModal = true;
           return;
         }
         store.isVerified = false;
