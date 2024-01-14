@@ -16,14 +16,13 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
         const experition = decodedPayload.exp;
         const now = +Date.now().toString().slice(0, 10);
         if (now >= experition) {
-          useAuth.store.loginModal = true;
           isLoading.store.isLogin = false;
           localStorage.removeItem("token");
         } else {
           isLoading.store.isLogin = true;
         }
       } else if (localStorage.hasOwnProperty("user_id")) {
-        useAuth.store.loginModal = true;
+        // useAuth.store.loginModal = true;
         isLoading.store.isLogin = false;
       }
     }
@@ -32,7 +31,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
       localStorage.hasOwnProperty("user_id") ||
       localStorage.hasOwnProperty("token")
     ) {
-      useAuth.store.loginModal = true;
+      // useAuth.store.loginModal = true;
       isLoading.store.isLogin = false;
     }
     console.log(error);

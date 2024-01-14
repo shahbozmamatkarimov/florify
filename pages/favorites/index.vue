@@ -140,7 +140,9 @@ const runtimeConfig = useRuntimeConfig();
 const baseUrl = runtimeConfig.public.baseURL;
 const baseUrlImage = ref(runtimeConfig.public.baseURL?.slice(0, -3));
 isLoading.addLoading("getAllFavorites");
-
+if (!isLoading.store.isLogin) {
+  authStore.store.loginModal = true
+}
 const store = reactive({
   data: 8,
 });

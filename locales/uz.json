@@ -9,6 +9,7 @@
   "contact": "Bog'lanish",
   "basket": "Savatcha",
   "login": "Kirish",
+  "main": "Asosiy",
   "navbar": {
     "address": "Manzilni kiriting",
     "show": "Ko'rsatish",
@@ -43,5 +44,74 @@
     "address": "Yuridik manzil",
     "phone": "Telefon raqami",
     "email": "Elektron pochta"
+  },
+  "order": {
+    "order": "Buyurtmani rasmiylashtirish",
+    "whom": "Guldastani kim oladi?",
+    "another": "Boshqa odam",
+    "myself": "O'zim",
+    "your_contact": "Sizning kontaktlaringiz",
+    "surname": "Familiyangiz",
+    "name": "Ismingiz",
+    "enter_surname": "Familiyangizni kiriting",
+    "enter_name": "Ismingizni kiriting",
+    "plase_enter_surname": "Iltimos, familiyangizni kiriting",
+    "curyer_info": "Siz qoldirgan telefon raqamga buyurtmangiz holati haqida xabar yuboramiz. Yetkazib berish vaqtini tasdiqlash uchun kuryer siz bilan bog'lanadi.",
+    "receiver_phone": "Qabul qiluvchining kontaktlari",
+    "phone_number": "Telefon raqami",
+    "address": "Yetkazib berish manzili",
+    "enter_address": "Ko'cha va uy raqami",
+    "please_enter_address": "Iltimos, qabul qiluvchining manzilini ko'rsating",
+    "office": "Kvartira/ofis",
+    "office_number": "Kirish",
+    "floor": "Qavat",
+    "comment_curyer": "Kuryer uchun sharh",
+    "comment_description": "Masalan, buyurtmani qayerga yetkazib berish kerakligi, eng yaqin manzil yoki belgi",
+    "delivery_time": "Yetkazib berish sanasi va vaqti",
+    "payment_type": "To'lov usuli",
+    "free_convert": "Bepul otkritka",
+    "onlayn": "Onlayn karta orqali",
+    "offline1": "Qabul qilgandan so'ng",
+    "offline2": "Naqd pul yoki karta",
+    "order_list": "Buyurtma ro'yxati",
+    "delivery": "Yetkazib berish",
+    "free": "Tekinga",
+    "total": "Umumiy qiymati",
+    "warning": "Tugmani bosish orqali siz xizmat ko'rsatish shartlari va shaxsiy ma'lumotlarni qayta ishlash siyosatiga rozilik bildirasiz",
+    "convert_text": "Otkritka matni",
+    "convert_placeholder": "Do'stim ..."
+  },
+  "_about": {
+    "title1": "Kompaniya haqida",
+    "about1": "Florify.uz xalqaro kompaniya bo'lib 2023 yildan buyon gullar yetkazib berish xizmati bilan shug‘ullanadi. Bugungi kunda bizning tarmog'imiz butun Rossiya bo'ylab 700 dan ortiq gul salonlarini va qo'shni va xorijiy mamlakatlarda 1000 dan ortiq salonlarni birlashtiradi. Bizning tajribamiz davomida dunyoning 150 ta davlatidan 1 500 000 dan ortiq kishi bizning mijozlarimizga aylandiМеждународная компания Florify.uz осуществляет доставку цветов с 2023 года. Сегодня наша сеть объединяет более 700 цветочных салонов по России и 1000 салонов в ближних и зарубежных странах. За время работы нашими клиентами стали более 1 500 000 людей из 150 стран мира.",
+    "title2": "Butun dunyo bo'ylab gullarni yetkazib berish",
+    "about2": "2023-yilda kuryerlarimiz tomonidan o'z egalariga 200 000 dan ortiq gullar yetkazib berildi. Siz o'zingizning sevimli guldastangizni veb-saytimiz, ijtimoiy tarmoqlar yoki quyidagi raqam orqali buyurtma berishingiz mumkin: +998 (88) 111 02 11, +998 (95) 888 58 58",
+    "title3": "Bizning assortimentimiz: gullar...",
+    "about3": "Bizning assortimentimizda turli xil gullar mavjud bo'lib, ular orasida siz o'zingizning didingizga mos keladiganini topasiz.  Bizda tayyor variantlarning keng assortimenti mavjud yoki biz siz uchun o'zingiznikini yig'amiz! Shuningdek, biz sizga har qanday interyerning floristik dizayni va kompaniyaning gul uslubini ishlab chiqishda yordam beramiz.",
+    "title4": "To'liq maxfiylik",
+    "about4": "Siz Florify.uz xalqaro kompaniyasiga murojaat qilib buyurtma va Internet to'lovlari to'g'risidagi ma'lumotlarning mutloq xavfsizligi va maxfiyligiga amin bo'lishingiz mumkin. Biz PCI DSS to'lov kartalari ma'lumotlarini himoya qilish standartiga muvofiq sertifikatlangan birinchi onlayn-do'konmiz."
+  },
+  "delivery": {
+    "title1": "Buyurtma va to'lov",
+    "about1": "Hatto masofada bo'lganingizda ham yaqinlaringizni xursand qiling! Biz sizning har bir topshirig'ingizni bajarish uchun qo'limizdan kelganini qilamiz. Guldastalarni sayyoramizning eng burchaklariga ham yetkazib beramiz! Buyurtmalar o'z manziliga vertolyotda uchib, paromda suzib, qor avtomobilida ham yetkazib berilgan.",
+    "title2": "Yetkazib berish xizmati",
+    "about2": [
+      "Tez, bepul va eng muhimi, sifatli!",
+      "Bizda buyurtma kuni 9-21 soatda bepul yetkazib berish mavjud. (mahalliy vaqt bilan). Boshqa vaqtda yetkazib berish uchun qo'shimcha to'lov talab qilinadi.",
+      "O'zbekiston bo'ylab soat 14:00 gacha(mahalliy vaqt bilan) yetkazib berishga buyurtma berganingizda, buyurtmangiz o'sha kuni yetkazib beriladi. Boshqa mamlakatlarga-soat 12: 00 gacha.",
+      "Katta vaqt farqi bo'lgan mamlakatlarga kundan-kunga gullarni yetkazib berish, guldastaning tarkibi o'zgarishi mumkin.",
+      "Agar guldastani yetkazib berish manzili mehmonxona bo'lsa, biz faqat qabulxonaga yetkazib berishni kafolatlashimiz mumkin. Buyurtmani muvaffaqiyatli yetkazib berish uchun qabul qiluvchi yashaydigan xonaning raqami va uning telefon raqamiga sovg'a haqida xabar berish kerak."
+    ],
+    "title3": "E'tibor bering",
+    "about3": [
+      "28-31 dekabr, 13-14 fevral, 6-7-8 mart — buyurtmalar soni bir necha baravar ko'payadigan kunlar. Oldindan berilgan bayramlar uchun barcha buyurtmalar belgilangan vaqtda amalga oshiriladi.",
+      "Shu kunlarda biz buyurtmalarni aniq vaqtda yetkazib berishni va'da qilmasdan qabul qilamiz."
+    ],    "title4": "Maxfiylik",
+    "about4": [
+      "Siz taqdim etgan barcha ma'lumotlar qat'iy maxfiy bo'lib, uchinchi shaxslarga berilmaydi.",
+      "Istalgan vaqtda siz arizangizning holatini shaxsiy kabinetingizdan yoki \"buyurtma holati\" havolasi orqali aniqlab olishingiz mumkin. Aslini olib qaraganda yetkazib berish davomida, biz sizga elektron pochta yoki SMS orqali xabar yuboramiz."
+    ],
+    "title5": "To'lov",
+    "about5": "Buyurtmani o'zingiz uchun qulay tarzda ro'yxatdan o'tkazgandan so'ng darhol to'lang. Bundan tashqari, agar siz buyurtmani keyinroq to'lashga qaror qilsangiz, biz kerakli havolalar bilan tasdiqlash xatini yuboramiz."
   }
 }

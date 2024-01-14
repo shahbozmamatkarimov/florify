@@ -3,12 +3,12 @@
     <form @submit.prevent="addToPayment" class="grid xl:grid-cols-2 gap-16">
       <div>
         <h1 class="font-semibold sm:text-2xl text-xl py-5">
-          Оформление заказа
+          {{ $t("order.order") }}
         </h1>
         <ul class="leading-10">
           <li>
             <p class="font-semibold sm:text-2xl text-xl sm:py-5 py-3">
-              Кто получит букет?
+              {{ $t("order.whom") }}
             </p>
             <div
               @click="isFullDetails"
@@ -24,7 +24,7 @@
                 "
                 class="h-full border-2 rounded"
               >
-                Другой человек
+                {{ $t("order.another") }}
               </button>
               <button
                 type="button"
@@ -36,17 +36,17 @@
                 "
                 class="h-full border-2 rounded"
               >
-                Я сам
+                {{ $t("order.myself") }}
               </button>
             </div>
           </li>
           <li>
             <h1 class="font-semibold sm:text-2xl text-xl pt-7 pb-1">
-              Ваши контакты
+              {{ $t("order.your_contact") }}
             </h1>
             <div class="grid grid-cols-2 gap-5">
-              <p>Фамилия *</p>
-              <p>Имя *</p>
+              <p>{{ $t("order.surname") }} *</p>
+              <p>{{ $t("order.name") }} *</p>
             </div>
           </li>
         </ul>
@@ -55,23 +55,24 @@
             type="text"
             v-model="store.customer_firstname"
             class="h-full bg-transparent border-2 border-[#D9D9D9] rounded"
-            placeholder="Введите фамилия"
+            :placeholder="$t('order.enter_surname')"
             required
           />
           <input
             type="text"
             v-model="store.customer_lastname"
             class="h-full bg-transparent border-2 border-[#D9D9D9] rounded"
-            placeholder="Введите имя"
+            :placeholder="$t('order.enter_name')"
             required
           />
         </div>
-        <p class="text-[#5C0099] pl-4 py-2">Укажите, пожалуйста, фамилия</p>
-        <p class="py-2">
-          Мы пришлем уведомление о статусе заказа на указанный вами телефон.
-          Курьер свяжется с вами по телефону для уточнения времени доставки.
+        <p class="text-[#5C0099] pl-4 py-2">
+          {{ $t("order.plase_enter_surname") }}
         </p>
-        <h1 class="pt-2 pb-4">Номер телефона *</h1>
+        <p class="py-2">
+          {{ $t("order.curyer_info") }}
+        </p>
+        <h1 class="pt-2 pb-4">{{ $t("order.phone_number") }} *</h1>
         <div class="grid sm:grid-cols-2 gap-5 sm:h-[53px]">
           <input
             type="tel"
@@ -87,12 +88,12 @@
         <div v-if="store.to_whom_bouquet == 'another'">
           <div>
             <h1 class="font-semibold sm:text-xl text-xl py-5">
-              Контакты получателя
+              {{ $t("order.receiver_phone") }}
             </h1>
           </div>
           <div class="grid grid-cols-2 pb-2 gap-5">
-            <p>Имя *</p>
-            <p>Номер телефона *</p>
+            <p>{{ $t("order.name") }} *</p>
+            <p>{{ $t("order.phone_number") }} *</p>
           </div>
 
           <div class="grid grid-cols-2 gap-5 sm:h-[53px]">
@@ -100,7 +101,7 @@
               type="text"
               v-model="store.receiver_name"
               class="h-full bg-transparent border-2 border-[#D9D9D9] rounded"
-              placeholder="Введите имя"
+              :placeholder="$t('order.enter_name')"
               required
             />
             <input
@@ -132,26 +133,28 @@
             </select>
           </li> -->
           <li>
-            <h1 class="font-semibold text-xl pt-3 pb-5">Адрес доставки *</h1>
+            <h1 class="font-semibold text-xl pt-3 pb-5">
+              {{ $t("order.address") }} *
+            </h1>
             <input
               @input="checkAddress"
               v-model="address.shipping_address"
               type="text"
               class="md:h-14 h-10 w-full bg-transparent placeholder-[#454545] border-2 border-[#D9D9D9] rounded"
-              placeholder="Улица и номер дома"
+              :placeholder="$t('order.enter_address')"
               required
             />
             <p class="text-[#5C0099] pl-4 pb-4">
-              Укажите, пожалуйста, адрес получателя
+              {{ $t("order.please_enter_address") }}
             </p>
             <div>
               <ul>
                 <li
                   class="grid sm:grid-cols-3 grid-cols-2 ext-gray-700 h-14 -my-3 gap-5"
                 >
-                  <p>Квартира/офис</p>
-                  <p>Подъезд</p>
-                  <p class="sm:pt-0 pt-5">Этаж</p>
+                  <p>{{ $t("order.office") }}</p>
+                  <p>{{ $t("order.enter_address") }}</p>
+                  <p class="sm:pt-0 pt-5">{{ $t("order.floor") }}</p>
                 </li>
                 <li
                   class="grid sm:grid-cols-3 grid-cols-2 sm:pb-0 pb-24 md:h-14 h-10 gap-5"
@@ -179,19 +182,19 @@
             </div>
           </li>
           <li class="leading-7 pt-5">
-            <h1 class="text-gray-700 py-2">Комментарий для курьера</h1>
+            <h1 class="text-gray-700 py-2">{{ $t("order.comment_curyer") }}</h1>
             <textarea
               v-model="store.comment_for_courier"
               class="h-20 bg-transparent w-full rounded border-2 border-[#D9D9D9]"
             ></textarea>
             <p>
-              Например, куда именно привезти заказ, ближайший адрес или ориентир
+              {{ $t("order.comment_description") }}
             </p>
           </li>
           <li v-show="store.to_whom_bouquet == 'another'">
             <div class="flex items-center gap-5">
               <h1 class="text-xl font-semibold py-2 mb-1">
-                Бесплатная открытка
+                {{ $t("order.free_convert") }}
               </h1>
               <img src="@/assets/svg/convert_msg.svg" alt="" />
 
@@ -208,18 +211,20 @@
             </div>
             <div v-show="store.is_message">
               <label for="convert" class="text-gray-700 py-2"
-                >Текст открытки…</label
+                >{{$t('order.convert_text')}}…</label
               >
               <textarea
                 v-model="store.postcard_text"
                 id="convert"
                 class="h-20 bg-transparent w-full rounded border-2 border-[#D9D9D9]"
-                placeholder="Мой дорогой..."
+                :placeholder="$t('order.convert_placeholder')"
               ></textarea>
             </div>
           </li>
           <li class="pb-7">
-            <h1 class="font-semibold text-xl pt-7">Дата и время доставки *</h1>
+            <h1 class="font-semibold text-xl pt-7">
+              {{ $t("order.delivery_time") }} *
+            </h1>
             <div class="flex pt-1 w-full gap-[23px] items-center">
               <div class="relative w-full -mr-[5px]">
                 <img
@@ -296,7 +301,9 @@
             </div>
           </li>
         </ul>
-        <h1 class="text-2xl font-semibold my-5">Способ оплаты</h1>
+        <h1 class="text-2xl font-semibold my-5">
+          {{ $t("order.payment_type") }}
+        </h1>
         <div class="grid sm:h-20 sm:grid-cols-2 gap-5">
           <div
             @click="store.payment_type = 'ONLINE'"
@@ -308,7 +315,7 @@
             class="flex h-20 justify-between items-center cursor-pointer active:ring-2 px-5 py-2 rounded border-2 border-transparent"
           >
             <div>
-              <h1 class="py-2">Картой онлайн</h1>
+              <h1 class="py-2">{{ $t("order.onlayn") }}</h1>
               <!-- <div class="flex items-center gap-5">
                 <img src="../../assets/svg/humo.svg" alt="" />
                 <img src="../../assets/svg/uzcard.svg" alt="" />
@@ -331,8 +338,8 @@
             class="flex justify-between items-center cursor-pointer h-20 px-5 py-2 rounded border-2 border-transparent"
           >
             <div>
-              <h1>При получении</h1>
-              <p>Наличными или картой</p>
+              <h1>{{ $t("order.offline1") }}</h1>
+              <p>{{ $t("order.offline2") }}</p>
             </div>
             <img
               v-if="store.payment_type == 'ONLINE'"
@@ -347,7 +354,9 @@
         <div
           class="border-2 sticky top-24 border-[#D9D9D9] rounded-xl sm:p-7 p-4"
         >
-          <h1 class="sm:pb-5 pb-3 font-semibold text-2xl">Состав заказа</h1>
+          <h1 class="sm:pb-5 pb-3 font-semibold text-2xl">
+            {{ $t("order.order_list") }}
+          </h1>
           <div class="max-h-[950px] overflow-hidden overflow-y-auto">
             <table class="w-full">
               <tbody class="w-full space-y-4">
@@ -398,14 +407,14 @@
           </div>
           <hr class="sm:my-5 my-2" />
           <div class="flex justify-between items-center">
-            <p>Доставка</p>
-            <p class="font-semibold">Бесплатно</p>
+            <p>{{ $t("order.delivery") }}</p>
+            <p class="font-semibold">{{ $t("order.free") }}</p>
           </div>
           <hr class="sm:my-5 my-2" />
           <div class="flex justify-between py-2 items-center">
-            <p>Общая стоимость</p>
+            <p>{{ $t("order.total") }}</p>
             <p class="font-semibold">
-              {{ useAddToCart.store.total_price }} сум
+              {{ useAddToCart.store.total_price }} {{ $t("home.sum") }}
             </p>
           </div>
           <button
@@ -413,11 +422,10 @@
             :class="is_submit ? '' : 'opacity-50'"
             class="sm:h-16 h-10 sm:my-5 my-2 flex justify-center sm:text-md text-sm items-center w-full font-semibold text-white rounded-xl bg-[#5C0099]"
           >
-            Оформить заказ
+          {{ $t("order.order") }}
           </button>
           <h1 class="sm:text-md text-sm">
-            Нажимая на кнопку, вы соглашаетесь с условиями оказания услуг и
-            политикой обработки персональных данных
+            {{ $t("order.warning") }}
           </h1>
         </div>
       </div>
