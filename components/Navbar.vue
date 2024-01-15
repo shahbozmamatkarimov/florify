@@ -520,7 +520,7 @@
                 @click.prevent
               >
                 <p
-                  v-if="$t('en') === 'In'"
+                  v-if="$t('en') !== 'In'"
                   class="flex items-center text-black leading-4 gap-2"
                 >
                   Русский
@@ -541,7 +541,7 @@
                   </svg>
                 </p>
                 <p
-                  v-else-if="$t('en') === 'Ан'"
+                  v-else-if="$t('en') !== 'Ан'"
                   class="flex items-center text-black leading-4 gap-2"
                 >
                   Uzbekcha

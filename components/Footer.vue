@@ -20,10 +20,10 @@
           <router-link to="/quality_assurance"> {{$t("quality_assurance") }} </router-link>
         </li>
         <li
+        class="cursor-pointer"
           v-for="(i, index) in productStore.state.categories"
           @click="productStore.getOneProduct(i.id, index + 1)"
         >
-          <router-link to="/about">
             <p
               v-if="$t('uz') == 'Уз'"
               class="truncate w-[90%] md:text-lg text-sm leading-[21px]"
@@ -36,7 +36,6 @@
             >
               {{ i.uz }}
             </p>
-          </router-link>
         </li>
       </ul>
       <ul>
