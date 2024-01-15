@@ -1,9 +1,9 @@
 <template>
-  <main class="container bg-white min-h-screen  mx-auto xl:px-28 md:px-10 px-5 py-20">
-    <router-link class="cursor-pointer" to="/">
+  <main class="container min-h-screen max-h-screen mx-auto xl:px-28 md:px-10 px-5 py-20">
+    <router-link class="cursor-pointer absolute top-0 bottom-0 xl:px-28 md:px-10 px-5 py-20 z-20" to="/">
       <img src="/not_found.svg" alt="" />
     </router-link>
-    <div class="flex items-center absolute gap-20 top-0 bottom-0 my-auto">
+    <div class="flex xl:flex-row flex-col min-h-[600px] h-[calc(100vh_-_200px)] items-center xl:justify-start justify-center xl:gap-20 gap-5">
       <h1 class="leading-[264px] text-white">404</h1>
       <div>
         <p class="text-38 font-bold">Мы не нашли страницу, которую вы ищете</p>
