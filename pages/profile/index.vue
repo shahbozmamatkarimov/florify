@@ -161,7 +161,7 @@
     <el-dialog
       v-if="isMount"
       close-icon="false"
-      v-model="isLogout"
+      v-model="useAuth.store.logOutModal"
       width="30%"
       align-center
     >
@@ -171,7 +171,7 @@
           Haqiqatdan ham hisobingizdan chiqmoqchimisiz?
         </p>
         <button
-          @click="logout"
+          @click="useAuth.logOut"
           class="font-semibold rounded-[10px] bg-[#5C0099] text-white h-[50px] w-full"
         >
           Выйти из аккаунта
@@ -189,11 +189,6 @@ const isLoading = useLoadingStore();
 const isLogout = ref(false);
 const isMount = ref(false);
 const lang = ref(false);
-function logout() {
-  localStorage.removeItem("token");
-  isLoading.store.isLogin = false;
-  isLogout.value = false;
-}
 
 onMounted(() => {
   isMount.value = true;

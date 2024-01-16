@@ -19,6 +19,7 @@ export const useAuthStore = defineStore("isLogged", () => {
     isVerified: true,
     isLoading: false,
     registerModal: false,
+    logOutModal: false,
   });
 
   function handleSubmit() {
@@ -78,7 +79,8 @@ export const useAuthStore = defineStore("isLogged", () => {
       .then((res) => {
         console.log(res.data);
         if (res.data.statusCode == 201) {
-        isLoading.store.salesman_id = res.data?.data?.client?.id;
+          isLoading.store.salesman_id = res.data?.data?.client?.id;
+          isLoading.store.name = res.data?.data?.client?.name;
           isLoading.store.isLogin = true;
           store.registerModal = false;
           store.otpModal = false;
@@ -99,5 +101,13 @@ export const useAuthStore = defineStore("isLogged", () => {
       });
   }
 
-  return { store, handleSubmit, verifyOtp };
+  function logOut() {
+    isLoading.store.salesman_id = "";
+    isLoading.store.name = "";
+    localStorage.removeItem("token");
+    store.logOutModal = false;
+    isLoading.store.isLogin = false;
+  }
+
+  return { store, handleSubmit, verifyOtp, logOut };
 });

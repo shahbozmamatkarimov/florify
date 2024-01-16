@@ -1,6 +1,6 @@
 <template>
   <div class="fixed top-0 z-50 w-full -mt-[1px]">
-    <div class="flex flex-wrap h-[70px]">
+    <div :class="$router.currentRoute.value.name == 'index'?']':'overflow-hidden'" class="flex flex-wrap h-[70px]">
       <section class="relative w-full mx-auto">
         <nav class="flex items-center md:hidden h-[76px] bg-white">
           <div

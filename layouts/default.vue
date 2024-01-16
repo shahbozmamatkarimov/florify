@@ -6,7 +6,7 @@
     <nav>
       <Navbar />
     </nav>
-    <div class="overflow-hidden mb:pb-0 pb-20 md:mt-[94px] mt-[160px] sm:pb-0 max-w-screen container mx-auto">
+    <div :class="$router.currentRoute.value.name == 'index'?'mt-[160px]':'mt-[90px]'" class="overflow-hidden mb:pb-0 pb-20 md:mt-[94px] sm:pb-0 max-w-screen container mx-auto">
       <!-- <section
         v-if="$router.currentRoute.value.fullPath == '/'"
         class="container mx-auto xl:px-28 md:px-10 px-5 pb-5"

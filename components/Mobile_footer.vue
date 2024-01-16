@@ -9,7 +9,11 @@
           to="/"
         >
           <img class="active" src="@/assets/footer/logo.svg" alt="" />
-          <img class="_active hidden h-6 w-6 mb-1 mt-1.5" src="@/assets/footer/_logo.svg" alt="" />
+          <img
+            class="_active hidden h-6 w-6 mb-1 mt-1.5"
+            src="@/assets/footer/_logo.svg"
+            alt=""
+          />
           <p class="text-[10px] leading-3">Asosiy</p>
         </router-link>
       </li>
@@ -23,15 +27,15 @@
           <p class="text-[10px] leading-3">Savatcha</p>
         </router-link>
       </li>
-      <li class="w-[75px]">
-        <router-link
+      <li class="cursor-pointer w-[75px]">
+        <div
+          @click="checkAuth"
           class="flex flex-col gap-[2px] items-center justify-center"
-          to="/favorites"
         >
           <img class="active" src="@/assets/footer/heart.svg" alt="" />
           <img class="_active hidden" src="@/assets/footer/_heart.svg" alt="" />
           <p class="text-[10px] leading-3">Tanlanganlar</p>
-        </router-link>
+        </div>
       </li>
       <li class="flex flex-col gap-[2px] items-center justify-center w-[75px]">
         <router-link
@@ -39,7 +43,11 @@
           to="/profile"
         >
           <img class="active" src="@/assets/footer/profile.svg" alt="" />
-          <img class="_active hidden" src="@/assets/footer/_profile.svg" alt="" />
+          <img
+            class="_active hidden"
+            src="@/assets/footer/_profile.svg"
+            alt=""
+          />
           <p class="text-[10px] leading-3">Profil</p>
         </router-link>
       </li>
@@ -47,11 +55,25 @@
   </footer>
 </template>
 
-<script setup></script>
+<script setup>
+import { useLoadingStore, useAuthStore } from "@/store";
+
+const isLoading = useLoadingStore();
+const authStore = useAuthStore();
+const router = useRouter();
+
+function checkAuth() {
+  if (!isLoading.store.isLogin) {
+    authStore.store.loginModal = true;
+  } else {
+    router.push("/favorites");
+  }
+}
+</script>
 
 <style lang="scss" scoped>
 .router-link-exact-active {
-  color: #5C0099;
+  color: #5c0099;
   .active {
     display: none;
   }
