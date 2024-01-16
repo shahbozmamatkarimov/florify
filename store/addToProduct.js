@@ -7,6 +7,7 @@ export const useAddToCartStore = defineStore("addtocart", () => {
   const isLoading = useLoadingStore();
 
   const store = reactive({
+    totalCount: 0,
     products: "",
     total_price: 0,
   });
@@ -20,7 +21,8 @@ export const useAddToCartStore = defineStore("addtocart", () => {
     store.total_price = 0;
     for (let i = 0; i < store.products.length; i++) {
       console.log(store.products[i]);
-      store.total_price += store.products[i].price * store.products[i].client_quantity;
+      store.total_price +=
+        store.products[i].price * store.products[i].client_quantity;
     }
   }
 
@@ -47,6 +49,7 @@ export const useAddToCartStore = defineStore("addtocart", () => {
           res.data.data.product.client_quantity = 1;
           product.push(res.data?.data?.product);
           localStorage.setItem("addToCart", JSON.stringify(product));
+          store.totalCount = product?.length;
         }
       })
       .catch((err) => {

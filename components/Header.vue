@@ -1,13 +1,19 @@
 <template>
   <div class="fixed top-0 z-50 w-full -mt-[1px]">
-    <div :class="$router.currentRoute.value.name == 'index'?']':'overflow-hidden'" class="flex flex-wrap h-[70px]">
+    <div
+      :class="
+        $router.currentRoute.value.name == 'index' ? ']' : 'overflow-hidden'
+      "
+      class="flex flex-wrap h-[70px]"
+    >
       <section class="relative w-full mx-auto">
         <nav class="flex items-center md:hidden h-[76px] bg-white">
           <div
             class="flex items-center justify-between container md:px-10 px-5 mx-auto"
           >
             <div class="flex items-center gap-2">
-              <img @click="$router.push('/')"
+              <img
+                @click="$router.push('/')"
                 class="lg:hidden block logo h-[40px] cursor-pointer"
                 src="../public/logo_mobile.svg"
                 alt="logo"
@@ -113,16 +119,25 @@
                   class="sm:flex hidden items-center w-full max-w-fit gap-3"
                 >
                   <img src="@/assets/svg/login.svg" alt="" />
-                  <p v-if="!isLoading.store.isLogin" class="2xl:block hidden">{{ $t("login") }}</p>
-                  <p v-if="isLoading.store.isLogin" class="2xl:block hidden w-[100px] truncate">{{ isLoading.store.name }}</p>
+                  <p v-if="!isLoading.store.isLogin" class="2xl:block hidden">
+                    {{ $t("login") }}
+                  </p>
+                  <p
+                    v-if="isLoading.store.isLogin"
+                    class="2xl:block hidden w-[100px] truncate"
+                  >
+                    {{ isLoading.store.name }}
+                  </p>
                 </li>
                 <li
                   @click="addToCart"
                   class="relative sm:flex hidden cursor-pointer items-center w-full max-w-fit gap-3"
                 >
-                  <!-- <p
-                    class="h-2 w-2 bg-[#FF6161] absolute left-4 top-1 rounded-full"
-                  ></p> -->
+                  <p v-if="useAddToCart.store.totalCount"
+                    class="flex items-center justify-center overflow-hidden text-white text-[8px] font-bold h-4 w-4 bg-[#FF6161] absolute left-4 -top-1 rounded-full"
+                  >
+                    {{ useAddToCart.store.totalCount }}
+                  </p>
                   <img src="@/assets/svg/cartWhite.svg" alt="" />
                   <p class="2xl:block hidden">{{ $t("basket") }}</p>
                 </li>
@@ -183,9 +198,9 @@ function clickedModal(click_type, value) {
 
 function checkAuth() {
   if (!isLoading.store.isLogin) {
-    authStore.store.loginModal = true
+    authStore.store.loginModal = true;
   } else {
-    router.push("/favorites")
+    router.push("/favorites");
   }
 }
 
@@ -195,6 +210,17 @@ const addToCart = () => {
   useProduct.state.addToProductDrawer = true;
   useAddToCart.getAddToCart();
 };
+
+onMounted(() => {
+  useAddToCart.store.totalCount = JSON.parse(localStorage.getItem("addToCart"))?.length; 
+
+  // let token;
+  // window.addEventListener('storage', () => {
+  //   console.log("Local");
+  //   token = localStorage.getItem("token");
+  //   localStorage.setItem(token);
+  // });
+});
 </script>
 
 <style lang="scss" scoped>

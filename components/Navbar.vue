@@ -711,6 +711,7 @@ function changeQuantity(e, id) {
         }
       } else if (e == "delete") {
         useAddToCart.store.products?.splice(i, 1);
+        useAddToCart.store.totalCount = useAddToCart.store.products?.length;
         localStorage.setItem(
           "addToCart",
           JSON.stringify(useAddToCart.store.products)

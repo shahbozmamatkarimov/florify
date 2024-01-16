@@ -78,7 +78,7 @@
         >
       </p>
       <ul class="flex items-center gap-5 float-right py-10">
-        <li>
+        <li v-if="store.contacts.facebook">
           <a
             :href="store.contacts.facebook"
             target="_blank"
@@ -87,7 +87,7 @@
             <img src="../assets/networks/facebook.svg" alt="" />
           </a>
         </li>
-        <li class="cursor-pointer">
+        <li v-if="store.contacts.instagramm" class="cursor-pointer">
           <a
             :href="store.contacts.instagramm"
             target="_blank"
@@ -96,7 +96,7 @@
             <img src="../assets/networks/instagram.svg" alt="" />
           </a>
         </li>
-        <li>
+        <li v-if="store.contacts.telegram">
           <a
             :href="store.contacts.telegram"
             target="_blank"
