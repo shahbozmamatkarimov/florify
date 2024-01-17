@@ -270,6 +270,21 @@
 </template>
 
 <script setup>
+useHead({
+  title: 'florify',
+  meta: [
+    { name: 'description', content: 'florify' }
+  ],
+})
+useSeoMeta({
+  title: 'florify',
+  ogTitle: 'florify',
+  description: 'Find your dream flowers with our website',
+  ogDescription: 'Find your dream flowers with our website',
+  ogImage: '/public/logo_mobile.svg',
+  twitterCard: '/public/logo_mobile.svg',
+})
+
 import axios from "axios";
 import {
   useProductsStore,
