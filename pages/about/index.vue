@@ -77,7 +77,12 @@
   </main>
 </template>
 
-<script setup></script>
+<script setup>
+useHead({
+  title: "About us",
+  meta: [{ name: "florify", content: "about us" }],
+});
+</script>
 
 <style lang="scss" scoped>
 h1 {

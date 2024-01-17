@@ -80,6 +80,11 @@
   </main>
 </template>
 
-<script setup></script>
+<script setup>
+useHead({
+  title: "Contact us",
+  meta: [{ name: "florify", content: "contact us" }],
+});
+</script>
 
 <style lang="scss" scoped></style>

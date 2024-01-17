@@ -46,36 +46,41 @@
 
     <h1 class="font-bold">{{ $t("terms_of_use[1][4][0]") }}</h1>
     <div>
-        <p>{{ $t("terms_of_use[1][4][1][0]") }}</p>
-        <p>{{ $t("terms_of_use[1][4][1][1]") }}</p>
-        <p>{{ $t("terms_of_use[1][4][1][2]") }}</p>
-        <p>{{ $t("terms_of_use[1][4][1][3]") }}</p>
-        <p>{{ $t("terms_of_use[1][4][1][4]") }}</p>
-        <p>{{ $t("terms_of_use[1][4][1][5]") }}</p>
-        <p>{{ $t("terms_of_use[1][4][1][6]") }}</p>
-        <p>{{ $t("terms_of_use[1][4][1][7]") }}</p>
-        <p>{{ $t("terms_of_use[1][4][1][8]") }}</p>
-        <p>{{ $t("terms_of_use[1][4][1][9]") }}</p>
-        <p>{{ $t("terms_of_use[1][4][1][10]") }}</p>
-        <p>{{ $t("terms_of_use[1][4][1][11]") }}</p>
-        <p>{{ $t("terms_of_use[1][4][1][12]") }}</p>
-        <p>{{ $t("terms_of_use[1][4][1][13]") }}</p>
-        <p>{{ $t("terms_of_use[1][4][1][14]") }}</p>
-        <p>{{ $t("terms_of_use[1][4][1][15]") }}</p>
-        <p>{{ $t("terms_of_use[1][4][1][16]") }}</p>
-        <p>{{ $t("terms_of_use[1][4][1][17]") }}</p>
+      <p>{{ $t("terms_of_use[1][4][1][0]") }}</p>
+      <p>{{ $t("terms_of_use[1][4][1][1]") }}</p>
+      <p>{{ $t("terms_of_use[1][4][1][2]") }}</p>
+      <p>{{ $t("terms_of_use[1][4][1][3]") }}</p>
+      <p>{{ $t("terms_of_use[1][4][1][4]") }}</p>
+      <p>{{ $t("terms_of_use[1][4][1][5]") }}</p>
+      <p>{{ $t("terms_of_use[1][4][1][6]") }}</p>
+      <p>{{ $t("terms_of_use[1][4][1][7]") }}</p>
+      <p>{{ $t("terms_of_use[1][4][1][8]") }}</p>
+      <p>{{ $t("terms_of_use[1][4][1][9]") }}</p>
+      <p>{{ $t("terms_of_use[1][4][1][10]") }}</p>
+      <p>{{ $t("terms_of_use[1][4][1][11]") }}</p>
+      <p>{{ $t("terms_of_use[1][4][1][12]") }}</p>
+      <p>{{ $t("terms_of_use[1][4][1][13]") }}</p>
+      <p>{{ $t("terms_of_use[1][4][1][14]") }}</p>
+      <p>{{ $t("terms_of_use[1][4][1][15]") }}</p>
+      <p>{{ $t("terms_of_use[1][4][1][16]") }}</p>
+      <p>{{ $t("terms_of_use[1][4][1][17]") }}</p>
     </div>
 
     <h1 class="font-bold">{{ $t("terms_of_use[1][5][0]") }}</h1>
     <div>
-        <p>{{ $t("terms_of_use[1][5][1][0]") }}</p>
-        <p>{{ $t("terms_of_use[1][5][1][1]") }}</p>
-        <p>{{ $t("terms_of_use[1][5][1][2]") }}</p>
+      <p>{{ $t("terms_of_use[1][5][1][0]") }}</p>
+      <p>{{ $t("terms_of_use[1][5][1][1]") }}</p>
+      <p>{{ $t("terms_of_use[1][5][1][2]") }}</p>
     </div>
   </main>
 </template>
 
-<script setup></script>
+<script setup>
+useHead({
+  title: "Terms of Use",
+  meta: [{ name: "florify", content: "terms of use" }],
+});
+</script>
 
 <style lang="scss" scoped>
 h1 {

@@ -67,6 +67,11 @@
 </template>
 
 <script setup>
+useHead({
+  title: "Private info",
+  meta: [{ name: "florify", content: "private info" }],
+});
+
 import {useLoadingStore} from "@/store";
 
 const isLoading = useLoadingStore()

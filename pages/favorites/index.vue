@@ -18,7 +18,7 @@
             class="relative card max-w-sm md:w-full w-[160px] md:p-0 p-[6px] hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
           >
             <img
-              @click="$router.push(`./flowers/${i.product.id}`)"
+              @click="$router.push(`./flowers/${i.product.id}?flower=${i.product.name}`)"
               class="img md:rounded-b-none rounded-b-lg rounded-t-lg 2xl:h-80 xl:h-64 cursor-pointer md:h-52 sm:h-36 h-44 w-full object-cover"
               :src="`${baseUrlImage}${i.product.images[0]?.image}`"
               alt=""
@@ -105,6 +105,10 @@
 </template>
 
 <script setup>
+useHead({
+  title: "Favorites",
+  meta: [{ name: "florify", content: "favorites" }],
+});
 import axios from "axios";
 import {
   useLikeStore,

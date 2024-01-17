@@ -435,6 +435,11 @@
 </template>
 
 <script setup>
+useHead({
+  title: "Order",
+  meta: [{ name: "florify", content: "order" }],
+});
+
 import axios from "axios";
 import { useAddToCartStore, useLoadingStore, useAuthStore } from "@/store";
 const useAddToCart = useAddToCartStore();

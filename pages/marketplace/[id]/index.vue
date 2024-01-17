@@ -2,12 +2,14 @@
   <main class="container mx-auto xl:px-28 md:px-10 px-5 pb-5 text-[#242424]">
     <section class="flex items-center gap-5 max-w-[730px] py-12">
       <div class="min-w-fit">
-        <img v-if="!useSalesman.store.salesman.image?.length"
+        <img
+          v-if="!useSalesman.store.salesman.image?.length"
           class="md:h-24 md:w-24 h-16 w-16 rounded-full object-cover"
           src="@/assets/image/florify.png"
           alt="img"
         />
-        <img v-else
+        <img
+          v-else
           class="md:h-24 md:w-24 h-16 w-16 rounded-full object-cover"
           :src="baseUrlImage + useSalesman.store.salesman.image"
           alt="img"
@@ -15,9 +17,13 @@
         <!-- baseUrlImage -->
       </div>
       <div class="flex flex-col gap-5">
-        <h1 class="md:text-2xl sm:text-xl text-lg font-semibold">{{useSalesman.store.salesman.store_name}}</h1>
-        <pre class="md:-ml-8 -ml-8 !p-0 block  w-full md:text-md sm:text-sm text-xs leading-6">
-          {{useSalesman.store.salesman.description}}
+        <h1 class="md:text-2xl sm:text-xl text-lg font-semibold">
+          {{ useSalesman.store.salesman.store_name }}
+        </h1>
+        <pre
+          class="md:-ml-8 -ml-8 !p-0 block w-full md:text-md sm:text-sm text-xs leading-6"
+        >
+          {{ useSalesman.store.salesman.description }}
         </pre>
         <!-- <button
           class="md:ml-0 -ml-20 md:text-md sm:text-sm text-xs flex items-center max-w-fit gap-5 border-2 border-[#242424] rounded-full py-2 px-8"
@@ -53,7 +59,9 @@
         </li>
       </ul>
     </section>
-    <h1 class="font-semibold md:text-2xl sm:text-xl text-lg pt-10 pb-7 border-b-2">
+    <h1
+      class="font-semibold md:text-2xl sm:text-xl text-lg pt-10 pb-7 border-b-2"
+    >
       Товары BOTANICA Department of flowers
     </h1>
     <section class="sm:flex w-full">
@@ -125,16 +133,30 @@
 </template>
 
 <script setup>
-import { useSalesmanStore } from '@/store';
+useHead({
+  title: "Salesman profile",
+  meta: [{ name: "florify", content: "saleman profile" }],
+});
+
+import { useSalesmanStore } from "@/store";
 const runtimeConfig = useRuntimeConfig();
 // const baseUrl = runtimeConfig.public.baseURL;
 const baseUrlImage = ref(runtimeConfig.public.baseURL?.slice(0, -3));
 
-const useSalesman = useSalesmanStore()
+const useSalesman = useSalesmanStore();
 useSalesman.get_salesman();
 
-onMounted(()=> {
-})
+onMounted(() => {});
+
+watch(
+  () => useSalesman.store.salesman?.name,
+  () => {
+    useHead({
+      title: useSalesman.store.salesman?.name,
+      meta: [{ name: "florify", content: "saleman" }],
+    });
+  }
+);
 </script>
 
 <style lang="scss" scoped></style>

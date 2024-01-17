@@ -23,6 +23,11 @@
 </template>
 
 <script setup>
+useHead({
+  title: "Page not found",
+  meta: [{ name: "florify", content: "page not found" }],
+});
+
 definePageMeta({
   layout: false,
 });

@@ -19,7 +19,7 @@
       </div>
     </div>
     <ul>
-      <li class="py-6 border-b">
+      <li v-if="isLoading.store.isLogin" class="py-6 border-b">
         <router-link
           class="flex items-center justify-between leading-[20px]"
           to="/orders"
@@ -29,14 +29,27 @@
         </router-link>
       </li>
       <li>
-        <div @click="lang = !lang"
+        <div
+          @click="lang = !lang"
           class="flex items-center justify-between leading-[20px] py-6 border-b"
         >
           Til <img src="@/assets/svg/profile_arrow.svg" alt="" />
         </div>
-        <div v-if="lang" class="mt-2 border-b">
-          <div @click="$i18n.locale = 'uz'" class="flex items-center gap-2"><p :class="$t('en') !== 'Ан'?'bg-[#5C0099]':'border'" class="h-4 w-4 rounded-full"></p> Uzbekcha</div>
-          <div @click="$i18n.locale = 'ru'" class="flex items-center gap-2"><p :class="$t('en') === 'Ан'?'bg-[#5C0099]':'border'" class="h-4 w-4 rounded-full"></p> Русский</div>
+        <div v-if="lang" class="mt-3 pb-3 space-y-2 border-b">
+          <div @click="$i18n.locale = 'uz'" class="flex items-center gap-2">
+            <p
+              :class="$t('en') !== 'Ан' ? 'bg-[#5C0099]' : 'border'"
+              class="h-4 w-4 rounded-full"
+            ></p>
+            O'zbekcha
+          </div>
+          <div @click="$i18n.locale = 'ru'" class="flex items-center gap-2">
+            <p
+              :class="$t('en') === 'Ан' ? 'bg-[#5C0099]' : 'border'"
+              class="h-4 w-4 rounded-full"
+            ></p>
+            Русский
+          </div>
         </div>
         <div
           class="flex lang_select cursor-pointer items-center gap-2 hover:text-[#5C0099] hover:font-semibold"
@@ -96,7 +109,7 @@
                     <div class="flex gap-2">
                       <img
                         class="w-6 h-6 object-cover rounded-full"
-                        src="../assets/lang/uz.svg"
+                        src="@/assets/lang/uz.svg"
                         alt=""
                       />
                       Uzbekcha
@@ -106,7 +119,7 @@
                     <div class="flex w-12 gap-2">
                       <img
                         class="w-6 h-6 object-cover rounded-full"
-                        src="../assets/lang/ru.svg"
+                        src="@/assets/lang/ru.svg"
                         alt=""
                       />
                       Русский
@@ -144,7 +157,7 @@
       </li>
       <li
         v-if="isLoading.store.isLogin"
-        @click="isLogout = true"
+        @click="useAuth.store.logOutModal = true"
         class="py-6 border-b text-[#5C0099]"
       >
         Hisobdan chiqish
@@ -182,6 +195,10 @@
 </template>
 
 <script setup>
+useHead({
+  title: "Profile",
+  meta: [{ name: "florify", content: "profile" }],
+});
 import { useAuthStore, useLoadingStore } from "@/store";
 
 const useAuth = useAuthStore();

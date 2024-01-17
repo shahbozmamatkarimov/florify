@@ -173,7 +173,7 @@
               class="relative card max-w-sm md:w-full w-[160px] md:p-0 p-[6px] hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
             >
               <img
-                @click="$router.push(`/flowers/${product.id}`)"
+                @click="$router.push(`/flowers/${product.id}?flower=${product.name}`)"
                 class="img md:rounded-b-none rounded-b-lg rounded-t-lg 2xl:h-80 xl:h-64 cursor-pointer md:h-52 sm:h-36 h-44 w-full object-cover"
                 :src="`${baseUrlImage}${product?.images[0]?.image}`"
                 alt=""
@@ -280,9 +280,13 @@ useSeoMeta({
   title: 'florify',
   ogTitle: 'florify',
   description: 'Find your dream flowers with our website',
+  keywords: "florify, florify, florafy, florifay",
   ogDescription: 'Find your dream flowers with our website',
   ogImage: '/public/logo_mobile.svg',
   twitterCard: '/public/logo_mobile.svg',
+  bodyAttrs: {
+    class: "test",
+  },
 })
 
 import axios from "axios";

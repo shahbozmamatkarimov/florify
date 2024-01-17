@@ -142,11 +142,14 @@
             </div>
             <p>Более {{ useProduct.state.getById?.number_of_sales }} заказов</p>
           </li>
-          {{ useProduct.state.getById }}
           <li class="flex flex-wrap">
             <p class="w-24">Продавец:</p>
             <p
-              @click="$router.push(`/marketplace/${useProduct.state.getById?.salesman_id}`)"
+              @click="
+                $router.push(
+                  `/marketplace/${useProduct.state.getById?.salesman_id}`
+                )
+              "
               class="font-bold hover:underline cursor-pointer"
             >
               BOTANICA Department of flowers
@@ -322,7 +325,9 @@
           class="card 2xl:min-w-[310px] xl:min-w-[247px] lg:min-w-[220px] md:min-w-[212px] sm:min-w-[185px] min-w-[150px] my-5 hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
         >
           <img
-            @click="$router.push(`/flowers/${product.id}`)"
+            @click="
+              $router.push(`/flowers/${product.id}?flower=${product.name}`)
+            "
             class="img rounded-t-lg 2xl:h-80 xl:h-64 cursor-pointer md:h-52 sm:h-44 h-44 w-full object-cover"
             :src="`${baseUrlImage}${product?.images[0]?.image}`"
             alt=""
@@ -788,6 +793,24 @@ onMounted(() => {
   getComments();
   useProduct.getById(store.product_id);
   useHistory.getUserHistory();
+});
+
+useHead({
+  title: router.currentRoute.value?.query?.flower,
+  meta: [{ name: "florify", content: "order" }],
+});
+
+useSeoMeta({
+  title: router.currentRoute.value?.query?.flower,
+  ogTitle: router.currentRoute.value?.query?.flower,
+  description: router.currentRoute.value?.query?.flower,
+  keywords: router.currentRoute.value?.query?.flower,
+  ogDescription: router.currentRoute.value?.query?.flower ?? "florify",
+  ogImage: router.currentRoute.value?.query?.flower,
+  twitterCard: router.currentRoute.value?.query?.flower,
+  bodyAttrs: {
+    class: "test",
+  },
 });
 </script>
 

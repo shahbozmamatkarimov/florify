@@ -3,6 +3,11 @@
 </template>
 
 <script setup>
+useHead({
+  title: "Payment",
+  meta: [{ name: "florify", content: "private info" }],
+});
+
 import { usePaymentStore } from "@/store";
 definePageMeta({
   layout: false,

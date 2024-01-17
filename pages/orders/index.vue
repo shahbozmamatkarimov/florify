@@ -185,6 +185,11 @@
 </template>
 
 <script setup>
+useHead({
+  title: "Orders",
+  meta: [{ name: "florify", content: "orders" }],
+});
+
 import axios from "axios";
 const router = useRouter();
 const runtimeConfig = useRuntimeConfig();

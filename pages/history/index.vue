@@ -92,7 +92,7 @@
                   </div>
                   <div class="border border-[#EEEEEE] rounded-full p-1">
                     <img
-                    @click="() => addToCart(i.product.id)"
+                      @click="() => addToCart(i.product.id)"
                       class="cursor-pointer sm:h-5 sm:w-5 md:max-h-6 md:max-w-6 max-h-4 max-w-4"
                       src="@/assets/svg/cart.svg"
                       alt=""
@@ -123,6 +123,11 @@
 </template>
 
 <script setup>
+useHead({
+  title: "History", 
+  meta: [{ name: "florify", content: "history" }],
+});
+
 import axios from "axios";
 import {
   useHistoryStore,

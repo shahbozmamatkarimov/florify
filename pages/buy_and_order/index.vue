@@ -106,7 +106,12 @@
   </main>
 </template>
 
-<script setup></script>
+<script setup>
+useHead({
+  title: "Buy and Order",
+  meta: [{ name: "florify", content: "buy and order" }],
+});
+</script>
 
 <style lang="scss" scoped>
 h1 {

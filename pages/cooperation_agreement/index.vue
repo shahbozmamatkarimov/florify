@@ -113,7 +113,12 @@
   </main>
 </template>
 
-<script setup></script>
+<script setup>
+useHead({
+  title: "Cooperation agreement",
+  meta: [{ name: "florify", content: "cooperation agreement" }],
+});
+</script>
 
 <style lang="scss" scoped>
 h1 {

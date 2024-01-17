@@ -94,7 +94,12 @@
   </main>
 </template>
 
-<script setup></script>
+<script setup>
+useHead({
+  title: "Quality assurance",
+  meta: [{ name: "florify", content: "quality assurance" }],
+});
+</script>
 
 <style lang="scss" scoped>
 h1 {
