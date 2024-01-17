@@ -142,10 +142,11 @@
             </div>
             <p>Более {{ useProduct.state.getById?.number_of_sales }} заказов</p>
           </li>
+          {{ useProduct.state.getById }}
           <li class="flex flex-wrap">
             <p class="w-24">Продавец:</p>
             <p
-              @click="$router.push('/marketplace')"
+              @click="$router.push(`/marketplace/${useProduct.state.getById?.salesman_id}`)"
               class="font-bold hover:underline cursor-pointer"
             >
               BOTANICA Department of flowers

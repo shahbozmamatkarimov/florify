@@ -6,6 +6,7 @@ import { useHistoryStore } from "./history";
 import { useLoadingStore } from "./isLoading";
 import { useAddToCartStore } from "./addToProduct";
 import { usePaymentStore } from "./payment";
+import { useSalesmanStore } from "./salesman";
 
 export {
   useLoadingStore,
@@ -16,4 +17,5 @@ export {
   useHistoryStore,
   useAddToCartStore,
   usePaymentStore,
+  useSalesmanStore,
 };

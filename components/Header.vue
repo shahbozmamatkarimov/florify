@@ -134,7 +134,7 @@
                   class="relative sm:flex hidden cursor-pointer items-center w-full max-w-fit gap-3"
                 >
                   <p v-if="useAddToCart.store.totalCount"
-                    class="flex items-center justify-center overflow-hidden text-white text-[8px] font-bold h-4 w-4 bg-[#FF6161] absolute left-4 -top-1 rounded-full"
+                    class="flex items-center justify-center overflow-hidden text-white text-[8px] font-bold h-4 w-4 bg-[red] absolute left-4 -top-1 rounded-full"
                   >
                     {{ useAddToCart.store.totalCount }}
                   </p>
