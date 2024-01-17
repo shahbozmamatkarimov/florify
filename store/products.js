@@ -163,7 +163,7 @@ export const useProductsStore = defineStore("products", () => {
       .then((res) => {
         console.log(res);
         isLoading.removeLoading("getAdvertising");
-        state.addvertising = res.data?.data?.advertisings[0];
+        state.addvertising = res.data?.data?.advertisings;
       })
       .catch((err) => {
         console.log(err);

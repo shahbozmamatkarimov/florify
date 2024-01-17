@@ -9,7 +9,7 @@
       <section class="flex md:gap-7 gap-5">
         <div
           class="w-full bg-transparent h-full"
-          v-if="!isLoading.isLoadingType('getAllProducts')"
+          v-if="!isLoading.isLoadingType('getAdvertising')"
         >
           <Swiper
             @slide-change-transition-end="slidechange"
@@ -34,7 +34,7 @@
             }"
           >
             <SwiperSlide
-              v-for="slide in productStore.state.categories"
+              v-for="slide in productStore.state.addvertising"
               :key="slide"
             >
               <div
@@ -54,7 +54,7 @@
             <p
               :class="store.slideStep == i ? 'bg-[#323232]' : 'bg-[#D9D9D9]'"
               class="h-[10px] w-[10px] rounded-full"
-              v-for="i in productStore.state.categories?.length"
+              v-for="i in productStore.state.addvertising?.length"
             ></p>
           </div>
         </div>
