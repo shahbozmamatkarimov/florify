@@ -65,14 +65,14 @@
                   v-model="useProduct.search.search"
                   @input="useProduct.searchProduct"
                   @focus="focused('product')"
-                  type="text"
+                  type="search"
                   :placeholder="$t('navbar.search')"
                   class="sm:w-[400px] w-full search_input sm:pl-11 pl-14 md:h-[46px] h-[50px] text-[#454545] text-lg rounded-lg bg-[#F4F7F9] border-none outline-none ring-0"
                 />
                 <div
                   v-if="useProduct.state.isSearchingModal"
                   v-loading="isLoading.isLoadingType('getSearchProducts')"
-                  class="p-6 mt-12 -ml-3 absolute z-50 w-[400px] bg-white rounded-b-xl"
+                  class="p-6 mt-12 -ml-3 absolute z-[60] w-[400px] bg-white rounded-b-xl"
                 >
                   <h1 class="text-xl leading-6 font-medium">Популярное</h1>
                   <div
@@ -85,7 +85,7 @@
                     >
                       <img
                         class="h-20 w-20 rounded-[10px] object-cover"
-                        :src="baseUrlImage + i.images[0].image"
+                        :src="baseUrlImage + i.images[0]?.image"
                         alt=""
                       />
                       <div class="space-y-1 font-medium">

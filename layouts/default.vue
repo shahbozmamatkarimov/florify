@@ -89,7 +89,7 @@
     <div
       @click="closeModal"
       v-if="isLoading.store.isOpen"
-      class="absolute top-0 left-0 min-h-screen min-w-full"
+      class="fixed top-0 left-0 z-40 min-h-screen min-w-full"
     ></div>
   </div>
 </template>
