@@ -120,8 +120,8 @@
           <li class="underline whitespace-nowrap">Согласие пользователя</li>
         </ul>
         <div class="flex items-center gap-5">
-          <img src="../assets/svg/appstore.svg" alt="app store" />
-          <img src="../assets/svg/googleplay.svg" alt="google play" />
+          <img class="h-[40px] w-[140px]" src="../assets/svg/appstore.svg" alt="app store" />
+          <img class="h-[40px] w-[140px]" src="../assets/svg/googleplay.svg" alt="google play" />
         </div>
       </div>
     </div>
