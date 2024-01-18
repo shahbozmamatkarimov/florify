@@ -152,7 +152,11 @@
               "
               class="font-bold hover:underline cursor-pointer"
             >
-              BOTANICA Department of flowers
+              {{
+                useProduct.state.getById?.salesman?.store_name
+                  ? useProduct.state.getById?.salesman?.store_name
+                  : "Store"
+              }}
             </p>
           </li>
           <li class="flex flex-wrap">

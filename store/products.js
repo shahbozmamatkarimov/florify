@@ -17,6 +17,7 @@ export const useProductsStore = defineStore("products", () => {
     total_pages: 0,
     page: 1,
     showProduct: [],
+    salesmanProduct: [],
     getById: "",
     isCategory: 0,
     sliderStep: 0,
@@ -168,6 +169,21 @@ export const useProductsStore = defineStore("products", () => {
       .catch((err) => {
         console.log(err);
         isLoading.removeLoading("getAdvertising");
+      });
+  }
+
+  function getSalesmanProCategory(category_id, salesman_id) {
+    isLoading.addLoading("getSalesmanProCategory");
+    axios
+      .get(baseUrl + `/product/salesmanId/${salesman_id}/${category_id}/1/10`)
+      .then((res) => {
+        console.log(res);
+        isLoading.removeLoading("getSalesmanProCategory");
+        state.salesmanProduct = res.data?.data?.categories;
+      })
+      .catch((err) => {
+        console.log(err);
+        isLoading.removeLoading("getSalesmanProCategory");
       });
   }
 
@@ -326,5 +342,6 @@ export const useProductsStore = defineStore("products", () => {
     searchProduct,
     getAdvertising,
     getSalesmanProducts,
+    getSalesmanProCategory,
   };
 });

@@ -68,13 +68,30 @@
       <nav class="sm:block hidden xl:w-[500px] w-[300px] pt-5 leading-9">
         <h1 class="md:text-xl sm:text-lg text-md font-semibold">Категории</h1>
         <ul class="md:text-[16px] text-sm leading-9">
-          <li>Мaгaзин рeкoмeндуeт</li>
+          <!-- <li>Мaгaзин рeкoмeндуeт</li>
           <li>Цветы в коробке</li>
           <li>Шитье и бисер</li>
           <li>Мaгaзин рeкoмeндуeт</li>
           <li>Цветы в корзине</li>
-          <li>Авторские букеты</li>
-          <li>Монобукеты</li>
+          <li>Авторские букеты</li> -->
+          <li
+            class="cursor-pointer"
+            v-for="(i, index) in productStore.state.categories"
+            @click="productStore.getOneProduct(i.id, index + 1)"
+          >
+            <p
+              v-if="$t('uz') == 'Уз'"
+              class="truncate w-[90%] md:text-lg text-sm leading-[21px]"
+            >
+              {{ i.ru }}
+            </p>
+            <p
+              v-else
+              class="truncate w-[90%] md:text-lg text-sm leading-[21px]"
+            >
+              {{ i.uz }}
+            </p>
+          </li>
         </ul>
       </nav>
       <nav class="sm:hidden flex justify-center w-full py-3 border-b-2">
@@ -84,39 +101,75 @@
       <div class="w-full">
         <div class="grid lg:grid-cols-3 grid-cols-2 cards my-5 md:gap-7 gap-5">
           <div
-            v-for="i in 12"
-            :key="i"
-            class="card max-w-sm hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
+            v-for="(product, index) in productStore.state.salesmanProduct"
+            :key="product.id"
+            class="relative card max-w-sm md:w-full w-[160px] md:p-0 p-[6px] hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
           >
             <img
-              @click="$router.push('./фрида_кало')"
-              class="img rounded-t-lg 2xl:h-72 xl:h-64 cursor-pointer md:h-52 sm:h-44 h-44 w-full object-cover"
-              src="@/assets/image/image2.png"
+              @click="
+                $router.push(`/flowers/${product.id}?flower=${product.name}`)
+              "
+              class="img md:rounded-b-none rounded-b-lg rounded-t-lg 2xl:h-80 xl:h-64 cursor-pointer md:h-52 sm:h-36 h-44 w-full object-cover"
+              :src="`${baseUrlImage}${product?.images[0]?.image}`"
               alt=""
             />
-            <div class="md:p-5 p-3">
+            <div class="md:p-5 p-[6px]">
               <h5
-                class="mb-2 sm:text-xl text-sm text-[#1F9D6D] tracking-tight font-medium"
+                class="mb-4 sm:text-xl text-sm text-[#1F9D6D] tracking-tight font-medium"
               >
-                Фрида Кало
+                {{ product.name }}
               </h5>
+              <div
+                class="flex gap-1.5 mb-5 items-center bg-[#FCEAC9B2] px-2 py-1 rounded-[5px] max-w-fit"
+              >
+                <img
+                  class="md:min-w-[12px] min-w-[9px] -mt-[1px] md:h-[14px] h-[11px]"
+                  src="@/assets/svg/cart.svg"
+                  alt=""
+                />
+                <p class="md:text-lg text-[10px] leading-3">
+                  {{ product.number_of_sales }} ta buyurtma
+                </p>
+              </div>
               <div class="flex justify-between items-center">
                 <p class="font-semibold sm:text-lg text-xs whitespace-nowrap">
-                  <span class="md:inline-block hidden"></span> 350 000
+                  <span class="md:inline-block hidden"></span>
+                  {{ product.price }}
                   <span class="sm:inline hidden">{{ $t("home.sum") }}</span>
                 </p>
-                <div class="flex items-center sm:gap-3 gap-1">
-                  <img
-                    class="cursor-pointer"
-                    src="@/assets/svg/heart.svg"
-                    alt=""
-                  />
-
-                  <img
-                    class="cursor-pointer sm:h-5 sm:w-5 h-3 w-3"
-                    src="@/assets/svg/cart.svg"
-                    alt=""
-                  />
+                <div class="flex rounded-full sm:gap-3 gap-1">
+                  <div
+                    v-if="product.likes !== true"
+                    :id="product.id"
+                    @click="() => addToLike(index, i.id, true, product.id)"
+                    class="absolute cursor-pointer duration-1000 flex top-5 right-5 bg-white rounded-full items-center justify-center md:h-9 md:w-9 h-8 w-8"
+                  >
+                    <img
+                      class="md:h-5 md:w-5 h-4 w-4"
+                      src="@/assets/svg/heart.svg"
+                      alt=""
+                    />
+                  </div>
+                  <div
+                    v-else
+                    @click="() => addToLike(index, i.id, false, product.id)"
+                    :id="'id' + product.id"
+                    class="absolute cursor-pointer duration-1000 flex top-5 right-5 bg-white rounded-full items-center justify-center md:h-9 md:w-9 h-8 w-8"
+                  >
+                    <img
+                      class="duration-1000 md:h-5 md:w-5 h-4 w-4"
+                      src="@/assets/svg/redHeart.svg"
+                      alt=""
+                    />
+                  </div>
+                  <div class="border border-[#EEEEEE] rounded-full p-1">
+                    <img
+                      @click="() => addToCart(product.id)"
+                      class="cursor-pointer sm:h-5 sm:w-5 md:max-h-6 md:max-w-6 max-h-4 max-w-4"
+                      src="@/assets/svg/cart.svg"
+                      alt=""
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -138,15 +191,21 @@ useHead({
   meta: [{ name: "florify", content: "saleman profile" }],
 });
 
-import { useSalesmanStore } from "@/store";
+import { useSalesmanStore, useProductsStore } from "@/store";
 const runtimeConfig = useRuntimeConfig();
+const router = useRouter();
+const productStore = useProductsStore();
 // const baseUrl = runtimeConfig.public.baseURL;
 const baseUrlImage = ref(runtimeConfig.public.baseURL?.slice(0, -3));
 
 const useSalesman = useSalesmanStore();
 useSalesman.get_salesman();
 
-onMounted(() => {});
+onMounted(() => {
+  const salesman_id = router.currentRoute.value.params?.id
+productStore.getSalesmanProCategory('e0b5739c-f97a-4a56-9cb7-46c3d505d854', salesman_id);
+
+});
 
 watch(
   () => useSalesman.store.salesman?.name,
