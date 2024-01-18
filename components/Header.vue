@@ -15,7 +15,7 @@
               <img
                 @click="$router.push('/')"
                 class="lg:hidden block logo h-[40px] cursor-pointer"
-                src="../public/logo_mobile.svg"
+                src="/logo_mobile.svg"
                 alt="logo"
               />
               <div>

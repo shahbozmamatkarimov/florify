@@ -11,7 +11,7 @@
           <img class="active" src="@/assets/footer/logo.svg" alt="" />
           <img
             class="_active hidden h-6 w-6 mb-1 mt-1.5"
-            src="@/assets/footer/_logo.svg"
+            src="/logo_mobile.svg"
             alt=""
           />
           <p class="text-[10px] leading-3">Asosiy</p>
