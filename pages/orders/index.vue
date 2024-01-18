@@ -190,12 +190,14 @@ useHead({
   meta: [{ name: "florify", content: "orders" }],
 });
 
+import {useLoadingStore}  from "@/store"
 import axios from "axios";
 const router = useRouter();
 const runtimeConfig = useRuntimeConfig();
 const baseUrl = runtimeConfig.public.baseURL;
 const baseUrlImage = ref(runtimeConfig.public.baseURL?.slice(0, -3));
 const isMount = ref(false);
+const isLoading = useLoadingStore();
 const store = reactive({
   show_more: "",
   orders: "",
