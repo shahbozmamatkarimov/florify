@@ -21,7 +21,7 @@
           v-for="i in 6"
           class="h-[300px] rounded-[4px] animate-pulse bg-gray-200"
         ></div>
-        <div v-else class="sm:border-none border" v-for="i in store.orders">
+        <div v-else-if="store.orders?.length" class="sm:border-none border" v-for="i in store.orders">
           <div class="bg-white rounded-[4px]">
             <ul
               class="flex items-center justify-between border-b border-[#E6E6E6] p-5"
@@ -119,6 +119,7 @@
             </div>
           </div>
         </div>
+        <NotFoundOrders v-else class="col-span-2" />
       </div>
     </section>
 

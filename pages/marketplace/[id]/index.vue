@@ -35,39 +35,50 @@
     <section class="py-5 border-y-2 sm:text-sm text-xs text-[#454545]">
       <ul class="flex lg:gap-20 gap-5 max-w-[730px] leading-6">
         <li class="text-center">
-          <h1>{{$t('rate')}}</h1>
+          <h1>{{ $t("rate") }}</h1>
           <p class="flex justify-center gap-1">
             <img src="@/assets/svg/greenstar.svg" alt="" /> 4.91
           </p>
         </li>
         <li class="text-center">
-          <h1>{{$t('reyting')}}</h1>
+          <h1>{{ $t("reyting") }}</h1>
 
           <p class="font-semibold">83</p>
         </li>
         <li class="text-center">
-          <h1>{{$t('order.delivery')}}</h1>
-          <p class="font-semibold">30 000 {{$t('home.sum')}}</p>
+          <h1>{{ $t("order.delivery") }}</h1>
+          <p class="font-semibold">30 000 {{ $t("home.sum") }}</p>
         </li>
         <!-- <li class="text-center">
           <h1>Бoнуcы</h1>
           <p class="font-semibold">5%</p>
         </li> -->
         <li class="text-center">
-          <h1>{{$t('in_florify')}}</h1>
-          <p class="font-semibold"><span v-if="$t('uz') == 'Уз'">c</span> {{new Date(useSalesman.store.salesman.createdAt).getFullYear()}}</p>
+          <h1>{{ $t("in_florify") }}</h1>
+          <p class="font-semibold">
+            <span v-if="$t('uz') == 'Уз'">c</span>
+            {{ new Date(useSalesman.store.salesman.createdAt).getFullYear() }}
+          </p>
         </li>
       </ul>
     </section>
     <h1
       class="font-semibold md:text-2xl sm:text-xl text-lg pt-10 pb-7 border-b-2"
     >
-    <span v-if="$t('uz') == 'Уз'">Товары</span> {{ useSalesman.store.salesman.store_name }} <span v-if="$t('uz') != 'Уз'">Tovarlari</span>
+      <span v-if="$t('uz') == 'Уз'">Товары</span>
+      {{ useSalesman.store.salesman.store_name }}
+      <span v-if="$t('uz') != 'Уз'">Tovarlari</span>
     </h1>
     <section class="sm:flex w-full">
-      <nav class="sticky top-40 sm:block flex xl:w-[500px] sm:border-b-0 sm:pb-0 pb-5 border-b-2 sm:w-[300px] pt-5 leading-9">
-        <h1 class="sm:block hidden md:text-xl sm:text-lg text-md font-semibold">{{$t('category')}}</h1>
-        <ul class="md:text-[16px] sm:block flex gap-3 overflow-hidden overflow-x-auto w-full text-sm leading-9">
+      <nav
+        class="sticky top-40 sm:block flex xl:w-[500px] sm:border-b-0 sm:pb-0 pb-5 border-b-2 sm:w-[300px] pt-5 leading-9"
+      >
+        <h1 class="sm:block hidden md:text-xl sm:text-lg text-md font-semibold">
+          {{ $t("category") }}
+        </h1>
+        <ul
+          class="md:text-[16px] sm:block flex gap-3 overflow-hidden overflow-x-auto w-full text-sm leading-9"
+        >
           <!-- <li>Мaгaзин рeкoмeндуeт</li>
           <li>Цветы в коробке</li>
           <li>Шитье и бисер</li>
@@ -92,11 +103,16 @@
               {{ i.uz }}
             </p>
           </li>
-          
         </ul>
       </nav>
       <!-- flowers -->
-      <div class="w-full min-h-[600px]">
+      <div v-if="isLoading.isLoadingType('getSalesmanProCategory')" class="col-span-full w-full">
+        <PlaceHolderSalesmanProfile />
+      </div>
+      <div
+        v-else-if="productStore.state.salesmanProduct?.length"
+        class="w-full min-h-[600px]"
+      >
         <div
           v-if="!isLoading.isLoadingType('getSalesmanProCategory')"
           class="grid lg:grid-cols-3 grid-cols-2 cards my-5 md:gap-7 gap-5"
@@ -142,7 +158,7 @@
                   <div
                     v-if="product.likes !== true"
                     :id="product.id"
-                    @click="() => addToLike(index, i.id, true, product.id)"
+                    @click="() => addToLike(index, true, product.id)"
                     class="absolute cursor-pointer duration-1000 flex top-5 right-5 bg-white rounded-full items-center justify-center md:h-9 md:w-9 h-8 w-8"
                   >
                     <img
@@ -153,7 +169,7 @@
                   </div>
                   <div
                     v-else
-                    @click="() => addToLike(index, i.id, false, product.id)"
+                    @click="() => addToLike(index, false, product.id)"
                     :id="'id' + product.id"
                     class="absolute cursor-pointer duration-1000 flex top-5 right-5 bg-white rounded-full items-center justify-center md:h-9 md:w-9 h-8 w-8"
                   >
@@ -194,6 +210,9 @@
           {{ $t("home.show_more") }}
         </button>
       </div>
+      <div v-else>
+        <NotFoundProduct />
+      </div>
       <!-- <placeholderMain class="w-full"
         v-else
       /> -->
@@ -206,14 +225,19 @@ useHead({
   title: "Salesman profile",
   meta: [{ name: "florify", content: "saleman profile" }],
 });
-
-import { useSalesmanStore, useProductsStore, useLoadingStore, useAddToCartStore } from "@/store";
+import axios from "axios";
+import {
+  useSalesmanStore,
+  useProductsStore,
+  useLoadingStore,
+  useAddToCartStore,
+} from "@/store";
 const runtimeConfig = useRuntimeConfig();
 const router = useRouter();
 const productStore = useProductsStore();
 const useAddToCart = useAddToCartStore();
 const isLoading = useLoadingStore();
-// const baseUrl = runtimeConfig.public.baseURL;
+const baseUrl = runtimeConfig.public.baseURL;
 const baseUrlImage = ref(runtimeConfig.public.baseURL?.slice(0, -3));
 
 const store = reactive({
@@ -244,6 +268,42 @@ function addToCart(id) {
   useAddToCart.addToCart();
 }
 
+function addToLike(index, isLiked, id) {
+  productStore.state.salesmanProduct[index].likes = isLiked;
+
+  let method = "POST";
+  if (isLiked) {
+    method = "post";
+  } else {
+    method = "delete";
+  }
+  let product_id = id;
+  const client_id = isLoading.store.salesman_id;
+  axios({
+    method,
+    url: baseUrl + "/like",
+    data: { client_id, product_id },
+  })
+    .then((res) => {
+      console.log(res.data);
+      if (res.data.statusCode === 400) {
+        productStore.state.salesmanProduct[index].likes = !isLiked;
+        authStore.store.loginModal = true;
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      if (
+        err.response.data.message ==
+        "Mahsulot allaqachon sevimlilar ro'yxatiga qo'shilgan!"
+      ) {
+      } else {
+        productStore.state.salesmanProduct[index].likes = !isLiked;
+        authStore.store.loginModal = true;
+      }
+    });
+}
+
 watch(
   () => productStore.state.categories,
   () => {
@@ -265,6 +325,13 @@ watch(
     });
   }
 );
+
+onMounted(() => {
+  productStore.getSalesmanProCategory(
+    productStore.state.categories[0]?.id,
+    store.salesman_id
+  );
+});
 </script>
 
 <style lang="scss" scoped></style>

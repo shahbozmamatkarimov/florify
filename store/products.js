@@ -186,6 +186,26 @@ export const useProductsStore = defineStore("products", () => {
         console.log(res);
         isLoading.removeLoading("getSalesmanProCategory");
         state.salesman_pagination = res.data?.data?.pagination;
+
+        const client_id = isLoading.store.salesman_id;
+        if (client_id) {
+          for (let i = 0; i < res.data.data.records?.length; i++) {
+            for (let like of res.data.data?.records[i]?.likes) {
+              if (like.client_id == client_id) {
+                res.data.data.records[i].likes = true;
+                break;
+              }
+            }
+          }
+        } else {
+          for (let i = 0; i < res.data.data.records?.length; i++) {
+            for (let like of res.data.data.records[i]?.likes) {
+              res.data.data.records[i].likes = false;
+              break;
+            }
+          }
+        }
+
         if (state.salesman_pagination.currentPage == 2) {
           state.salesmanProduct.push(...res.data?.data?.records);
         } else {

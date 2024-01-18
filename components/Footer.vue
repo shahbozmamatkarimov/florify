@@ -11,31 +11,30 @@
       <ul>
         <li>О сервисе</li>
         <li>
-          <router-link to="/about"> {{$t("about")}} </router-link>
+          <router-link to="/about"> {{ $t("about") }} </router-link>
         </li>
         <li>
-          <router-link to="/contact"> {{$t("contact")}} </router-link>
+          <router-link to="/contact"> {{ $t("contact") }} </router-link>
         </li>
         <li>
-          <router-link to="/quality_assurance"> {{$t("quality_assurance") }} </router-link>
+          <router-link to="/quality_assurance">
+            {{ $t("quality_assurance") }}
+          </router-link>
         </li>
         <li
-        class="cursor-pointer"
+          class="cursor-pointer"
           v-for="(i, index) in productStore.state.categories"
           @click="productStore.getOneProduct(i.id, index + 1)"
         >
-            <p
-              v-if="$t('uz') == 'Уз'"
-              class="truncate w-[90%] md:text-lg text-sm leading-[21px]"
-            >
-              {{ i.ru }}
-            </p>
-            <p
-              v-else
-              class="truncate w-[90%] md:text-lg text-sm leading-[21px]"
-            >
-              {{ i.uz }}
-            </p>
+          <p
+            v-if="$t('uz') == 'Уз'"
+            class="truncate w-[90%] md:text-lg text-sm leading-[21px]"
+          >
+            {{ i.ru }}
+          </p>
+          <p v-else class="truncate w-[90%] md:text-lg text-sm leading-[21px]">
+            {{ i.uz }}
+          </p>
         </li>
       </ul>
       <ul>
@@ -63,9 +62,11 @@
             store.contacts.additional_phone
           }}</a>
         </li>
-        <li class="break-words"><a :href="`mailto:${store.contacts.email}`">{{
-          store.contacts.email
-        }}</a></li>
+        <li class="break-words">
+          <a :href="`mailto:${store.contacts.email}`">{{
+            store.contacts.email
+          }}</a>
+        </li>
       </ul>
     </div>
     <div class="container mx-auto overflow-hidden xl:px-28 md:px-10 px-5">
@@ -112,16 +113,28 @@
         class="flex lg:flex-row flex-col lg:gap-0 gap-5 justify-between items-center pb-10"
       >
         <ul class="flex gap-10">
-          <li class="underline whitespace-nowrap">Персональные данные</li>
-          <li class="underline whitespace-nowrap">
-            Политика конфиденциальности
+          <li class="border-b hover:border-[#323232] whitespace-nowrap">
+            <router-link to="/terms_and_condations"
+              >Политика конфиденциальности</router-link
+            >
           </li>
-          <li class="underline whitespace-nowrap">Публичная оферта</li>
-          <li class="underline whitespace-nowrap">Согласие пользователя</li>
+          <li class="border-b hover:border-[#323232] whitespace-nowrap">
+            <router-link to="/privacy_policy"
+              >Согласие пользователя</router-link
+            >
+          </li>
         </ul>
         <div class="flex items-center gap-5">
-          <img class="h-[40px] w-[140px]" src="../assets/svg/appstore.svg" alt="app store" />
-          <img class="h-[40px] w-[140px]" src="../assets/svg/googleplay.svg" alt="google play" />
+          <img
+            class="h-[40px] w-[140px]"
+            src="../assets/svg/appstore.svg"
+            alt="app store"
+          />
+          <img
+            class="h-[40px] w-[140px]"
+            src="../assets/svg/googleplay.svg"
+            alt="google play"
+          />
         </div>
       </div>
     </div>
@@ -147,8 +160,6 @@ axios
       const contact_data = res.data?.data?.social_networks;
       console.log(contact_data);
       for (let i of contact_data) {
-        console.log(i.name);
-        console.log(i.link);
         store.contacts[i.name] = i.link;
       }
     }
@@ -167,12 +178,15 @@ const productStore = useProductsStore();
   gap: 20px;
   li:nth-child(1) {
     font-weight: 700;
-    text-decoration: none;
+    text-decoration: none !important;
   }
 
   li {
-    text-decoration: underline;
     line-height: 19.2px;
+  }
+
+  li:hover {
+    text-decoration: underline solid #323232;
   }
 }
 

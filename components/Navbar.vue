@@ -340,7 +340,7 @@
       title="I am the title"
       :with-header="false"
     >
-      <div class="flex sticky top-0 py-2 items-center justify-between bg-white">
+      <div class="flex py-2 items-center justify-between bg-white">
         <h1 class="font-semibold text-2xl">Состав заказа</h1>
         <img
           @click="productStore.state.addToProductDrawer = false"
@@ -352,7 +352,10 @@
       <div
         class="space-y-4 w-full mt-6 -mb-2 max-h-[calc(100vh_-_125px)] overflow-hidden overflow-y-auto"
       >
-        <div v-for="i in useAddToCart.store.products">
+        <div
+          v-if="useAddToCart.store.products?.length"
+          v-for="i in useAddToCart.store.products"
+        >
           <div class="tableImg flex w-full text-start">
             <img
               v-if="i.images[0]?.image"
@@ -425,25 +428,30 @@
           </div>
           <hr class="sm:my-5 my-4 w-full" />
         </div>
-        <div class="flex justify-between items-center">
-          <p>Доставка</p>
-          <p class="font-semibold">Бесплатно</p>
+        <NotFoundCart v-else />
+        <div v-if="useAddToCart.store.products?.length">
+          <div class="flex justify-between items-center">
+            <p>Доставка</p>
+            <p class="font-semibold">Бесплатно</p>
+          </div>
+          <hr class="sm:my-5 my-2" />
+          <div class="flex justify-between py-2 items-center">
+            <p>Общая стоимость</p>
+            <p class="font-semibold">
+              {{ useAddToCart.store.total_price }} сум
+            </p>
+          </div>
+          <button
+            @click="() => pushToOrder()"
+            class="sm:h-16 h-10 sm:my-5 my-2 flex justify-center sm:text-md text-sm items-center w-full font-semibold text-white rounded-xl bg-[#5C0099]"
+          >
+            Оформить заказ
+          </button>
+          <h1 class="sm:text-md text-sm">
+            Нажимая на кнопку, вы соглашаетесь с условиями оказания услуг и
+            политикой обработки персональных данных
+          </h1>
         </div>
-        <hr class="sm:my-5 my-2" />
-        <div class="flex justify-between py-2 items-center">
-          <p>Общая стоимость</p>
-          <p class="font-semibold">{{ useAddToCart.store.total_price }} сум</p>
-        </div>
-        <button
-          @click="() => pushToOrder()"
-          class="sm:h-16 h-10 sm:my-5 my-2 flex justify-center sm:text-md text-sm items-center w-full font-semibold text-white rounded-xl bg-[#5C0099]"
-        >
-          Оформить заказ
-        </button>
-        <h1 class="sm:text-md text-sm">
-          Нажимая на кнопку, вы соглашаетесь с условиями оказания услуг и
-          политикой обработки персональных данных
-        </h1>
       </div>
     </el-drawer>
 

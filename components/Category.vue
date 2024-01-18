@@ -148,10 +148,7 @@
             </div>
           </div>
         </div>
-        <div v-else class="gap-2 pt-20 pb-32 max-w-fit text-center">
-          <img src="@/assets/empty/nocategory.svg" alt="" />
-          <h1>Mahsulotlar yo’q</h1>
-        </div>
+        <NotFoundProduct v-else />
         <button
           @click="paginationNext(i.id)"
           v-if="

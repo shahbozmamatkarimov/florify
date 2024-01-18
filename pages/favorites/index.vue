@@ -5,11 +5,10 @@
     <Tabs />
     <placeholder-slug
       v-if="
-        isLoading.isLoadingType('getAllFavorites') &&
-        !useLike.store.allFavorites?.length
+        isLoading.isLoadingType('getAllFavorites')
       "
     />
-    <section v-else>
+    <section v-else-if="useLike.store.allFavorites?.length">
       <div>
         <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-3 cards my-5 md:gap-7 gap-5">
           <div
@@ -101,6 +100,7 @@
         </button>
       </div>
     </section>
+    <NotFoundFavorites v-else class="w-full" />
   </main>
 </template>
 
