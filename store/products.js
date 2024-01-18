@@ -18,6 +18,9 @@ export const useProductsStore = defineStore("products", () => {
     page: 1,
     showProduct: [],
     salesmanProduct: [],
+    salesman_pagination: {
+      currentPage: 1,
+    },
     getById: "",
     isCategory: 0,
     sliderStep: 0,
@@ -175,11 +178,19 @@ export const useProductsStore = defineStore("products", () => {
   function getSalesmanProCategory(category_id, salesman_id) {
     isLoading.addLoading("getSalesmanProCategory");
     axios
-      .get(baseUrl + `/product/salesmanId/${salesman_id}/${category_id}/1/10`)
+      .get(
+        baseUrl +
+          `/product/salesmanIdCategoryId/${salesman_id}/${category_id}/${state.salesman_pagination.currentPage}/10`
+      )
       .then((res) => {
         console.log(res);
         isLoading.removeLoading("getSalesmanProCategory");
-        state.salesmanProduct = res.data?.data?.categories;
+        state.salesman_pagination = res.data?.data?.pagination;
+        if (state.salesman_pagination.currentPage == 2) {
+          state.salesmanProduct.push(...res.data?.data?.records);
+        } else {
+          state.salesmanProduct = res.data?.data?.records;
+        }
       })
       .catch((err) => {
         console.log(err);

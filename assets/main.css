@@ -286,3 +286,9 @@ pre::-webkit-scrollbar-thumb:hover {
   }
   .marquee:before, .marquee:after { width: 5rem; }
 }
+
+.sticky {
+  position: -webkit-sticky !important;
+  position: sticky !important;
+  top: 100px !important;
+}
