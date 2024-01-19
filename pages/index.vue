@@ -223,9 +223,9 @@
             :class="
               isLoadingModal(i.id)
                 ? 'bg-[#F1F1F2] border-gray-400 opacity-25 pointer-events-none'
-                : 'border-[#5C0099] text-[#5C0099]'
+                : ''
             "
-            class="w-full font-semibold lg:h-14 h-10 border-2 rounded-xl overflow-hidden hover:bg-[#5C0099] duration-500 hover:text-white"
+            class="w-full font-semibold lg:h-14 h-10 rounded-xl bg-[#F1F1F2] overflow-hidden text-[#242424] hover:bg-black/10 duration-500"
             v-loading="isLoading.isLoadingType('getProductByCategory')"
           >
             {{ $t("home.show_more") }}
