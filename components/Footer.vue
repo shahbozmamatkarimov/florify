@@ -9,7 +9,7 @@
         </router-link>
       </div>
       <ul>
-        <li>О сервисе</li>
+        <li>{{$t('services')}}</li>
         <li>
           <router-link to="/about"> {{ $t("about") }} </router-link>
         </li>
@@ -38,20 +38,20 @@
         </li>
       </ul>
       <ul>
-        <li>Вопросы</li>
+        <li>{{$t('questions')}}</li>
         <li>Вопросы и ответы</li>
         <li>Доставка</li>
         <li>Оплата</li>
         <li>Скидки</li>
       </ul>
       <ul>
-        <li>Сотрудничество</li>
+        <li>{{$t('cooperation_page')}}</li>
         <li>Партнёрство</li>
         <li>Корпоративным клиентам</li>
       </ul>
       <div class="lg:block hidden"></div>
       <ul class="text-end contact">
-        <li>Свяжитесь с нами</li>
+        <li>{{$t('contact_us')}}</li>
         <li>
           <a :href="`tel:${store.contacts.phone}`">{{
             store.contacts.phone
@@ -108,20 +108,20 @@
         </li>
       </ul>
       <hr class="w-full" />
-      <p class="text-end py-5 font-bold">Заказывайте через приложение</p>
+      <p class="text-end py-5 font-bold">{{ $t("with_app") }}</p>
       <div
         class="flex lg:flex-row flex-col lg:gap-0 gap-5 justify-between items-center pb-10"
       >
         <ul class="flex gap-10">
           <li class="border-b hover:border-[#323232] whitespace-nowrap">
-            <router-link to="/terms_and_condations"
-              >Политика конфиденциальности</router-link
-            >
+            <router-link to="/privacy_policy">{{
+              $t("privacy_policy")
+            }}</router-link>
           </li>
           <li class="border-b hover:border-[#323232] whitespace-nowrap">
-            <router-link to="/privacy_policy"
-              >Согласие пользователя</router-link
-            >
+            <router-link to="/terms_and_condations">{{
+              $t("temrs")
+            }}</router-link>
           </li>
         </ul>
         <div class="flex items-center gap-5">

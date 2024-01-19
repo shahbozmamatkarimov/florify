@@ -8,6 +8,11 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+useHead({
+  title: "florify - Terms and Conditions",
+  meta: [{ name: "florify", content: "Terms and Conditions" }],
+});
+</script>
 
 <style lang="scss" scoped></style>

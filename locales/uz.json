@@ -14,6 +14,25 @@
   "reyting": "Reytinglar",
   "rate": "Reyting",
   "category": "Kategoriyalar",
+  "id": "Id",
+  "free": "tekin",
+  "no_reyting": "Hozircha reytinglar yoʻq",
+  "salesman": "Sotuvchi",
+  "price": "Narxi",
+  "quantity": "Miqdori",
+  "ad_to_cart": "Savatga qo'shish",
+  "buy_a_click": "1 marta bosishda xarid qiling",
+  "delivery_comments": "ta toshkentda tovarlarni yetkazib berish bo'yicha fikr-mulohazalar",
+  "other_products": "Ushbu do'kondan boshqa mahsulotlar",
+  "watched_products": "Ko'rilgan mahsulotlar",
+  "add_to_favorites": "Sevimlilarga",
+  "with_app": "Ilova orqali buyurtma bering",
+  "privacy_policy": "Maxfiylik siyosati",
+  "temrs": "Foydalanuvchi roziligi",
+  "services": "Xizmatlar",
+  "questions": "Savollar",
+  "cooperation_page": "Hamkorlik",
+  "contact_us": "Biz bilan bog'lanish",
   "navbar": {
     "address": "Manzilni kiriting",
     "show": "Ko'rsatish",
@@ -139,7 +158,7 @@
     "title6": "Istagingizdagi guldasta ideali",
     "about6": "Biz uchun asosiy narsa shundaki, bizning xizmatlarimizdan foydalanadigan odamlar qoniqishadi. Agar siz yetkazib berilgan guldastadan qoniqmasangiz, yetkazib berilgan kundan boshlab 24 soat ichida biz bilan bog'lanish huquqiga egasiz va biz sizning noroziligingiz sabablarini aniqlamagah holda guldastani yangisiga almashtiramiz."
   },
-  "cooperation": [
+  "_page": [
     [
       "Florist hamkorlik shartnomasi",
       [
@@ -191,7 +210,7 @@
       ]
     ]
   ],
-  "_cooperation": [
+  "__page": [
     "Kompaniya",
     "Florist",
     "O’zbekiston Respublikasi, Toshkent shahri, Mirobod hududi, N. Nazarbayeva 193 ko’chasi,",

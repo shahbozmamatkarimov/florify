@@ -4,16 +4,10 @@
     <section class="container mx-auto xl:px-28 md:px-10 px-5">
       <nav class="sm:flex hidden py-6" aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1 md:space-x-3">
-          <li
+          <li @click="$router.push('/')"
             class="inline-flex cursor-pointer items-center font-medium text-gray-700 hover:text-blue-600"
           >
-            Главная
-          </li>
-          <li>/</li>
-          <li
-            class="ml-1 cursor-pointer font-medium text-gray-700 hover:text-blue-600 md:ml-2"
-          >
-            Все категории
+            {{$t('main')}}
           </li>
           <li>/</li>
           <li class="ml-1 font-medium text-gray-500 md:ml-2 dark:text-gray-400">
@@ -78,7 +72,7 @@
             class="flex leading-[19px] flex-wrap w-full justify-between font-semibold items-center"
           >
             <h2>
-              <span class="leading-[19px]">Артикул:</span>
+              <span class="leading-[19px]">{{$t('id')}}:</span>
               <span class="leading-[19px]">{{
                 useProduct.state.getById?.id
               }}</span>
@@ -116,7 +110,7 @@
                 src="@/assets/svg/redHeart.svg"
                 alt=""
               />
-              В желания
+              {{ $t('add_to_favorites') }}
             </p>
           </li>
           <li class="leading-[19px] lg:text-2xl text-lg font-semibold">
@@ -125,25 +119,26 @@
           <li class="flex items-center gap-5 leading-[19px]">
             <div>
               <p
-                v-if="useProduct.state.getById?.likes?.length"
+                v-if="useProduct.state.getById?.like"
                 class="flex items-center gap-2"
               >
                 <i class="bx bxs-star text-[#FFA500]"></i
                 >{{
                   Math.ceil(
-                    (useProduct.state.getById?.likes?.length / 50) * 10
+                    (useProduct.state.getById?.like / 50) * 10
                   ) / 10
                 }}
-                ( {{ useProduct.state.getById?.likes?.length }} оценка )
+                ( {{ useProduct.state.getById?.like }} <span v-if="$t('uz') != 'Uz'">оценка</span><span>reyting</span> )
               </p>
               <p v-else class="flex items-center gap-2">
-                <i class="bx bxs-star text-[#FFA500]"></i>0.0 Оценок пока нет
+                <i class="bx bxs-star text-[#FFA500]"></i>0.0 {{$t('no_reyting')}}
               </p>
             </div>
-            <p>Более {{ useProduct.state.getById?.number_of_sales }} заказов</p>
+            <p v-if="$t('uz') != 'Uz'">Более {{ useProduct.state.getById?.number_of_sales }} заказов</p>
+            <p v-else>{{ useProduct.state.getById?.number_of_sales }} dan ortiq buyurtma</p>
           </li>
           <li class="flex flex-wrap">
-            <p class="w-24">Продавец:</p>
+            <p class="w-24">{{$t('salesman')}}:</p>
             <p
               @click="
                 $router.push(
@@ -155,22 +150,22 @@
               {{
                 useProduct.state.getById?.salesman?.store_name
                   ? useProduct.state.getById?.salesman?.store_name
-                  : "Store"
+                  : $t('salesman')
               }}
             </p>
           </li>
           <li class="flex flex-wrap">
-            <p class="w-24">Доставка:</p>
-            <p class="font-bold">бесплатно</p>
+            <p class="w-24">{{$t('order.delivery')}}:</p>
+            <p class="font-bold">{{$t('free')}}</p>
           </li>
         </ul>
         <ul class="grid xl:grid-cols-4 lg:grid-cols-3 grid-cols-2 pt-2">
           <li>
-            <h2>Цена:</h2>
+            <h2>{{$t('price')}}:</h2>
             <p class="font-bold">{{ useProduct.state.getById?.price }} uzs</p>
           </li>
           <li>
-            <h2>Количество:</h2>
+            <h2>{{$t('quantity')}}:</h2>
             <div
               class="flex items-center justify-around h-10 max-w-[120px] rounded-md overflow-hidden bg-[#EEEEEE] mt-1"
             >
@@ -197,13 +192,13 @@
             @click="addToCart"
             class="md:text-md text-sm sm:h-16 h-12 bg-[#5C0099] active:opacity-50 text-white font-semibold rounded-xl border border-[#5C0099]"
           >
-            Добавить в корзину
+          {{$t('ad_to_cart')}}
           </button>
           <button
             @click="() => addToCart('router')"
             class="md:text-md text-sm sm:h-16 h-12 text-[#5C0099] active:opacity-50 rounded-xl font-semibold border border-[#5C0099]"
           >
-            Купить в 1 клик
+          {{$t('buy_a_click')}}
           </button>
         </div>
         <!-- <div>
@@ -224,8 +219,7 @@
       <h1
         class="container mx-auto xl:px-28 md:px-10 px-5 mb-10 text-2xl leading-7 font-semibold"
       >
-        {{ store.prodcut_comments?.length }} oтзывa o дocтaвкe тoвaрoв в
-        Ташкенте
+        {{ store.prodcut_comments?.length }} {{$t('delivery_comments')}}
       </h1>
       <div class="marquee" v-show="!isLoading.isLoadingType('getComments')">
         <ul class="marquee-content">
@@ -286,7 +280,7 @@
 
     <section class="container mx-auto xl:px-28 md:px-10 px-5">
       <h1 class="sm:text-3xl mt-10 sm:pb-2 text-2xl">
-        Другие товары этого магазина
+        {{$t('other_products')}}
       </h1>
       <div class="flex overflow-hidden overflow-x-auto cards gap-5">
         <div
@@ -400,7 +394,7 @@
       </div>
     </section>
     <section class="pb-20 container mx-auto xl:px-28 md:px-10 px-5">
-      <h1 class="sm:text-3xl pb-2 text-2xl">Просмотренные товары</h1>
+      <h1 class="sm:text-3xl pb-2 text-2xl">{{$t('watched_products')}}</h1>
       <div class="flex overflow-hidden overflow-x-auto cards gap-5">
         <div
           v-if="isLoading.isLoadingType('getAllHistory')"

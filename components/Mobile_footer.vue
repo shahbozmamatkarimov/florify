@@ -8,7 +8,7 @@
           class="flex flex-col gap-[2px] items-center justify-center"
           to="/"
         >
-          <img class="active" src="@/assets/footer/logo.svg" alt="" />
+          <img class="active h-[26px] w-6" src="@/assets/footer/logo.svg" alt="" />
           <img
             class="_active hidden h-6 w-6 mb-1 mt-1.5"
             src="/logo_mobile.svg"
@@ -22,8 +22,8 @@
           class="flex flex-col gap-[2px] items-center justify-center"
           to="/order"
         >
-          <img class="active" src="@/assets/footer/cart.svg" alt="" />
-          <img class="_active hidden" src="@/assets/footer/_cart.svg" alt="" />
+          <img class="active h-[26px]" src="@/assets/footer/cart.svg" alt="" />
+          <img class="_active h-[26px] hidden" src="@/assets/footer/_cart.svg" alt="" />
           <p class="text-[10px] leading-3">Savatcha</p>
         </router-link>
       </li>
@@ -32,9 +32,9 @@
           @click="checkAuth"
           class="flex flex-col gap-[2px] items-center justify-center"
         >
-          <img class="active" src="@/assets/footer/heart.svg" alt="" />
-          <img class="_active hidden" src="@/assets/footer/_heart.svg" alt="" />
-          <p class="text-[10px] leading-3">Tanlanganlar</p>
+          <img class="active" v-if="$router.currentRoute.value.name != 'favorites'" src="@/assets/footer/heart.svg" alt="" />
+          <img v-else class="_active" src="@/assets/footer/_heart.svg" alt="" />
+          <p :class="$router.currentRoute.value.name != 'favorites'?'':'text-[#5c0099]'" class="text-[10px] leading-3">Tanlanganlar</p>
         </div>
       </li>
       <li class="flex flex-col gap-[2px] items-center justify-center w-[75px]">
