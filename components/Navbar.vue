@@ -240,6 +240,7 @@
         <h1 class="leading-[21px]">Номер телефона *</h1>
         <input
           v-model="authStore.store.phone"
+          @input="(e)=>phoneNumber(e)"
           :class="!authStore.store.isVerified ? 'border !border-[#EC3434]' : ''"
           class="h-14 mt-[6px] mb-[55px] rounded-[10px] w-full"
           type="tel"
@@ -641,6 +642,17 @@ function searchAddress() {
       store.searchedData = res.results;
     })
     .catch((err) => console.log(err));
+}
+
+function phoneNumber(e) {
+  if (e.target.value?.length < 4) {
+    authStore.store.phone = '+998'
+  }
+  const val = e.target.value?.slice(-1);
+  if (isNaN(val)) {
+    authStore.store.phone = authStore.store.phone.slice(0, -1);
+  }
+  authStore.store.phone = authStore.store.phone.slice(0, 13)
 }
 
 function focused(search_type) {

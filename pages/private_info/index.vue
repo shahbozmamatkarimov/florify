@@ -8,27 +8,43 @@
       <section
         class="2xl:grid grid-cols-3 border border-[#EDEDED] rounded-[2px]"
       >
-        <section class="p-6 col-span-2">
+        <form @submit.prevent="handleSubmit" class="p-6 col-span-2">
           <div class="grid grid-cols-2 gap-4">
-            <h1
-              class="flex items-center px-3 h-[50px] rounded-[2px] border text-[#242424] border-[#EDEDED]"
-            >
-              Rahmatulloh
-            </h1>
+            <input
+              type="text"
+              v-model="name"
+              @input="changingName"
+              placeholder="Ваше имя"
+              class="flex items-center px-3 h-[50px] rounded-[2px] border bg-transparent text-[#242424] border-[#EDEDED]"
+              required
+            />
             <p
               class="flex items-center px-3 h-[50px] rounded-[2px] border text-[#242424] border-[#EDEDED]"
             >
-              +998 91 476 9090
+              {{ useAuth.store.user }}
             </p>
           </div>
           <hr class="border border-[#EDEDED] my-6" />
           <button
-            @click="isLogout = true"
-            class="font-semibold rounded-[10px] bg-[#5C0099] text-white h-[50px] w-full"
+            :class="
+              store.isChange
+                ? 'bg-[#5C0099]'
+                : 'bg-[#E3E3E3] pointer-events-none'
+            "
+            class="font-semibold rounded-[10px] text-white h-[50px] w-full"
           >
-            Выйти из аккаунта
+            Готово
           </button>
-        </section>
+          <div class="flex justify-center mt-10">
+            <button
+              type="button"
+              @click="isLogout = true"
+              class="text-[#929292] border-b border-[#929292] font-semibold"
+            >
+              Выйти из аккаунта
+            </button>
+          </div>
+        </form>
         <div class="border border-[#EDEDED] rounded-[4px] p-5 m-5 ml-2">
           <h1 class="text-lg font-semibold">Скачать приложение Florify</h1>
           <p class="text-sm text-[#929292] mt-2 mb-4">
@@ -72,17 +88,41 @@ useHead({
   meta: [{ name: "florify", content: "private info" }],
 });
 
-import {useLoadingStore} from "@/store";
+import { useLoadingStore, useAuthStore } from "@/store";
 
-const isLoading = useLoadingStore()
+const isLoading = useLoadingStore();
+const useAuth = useAuthStore();
 const isLogout = ref(false);
 const isMount = ref(false);
 const router = useRouter();
 
+useAuth.getUser();
+
+const name = ref("");
+
+name.value = isLoading.store.name;
+
+const store = reactive({
+  isChange: false,
+});
+
+function changingName() {
+  if (name.value != isLoading.store.name) {
+    store.isChange = true;
+  } else {
+    store.isChange = false;
+  }
+}
+
 function logout() {
-    localStorage.removeItem("token");
-    isLoading.store.isLogin = false;
-    router.push("/")
+  localStorage.removeItem("token");
+  isLoading.store.isLogin = false;
+  router.push("/");
+}
+
+function handleSubmit() {
+  if (!name.value) return;
+  useAuth.updateUser(name.value);
 }
 
 onMounted(() => {

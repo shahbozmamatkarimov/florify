@@ -20,6 +20,7 @@ export const useAuthStore = defineStore("isLogged", () => {
     isLoading: false,
     registerModal: false,
     logOutModal: false,
+    user: "",
   });
 
   function handleSubmit() {
@@ -101,6 +102,46 @@ export const useAuthStore = defineStore("isLogged", () => {
       });
   }
 
+  function updateUser(name) {
+    isLoading.addLoading("updateUser");
+    console.log(isLoading.store.salesman_id);
+    axios
+      .patch(
+        baseUrl + `/client/${isLoading.store.salesman_id}`,
+        {
+          phone: store.user,
+          name: name,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        isLoading.removeLoading("updateUser");
+        console.log(res.data);
+        isLoading.store.name = res.data?.data?.client?.name;  
+      })
+      .catch((err) => {
+        console.log(err);
+        isLoading.removeLoading("updateUser");
+      });
+  }
+
+  function getUser() {
+    axios
+      .get(baseUrl + `/client/${isLoading.store.salesman_id}`)
+      .then((res) => {
+        console.log(res.data.data.client, "--------------------------------");
+        store.user = res.data.data.client?.phone;
+      })
+      .catch((err) => {
+        console.log(err);
+        isLoading.removeLoading("updateUser");
+      });
+  }
+
   function logOut() {
     isLoading.store.salesman_id = "";
     isLoading.store.name = "";
@@ -109,5 +150,5 @@ export const useAuthStore = defineStore("isLogged", () => {
     isLoading.store.isLogin = false;
   }
 
-  return { store, handleSubmit, verifyOtp, logOut };
+  return { store, handleSubmit, verifyOtp, logOut, updateUser, getUser };
 });
