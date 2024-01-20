@@ -32,17 +32,19 @@
                 translate: ['100%', 0, 0],
               },
             }"
+            class="md:rounded-[20px] rounded-[10px] overflow-hidden"
           >
             <SwiperSlide
               v-for="slide in productStore.state.addvertising"
               :key="slide"
+              class="md:rounded-[20px] rounded-[10px] overflow-hidden"
             >
               <div
-                class="relative w-full carousel lg:h-[340px] md:h-[300px] sm:h-[250px] h-[200px] min-h-[120px] overflow-hidden md:rounded-[20px] rounded-[10px]"
+                class="relative w-full carousel overflow-hidden lg:h-[340px] md:h-[300px] sm:h-[250px] h-[200px] min-h-[120px] overflow-hidden md:rounded-[20px] rounded-[10px]"
               >
                 <img
                   :src="baseUrlImage + slide.image"
-                  class="absolute block w-full h-full object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                  class="absolute w-full bg-transparent object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
                   alt="..."
                 />
               </div>
@@ -147,7 +149,9 @@
               class="relative card max-w-sm md:w-full w-[160px] md:p-0 p-[6px] hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
             >
               <img
-                @click="$router.push(`/flowers/${product.id}?flower=${product.name}`)"
+                @click="
+                  $router.push(`/flowers/${product.id}?flower=${product.name}`)
+                "
                 class="img md:rounded-b-none rounded-b-lg rounded-t-lg 2xl:h-80 xl:h-64 cursor-pointer md:h-52 sm:h-36 h-44 w-full object-cover"
                 :src="`${baseUrlImage}${product?.images[0]?.image}`"
                 alt=""
@@ -246,24 +250,34 @@
 
 <script setup>
 useHead({
-  title: 'florify',
-  meta: [
-    { name: 'description', content: 'florify' }
-  ],
-})
+  title: "florify",
+  meta: [{ name: "description", content: "florify" }],
+});
 useSeoMeta({
-  title: 'florify',
-  ogTitle: 'florify',
-  description: 'Find your dream flowers with our website',
+  title: "florify",
+  ogTitle: "florify",
+  description: "Find your dream flowers with our website",
   keywords: "florify, florify, florafy, florifay",
-  ogDescription: 'Find your dream flowers with our website',
-  ogImage: '/public/logo_mobile.svg',
-  twitterCard: '/public/logo_mobile.svg',
+  ogDescription: "Find your dream flowers with our website",
+  ogImage: "/public/logo_mobile.svg",
+  twitterCard: "/public/logo_mobile.svg",
   bodyAttrs: {
     class: "test",
   },
-})
+});
 
+import { Swiper, SwiperSlide } from "swiper/vue";
+
+// Import Swiper styles
+import "swiper/css";
+
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+
+// import './style.css';
+
+// import required modules
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import axios from "axios";
 import {
   useProductsStore,
