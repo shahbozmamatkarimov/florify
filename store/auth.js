@@ -20,6 +20,7 @@ export const useAuthStore = defineStore("isLogged", () => {
     isLoading: false,
     registerModal: false,
     logOutModal: false,
+    isUpdate: false,
     user: "",
   });
 
@@ -135,6 +136,7 @@ export const useAuthStore = defineStore("isLogged", () => {
       .then((res) => {
         console.log(res.data.data.client, "--------------------------------");
         store.user = res.data.data.client?.phone;
+        isLoading.store.name = res.data.data.client?.name;
       })
       .catch((err) => {
         console.log(err);

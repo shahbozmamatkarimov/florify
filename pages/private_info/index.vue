@@ -25,16 +25,19 @@
             </p>
           </div>
           <hr class="border border-[#EDEDED] my-6" />
-          <button
-            :class="
-              store.isChange
-                ? 'bg-[#5C0099]'
-                : 'bg-[#E3E3E3] pointer-events-none'
-            "
-            class="font-semibold rounded-[10px] text-white h-[50px] w-full"
-          >
-            Готово
-          </button>
+          <div :class="isLoading.isLoadingType('updateUser')?'pointer-events-none':''">
+            <button
+              v-loading="isLoading.isLoadingType('updateUser')"
+              :class="
+                isLoading.store.name != name
+                  ? 'bg-[#5C0099]'
+                  : 'bg-[#E3E3E3] pointer-events-none'
+              "
+              class="font-semibold rounded-[10px] text-white h-[50px] w-full"
+            >
+              Готово
+            </button>
+          </div>
           <div class="flex justify-center mt-10">
             <button
               type="button"
