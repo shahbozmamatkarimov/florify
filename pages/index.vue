@@ -40,11 +40,11 @@
               class="md:rounded-[20px] rounded-[10px] overflow-hidden"
             >
               <div
-                class="relative w-full carousel overflow-hidden lg:h-[340px] md:h-[300px] sm:h-[250px] h-[200px] min-h-[120px] overflow-hidden md:rounded-[20px] rounded-[10px]"
+                class="relative w-full carousel lg:h-[340px] md:h-[270px] sm:h-[230px] h-[200px] min-h-[120px] overflow-hidden md:rounded-[20px] rounded-[10px]"
               >
                 <img
                   :src="baseUrlImage + slide.image"
-                  class="absolute w-full bg-transparent object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                  class="absolute w-full bg-transparent -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
                   alt="..."
                 />
               </div>
@@ -62,7 +62,7 @@
         </div>
         <div class="w-full" v-else>
           <div
-            class="relative w-full carousel animate-pulse bg-gray-200 lg:h-[340px] md:h-[300px] sm:h-[250px] h-[200px] overflow-hidden rounded-[20px]"
+            class="relative w-full carousel animate-pulse bg-gray-200 lg:h-[340px] md:h-[270px] sm:h-[230px] h-[200px] overflow-hidden rounded-[20px]"
           ></div>
           <div
             class="md:flex hidden justify-center items-center mt-4 mb-11 gap-[10px]"

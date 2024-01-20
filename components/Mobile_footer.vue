@@ -8,7 +8,11 @@
           class="flex flex-col gap-[2px] items-center justify-center"
           to="/"
         >
-          <img class="active h-[26px] w-6" src="@/assets/footer/logo.svg" alt="" />
+          <img
+            class="active h-[26px] w-6"
+            src="@/assets/footer/logo.svg"
+            alt=""
+          />
           <img
             class="_active hidden h-6 w-6 mb-1 mt-1.5"
             src="/logo_mobile.svg"
@@ -17,13 +21,23 @@
           <p class="text-[10px] leading-3">Asosiy</p>
         </router-link>
       </li>
-      <li class="w-[75px]">
+      <li class="w-[75px] relative">
+        <p
+          v-if="useAddToCart.store.totalCount"
+          class="flex items-center justify-center overflow-hidden text-white text-[8px] font-bold h-4 w-4 bg-[red] absolute right-[23px] top-0 rounded-full"
+        >
+          {{ useAddToCart.store.totalCount }}
+        </p>
         <router-link
           class="flex flex-col gap-[2px] items-center justify-center"
           to="/order"
         >
           <img class="active h-[26px]" src="@/assets/footer/cart.svg" alt="" />
-          <img class="_active h-[26px] hidden" src="@/assets/footer/_cart.svg" alt="" />
+          <img
+            class="_active h-[26px] hidden"
+            src="@/assets/footer/_cart.svg"
+            alt=""
+          />
           <p class="text-[10px] leading-3">Savatcha</p>
         </router-link>
       </li>
@@ -32,9 +46,23 @@
           @click="checkAuth"
           class="flex flex-col gap-[2px] items-center justify-center"
         >
-          <img class="active" v-if="$router.currentRoute.value.name != 'favorites'" src="@/assets/footer/heart.svg" alt="" />
+          <img
+            class="active"
+            v-if="$router.currentRoute.value.name != 'favorites'"
+            src="@/assets/footer/heart.svg"
+            alt=""
+          />
           <img v-else class="_active" src="@/assets/footer/_heart.svg" alt="" />
-          <p :class="$router.currentRoute.value.name != 'favorites'?'':'text-[#5c0099]'" class="text-[10px] leading-3">Tanlanganlar</p>
+          <p
+            :class="
+              $router.currentRoute.value.name != 'favorites'
+                ? ''
+                : 'text-[#5c0099]'
+            "
+            class="text-[10px] leading-3"
+          >
+            Tanlanganlar
+          </p>
         </div>
       </li>
       <li class="flex flex-col gap-[2px] items-center justify-center w-[75px]">
@@ -56,9 +84,10 @@
 </template>
 
 <script setup>
-import { useLoadingStore, useAuthStore } from "@/store";
+import { useLoadingStore, useAuthStore, useAddToCartStore } from "@/store";
 
 const isLoading = useLoadingStore();
+const useAddToCart = useAddToCartStore();
 const authStore = useAuthStore();
 const router = useRouter();
 
@@ -69,6 +98,12 @@ function checkAuth() {
     router.push("/favorites");
   }
 }
+
+onMounted(() => {
+  useAddToCart.store.totalCount = JSON.parse(
+    localStorage.getItem("addToCart")
+  )?.length;
+});
 </script>
 
 <style lang="scss" scoped>
