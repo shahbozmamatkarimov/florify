@@ -54,8 +54,8 @@
             Больше бонусов, удобнее и проще.
           </p>
           <div class="flex gap-3 mb-5">
-            <img src="@/assets/svg/appstore.svg" alt="app_store" />
-            <img src="@/assets/svg/googleplay.svg" alt="play_market" />
+            <img class="w-[100px] h-[30px]" src="@/assets/svg/appstore.svg" alt="app_store" />
+            <img class="w-[100px] h-[30px]" src="@/assets/svg/googleplay.svg" alt="play_market" />
           </div>
           <img src="@/assets/svg/scaner.svg" alt="play_market" />
         </div>
