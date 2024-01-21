@@ -300,3 +300,10 @@ pre::-webkit-scrollbar-thumb:hover {
   position: sticky !important;
   top: 100px !important;
 }
+
+
+@media (max-width: 639px) {
+  .el-drawer, .el-overlay {
+    display: none !important;
+  }
+}
