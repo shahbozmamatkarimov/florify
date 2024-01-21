@@ -509,15 +509,5 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-@media (max-width: 380px) {
-  .carousel {
-    min-height: 140px;
-  }
-}
 
-@media (max-width: 340px) {
-  .carousel {
-    min-height: 100px;
-  }
-}
 </style>
