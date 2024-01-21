@@ -40,7 +40,7 @@
               class="md:rounded-[20px] rounded-[10px] overflow-hidden"
             >
               <div
-                class="relative w-full carousel 2xl:xl:h-[360px] xl:h-[320px] lg:h-[260px] md:h-[200px] sm:h-[180px] h-[160px] min-h-[120px] overflow-hidden md:rounded-[20px] rounded-[10px]"
+                class="relative w-full carousel 2xl:xl:h-[360px] xl:h-[300px] lg:h-[260px] md:h-[200px] sm:h-[180px] h-[160px] min-h-[120px] overflow-hidden md:rounded-[20px] rounded-[10px]"
               >
                 <img
                   :src="baseUrlImage + slide.image"
@@ -62,7 +62,7 @@
         </div>
         <div class="w-full" v-else>
           <div
-            class="relative w-full carousel animate-pulse bg-gray-200 2xl:xl:h-[360px] xl:h-[320px] lg:h-[260px] md:h-[200px] sm:h-[180px] h-[160px] min-h-[120px] overflow-hidden rounded-[20px]"
+            class="relative w-full carousel animate-pulse bg-gray-200 2xl:xl:h-[360px] xl:h-[300px] lg:h-[260px] md:h-[200px] sm:h-[180px] h-[160px] min-h-[120px] overflow-hidden rounded-[20px]"
           ></div>
           <div
             class="md:flex hidden justify-center items-center mt-4 mb-11 gap-[10px]"
@@ -109,7 +109,7 @@
       >
         <div
           v-for="i in 10"
-          class="relative bg-gray-200 animate-pulse cursor-pointer md:rounded-2xl rounded-lg overflow-hidden md:h-[200px] md:min-w-[200px] md:w-[200px] h-[100px] min-w-[100px] w-[100px]"
+          class="relative bg-gray-200 animate-pulse cursor-pointer md:rounded-2xl rounded-lg overflow-hidden xl:h-[200px] xl:min-w-[200px] xl:w-[200px] lg:h-[180px] lg:min-w-[180px] lg:w-[180px] md:h-[160px] md:min-w-[160px] md:w-[160px] sm:h-[140px] sm:min-w-[140px] sm:w-[140px] h-[100px] min-w-[100px] w-[100px]"
         ></div>
       </section>
 
