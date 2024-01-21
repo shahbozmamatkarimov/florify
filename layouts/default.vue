@@ -37,6 +37,7 @@ function closeModal() {
   useProduct.state.isSearchingModal = false;
   useProduct.state.isAddressModal = false;
 }
+
 watch(
   () => router.currentRoute.value.name,
   () => {
@@ -51,6 +52,19 @@ watch(
     layout.scrollTo(0, 0);
   }
 );
+
+onBeforeMount(() => {
+  window.addEventListener("keydown", function (event) {
+    // Check if the Ctrl key is pressed
+    if (event.ctrlKey) {
+      // Check for the '+' and '-' keys
+      if (event.key === "+" || event.key === "-") {
+        // Prevent the default behavior
+        event.preventDefault();
+      }
+    }
+  });
+});
 </script>
 
 <style lang="scss" scoped></style>
