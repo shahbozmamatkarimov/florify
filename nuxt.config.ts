@@ -28,7 +28,7 @@ export default defineNuxtConfig({
       baseURL: process.env.BASE_URL,
     },
   },
-  css: ["~/assets/main.css"],
+  css: ["~/assets/main.scss"],
   plugins: [{ src: "~/plugins/cloudpayments.js", mode: "client" }],
   postcss: {
     plugins: {

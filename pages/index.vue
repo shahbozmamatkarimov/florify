@@ -146,6 +146,7 @@
               v-for="(product, index) in productStore.state.products[i.id]?.data
                 ?.records"
               :key="product.id"
+              :id="product.id"
               class="relative card max-w-sm md:w-full w-[160px] md:p-0 p-[6px] hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
             >
               <img
@@ -207,7 +208,7 @@
                     </div>
                     <div class="border border-[#EEEEEE] rounded-full p-1">
                       <img
-                        @click="() => addToCart(product.id)"
+                        @click="(e) => addToCart(e, product.id)"
                         class="cursor-pointer sm:h-5 sm:w-5 md:max-h-6 md:max-w-6 max-h-4 max-w-4"
                         src="@/assets/svg/cart.svg"
                         alt=""
@@ -245,6 +246,61 @@
     >
       <Category />
     </div>
+    <!-- <section class="fixed">
+      <div
+        id="animateCard"
+        :style="`top: ${store.mouseY}px; left: ${store.mouseX}px`"
+        class="fixed z-[20000] card max-w-sm md:w-full w-[160px] md:p-0 p-[6px] hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
+      >
+        <img
+          class="img md:rounded-b-none rounded-b-lg rounded-t-lg 2xl:h-80 xl:h-64 cursor-pointer md:h-52 sm:h-36 h-44 w-full object-cover"
+          src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/ba/29/5c/img-worlds-of-adventure.jpg?w=1200&h=1200&s=1"
+          alt=""
+        />
+        <div class="md:p-5 p-[6px]">
+          <h5
+            class="mb-4 sm:text-xl text-sm text-[#1F9D6D] tracking-tight font-medium"
+          >
+            Apple
+          </h5>
+          <div
+            class="flex gap-1.5 mb-5 items-center bg-[#FCEAC9B2] px-2 py-1 rounded-[5px] max-w-fit"
+          >
+            <img
+              class="md:min-w-[12px] min-w-[9px] -mt-[1px] md:h-[14px] h-[11px]"
+              src="@/assets/svg/cart.svg"
+              alt=""
+            />
+            <p class="md:text-lg text-[10px] leading-3">0 ta buyurtma</p>
+          </div>
+          <div class="flex justify-between items-center">
+            <p class="font-semibold sm:text-lg text-xs whitespace-nowrap">
+              <span class="md:inline-block hidden"></span>
+              200
+              <span class="sm:inline hidden">{{ $t("home.sum") }}</span>
+            </p>
+            <div class="flex rounded-full sm:gap-3 gap-1">
+              <div
+                class="absolute cursor-pointer duration-1000 flex top-5 right-5 bg-white rounded-full items-center justify-center md:h-9 md:w-9 h-8 w-8"
+              >
+                <img
+                  class="md:h-5 md:w-5 h-4 w-4"
+                  src="@/assets/svg/heart.svg"
+                  alt=""
+                />
+              </div>
+              <div class="border border-[#EEEEEE] rounded-full p-1">
+                <img
+                  class="cursor-pointer sm:h-5 sm:w-5 md:max-h-6 md:max-w-6 max-h-4 max-w-4"
+                  src="@/assets/svg/cart.svg"
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section> -->
   </main>
 </template>
 
@@ -301,6 +357,8 @@ isLoading.addLoading("getAdvertising");
 
 const store = reactive({
   slideStep: 1,
+  mouseX: 0,
+  mouseY: 0,
 });
 
 function slidechange() {
@@ -327,7 +385,19 @@ function isLoadingModal(id) {
   return false;
 }
 
-function addToCart(id) {
+function addToCart(e, id) {
+  // const div = document.getElementById(id);
+  // const rect = div.getBoundingClientRect();
+  // store.mouseX = rect.left;
+  // store.mouseY = rect.top;
+  // document.documentElement.style.setProperty("--pagex", rect.left);
+  // document.documentElement.style.setProperty("--pagey", rect.top);
+
+  // const rootStyles = getComputedStyle(document.documentElement);
+
+  // const animatedDiv = document.getElementById("animateCard");
+  // animatedDiv.classList.add("animateCard");
+
   const user_id = isLoading.store.salesman_id;
   useAddToCart.addcart.client_id = user_id;
   useAddToCart.addcart.product_id = id;
