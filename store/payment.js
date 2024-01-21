@@ -21,7 +21,12 @@ export const usePaymentStore = defineStore("payment", () => {
   });
 
   function sendPaymentData() {
-    const token = localStorage.getItem("token");
+    let token;
+    if (router.currentRoute.value.params?.token) {
+      token = router.currentRoute.value.params?.token;
+    } else {
+      token = localStorage.getItem("token");
+    }
     axios
       .post(baseUrl + "/transaction/pay", payment, {
         headers: { Authorization: `Bearer ${token}` },

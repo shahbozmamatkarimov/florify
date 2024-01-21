@@ -34,7 +34,7 @@ const initiatePayment = async (orderDetails) => {
     widget.pay(
       "auth", // или 'charge'
       {
-        //options
+        //options 
         // 9860030321826932 06/26
         publicId: "test_api_00000000000000000000001", //id из личного кабинета
         description: "Оплата товаров в florify.uz", //назначение
