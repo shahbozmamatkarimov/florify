@@ -40,7 +40,7 @@
               class="md:rounded-[20px] rounded-[10px] overflow-hidden"
             >
               <div
-                class="relative w-full carousel lg:h-[340px] md:h-[270px] sm:h-[230px] h-[200px] min-h-[120px] overflow-hidden md:rounded-[20px] rounded-[10px]"
+                class="relative w-full carousel xl:h-[340px] lg:h-[290px] md:h-[250px] sm:h-[200px] h-[200px] min-h-[160px] overflow-hidden md:rounded-[20px] rounded-[10px]"
               >
                 <img
                   :src="baseUrlImage + slide.image"
@@ -62,7 +62,7 @@
         </div>
         <div class="w-full" v-else>
           <div
-            class="relative w-full carousel animate-pulse bg-gray-200 lg:h-[340px] md:h-[270px] sm:h-[230px] h-[200px] overflow-hidden rounded-[20px]"
+            class="relative w-full carousel animate-pulse bg-gray-200 xl:h-[340px] lg:h-[290px] md:h-[250px] sm:h-[200px] h-[200px] overflow-hidden rounded-[20px]"
           ></div>
           <div
             class="md:flex hidden justify-center items-center mt-4 mb-11 gap-[10px]"
@@ -438,4 +438,16 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@media (max-width: 380px) {
+  .carousel {
+    min-height: 140px;
+  }
+}
+
+@media (max-width: 340px) {
+  .carousel {
+    min-height: 100px;
+  }
+}
+</style>
