@@ -1,6 +1,10 @@
 <template>
   <main class="container mx-auto xl:px-28 md:px-10 px-5 pb-[15rem]">
-    <form v-if="useAddToCart.store.products?.length" @submit.prevent="addToPayment" class="grid xl:grid-cols-2 gap-16">
+    <form
+      v-if="useAddToCart.store.products?.length"
+      @submit.prevent="addToPayment"
+      class="grid xl:grid-cols-2 gap-16"
+    >
       <div>
         <h1 class="font-semibold sm:text-2xl text-xl py-5">
           {{ $t("order.order") }}
@@ -76,6 +80,7 @@
         <div class="grid sm:grid-cols-2 gap-5 sm:h-[53px]">
           <input
             type="tel"
+            @input="(e) => phoneNumber(e, 'custom')"
             minlength="13"
             maxlength="13"
             v-model="store.customer_phone"
@@ -106,6 +111,7 @@
             />
             <input
               type="tel"
+              @input="(e) => phoneNumber(e)"
               minlength="13"
               maxlength="13"
               v-model="store.receiver_phone"
@@ -418,9 +424,12 @@
             </p>
           </div>
           <button
-            type="submit" v-loading="isLoading.isLoadingType('payment')"
+            type="submit"
+            v-loading="isLoading.isLoadingType('payment')"
             :class="is_submit ? '' : 'opacity-50'"
-            :style="isLoading.isLoadingType('payment')?'pointer-events:none':''"
+            :style="
+              isLoading.isLoadingType('payment') ? 'pointer-events:none' : ''
+            "
             class="sm:h-16 h-10 sm:my-5 my-2 flex justify-center sm:text-md text-sm items-center w-full font-semibold text-white rounded-xl bg-[#5C0099]"
           >
             {{ $t("order.order") }}
@@ -432,6 +441,21 @@
       </div>
     </form>
     <NotFoundCart v-else />
+
+    <el-dialog
+      v-if="isMount"
+      close-icon="false"
+      v-model="errorModal"
+      width="30%"
+      align-center
+    >
+      <div
+        class="flex flex-col items-center p-5 pt-0 justify-center text-center"
+      >
+        <img src="@/assets/svg/error.svg" alt="" />
+        <h1 class="text-[32px]">{{ errorMessage }}</h1>
+      </div>
+    </el-dialog>
   </main>
 </template>
 
@@ -451,8 +475,11 @@ const runtimeConfig = useRuntimeConfig();
 const baseUrl = runtimeConfig.public.baseURL;
 const baseUrlImage = ref(runtimeConfig.public.baseURL?.slice(0, -3));
 
+const isMount = ref(false);
 const is_submit = ref(false);
 
+const errorModal = ref(false);
+const errorMessage = ref("");
 const delivery_data = ref("");
 
 const months = {
@@ -490,9 +517,9 @@ const store = reactive({
   to_whom_bouquet: "myself",
   customer_firstname: "",
   customer_lastname: "",
-  customer_phone: "",
+  customer_phone: "+998",
   receiver_name: "",
-  receiver_phone: "",
+  receiver_phone: "+998",
   full_address: "",
   comment_for_courier: "",
   delivery_time: "",
@@ -519,6 +546,28 @@ function checkAddress() {
     store.full_address +=
       (" ", address.apartment, address.entrance, address.floor);
     isFullDetails();
+  }
+}
+
+function phoneNumber(e, type) {
+  if (type == "custom") {
+    if (e.target.value?.length < 4) {
+      store.customer_phone = "+998";
+    }
+    const val = e.target.value?.slice(-1);
+    if (isNaN(val)) {
+      store.customer_phone = store.customer_phone.slice(0, -1);
+    }
+    store.customer_phone = store.customer_phone.slice(0, 13);
+  } else {
+    if (e.target.value?.length < 4) {
+      store.receiver_phone = "+998";
+    }
+    const val = e.target.value?.slice(-1);
+    if (isNaN(val)) {
+      store.receiver_phone = store.receiver_phone.slice(0, -1);
+    }
+    store.receiver_phone = store.receiver_phone.slice(0, 13);
   }
 }
 
@@ -611,7 +660,12 @@ function addToPayment() {
         })
         .catch((err) => {
           console.log(err);
-          useAuth.store.loginModal = true;
+          if (err.response.data?.message == "Token vaqti tugagan!") {
+            useAuth.store.loginModal = true;
+          } else {
+            errorMessage.value = err.response.data?.message;
+            errorModal.value = true;
+          }
           isLoading.removeLoading("payment");
         });
     }
@@ -634,6 +688,7 @@ function changeQuantity(id) {
 }
 
 onMounted(() => {
+  isMount.value = true;
   useAddToCart.getAddToCart();
   window.addEventListener("input", () => {
     isFullDetails();

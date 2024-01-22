@@ -241,6 +241,8 @@
         <input
           v-model="authStore.store.phone"
           @input="(e)=>phoneNumber(e)"
+          minlength="13"
+          maxlength="13"
           :class="!authStore.store.isVerified ? 'border !border-[#EC3434]' : ''"
           class="h-14 mt-[6px] mb-[55px] rounded-[10px] w-full"
           type="tel"
