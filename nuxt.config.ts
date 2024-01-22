@@ -19,12 +19,12 @@ export default defineNuxtConfig({
           defer: true,
         },
       ],
-      meta: [
-        {
-          "http-equiv": "Content-Security-Policy",
-          content: "frame-ancestors https: https://widget.cloudpayments.ru/",
-        },
-      ],
+      // meta: [
+      //   {
+      //     "http-equiv": "Content-Security-Policy",
+      //     content: "frame-ancestors https: https://widget.cloudpayments.ru/",
+      //   },
+      // ],
     },
   },
   runtimeConfig: {
