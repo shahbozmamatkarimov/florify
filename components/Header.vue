@@ -52,7 +52,7 @@
               </li>
               <li class="xl:flex hidden items-center w-full max-w-fit gap-2">
                 <img src="@/assets/svg/locate.svg" alt="" />
-                <p>Город:</p>
+                <p>{{ $t('city') }}:</p>
                 <p class="leading-5 border-b border-black">Ташкент</p>
               </li>
               <li class="relative flex sm:max-w-fit sm:w-auto w-full">
@@ -74,7 +74,7 @@
                   v-loading="isLoading.isLoadingType('getSearchProducts')"
                   class="p-6 mt-12 -ml-3 absolute z-[60] w-[400px] bg-white rounded-b-xl"
                 >
-                  <h1 class="text-xl leading-6 font-medium">Популярное</h1>
+                  <h1 class="text-xl leading-6 font-medium">{{$t('popular')}}</h1>
                   <div
                     class="space-y-4 mt-6 max-h-[calc(100vh_-_250px)] overflow-hidden overflow-y-auto"
                   >
@@ -103,7 +103,7 @@
                       @click="showSearchRes"
                       class="text-[#5C0099] text-xl leading-6 font-medium"
                     >
-                      Показать все результаты ({{
+                      {{$t('show_all')}} ({{
                         useProduct.search.pagination.total_count -
                         useProduct.search.pagination.currentPage * 10
                       }})
@@ -183,6 +183,7 @@ const store = reactive({
 });
 
 function focused(search_type) {
+  useProduct.searchProduct();
   isLoading.store.isOpen = true;
   if (search_type == "product") {
     useProduct.state.isSearchingModal = true;

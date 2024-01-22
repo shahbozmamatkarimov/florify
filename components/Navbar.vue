@@ -1,226 +1,5 @@
 <template>
   <main>
-    <!-- <nav class="navbar container mx-auto xl:px-28 md:px-10 px-5 mt-[70px]">
-      <div class="grid grid-cols-5 sm:py-5 py-3 sm:gap-6 gap-2">
-        <form
-          class="items-center grid md:grid-cols-3 grid-cols-5 sm:gap-6 gap-2 relative md:col-span-3 col-span-5"
-        >
-          <div class="flex items-center relative md:col-span-2 col-span-4">
-            <div class="relative w-full">
-              <div
-                class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none"
-              >
-                <img class="location" src="../assets/svg/location.svg" alt="" />
-              </div>
-              <input
-                type="text"
-                @input="searchAddress"
-                @focus="focused"
-                v-model="store.searchInput"
-                id="input-group-1"
-                class="border md:h-14 h-10 border-gray-300 placeholder-gray-800 md:text-lg rounded-xl outline-none block w-full pl-12 p-2.5"
-                :placeholder="$t('navbar.address')"
-                required
-              />
-              <div
-                v-if="productStore.state.isAddressModal"
-                class="p-6 absolute z-50 w-full bg-white rounded-b-xl"
-              >
-                <h1 class="text-xl leading-6 font-medium">Локация</h1>
-                <div
-                  class="space-y-4 mt-6 max-h-[calc(100vh_-_250px)] overflow-hidden overflow-y-auto"
-                >
-                  <div
-                    v-for="i in store.searchedData"
-                    @click="clickedModal('address', i.title?.text)"
-                    class="flex items-center gap-3 border-b pb-4 border-[#E6E6E6]"
-                  >
-                    <div class="space-y-1 font-medium cursor-pointer">
-                      <p class="leading-[21px] text-[#5C0099] text-lg">
-                        {{ i.title?.text }}
-                      </p>
-                      <p class="leading-[19px]">{{ i.tags[0] }}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <button
-            class="locate md:h-14 h-10 text-center whitespace-nowrap flex items-center justify-center bg-[#5C0099] text-white rounded-xl"
-          >
-            {{ $t("navbar.show") }}
-          </button>
-        </form>
-        <div class="relative md:col-span-2 col-span-full w-full">
-          <form class="relative">
-            <input
-              v-model="productStore.search.search"
-              @input="productStore.searchProduct"
-              @focus="focused('product')"
-              type="search"
-              class="border md:h-14 h-10 z-40 relative border-gray-300 placeholder-gray-800 md:text-lg rounded-xl outline-none block w-full p-2.5"
-              :placeholder="$t('navbar.search')"
-              required
-            />
-            <button
-              type="submit"
-              class="flex justify-center items-center border border-gray-300 border-l-0 absolute top-0 right-0 h-full p-2.5 font-medium bg-[#F3F3F3] rounded-r-xl sm:w-16 w-10"
-            >
-              <img src="../assets/svg/searchIcon.svg" alt="" />
-            </button>
-          </form>
-          <div
-            v-if="productStore.state.isSearchingModal"
-            v-loading="isLoading.isLoadingType('getSearchProducts')"
-            class="p-6 absolute z-50 w-full bg-white rounded-b-xl"
-          >
-            <h1 class="text-xl leading-6 font-medium">Популярное</h1>
-            <div
-              class="space-y-4 mt-6 max-h-[calc(100vh_-_250px)] overflow-hidden overflow-y-auto"
-            >
-              <div
-                v-for="i in productStore.state.search_products"
-                @click="clickedModal('product', i.id)"
-                class="flex items-center cursor-pointer gap-3 border-b pb-4 border-[#E6E6E6]"
-              >
-                <img
-                  class="h-20 w-20 rounded-[10px] object-cover"
-                  :src="baseUrlImage + i.images[0].image"
-                  alt=""
-                />
-                <div class="space-y-1 font-medium">
-                  <p class="leading-[21px] text-[#5C0099] text-lg">
-                    {{ i.name }}
-                  </p>
-                  <p class="leading-[19px]">{{ i.id }}</p>
-                </div>
-              </div>
-              <p v-if="productStore.search.pagination.currentPage < productStore.search.pagination.total_pages"
-                @click="showSearchRes"
-                class="text-[#5C0099] text-xl leading-6 font-medium"
-              >
-                Показать все результаты ({{
-                  productStore.search.pagination.total_count -
-                  productStore.search.pagination.currentPage * 10
-                }})
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div>
-        <ul
-          class="flex category gap-6 font-medium text-gray-600 py-1 md:pr-0 pr-10 overflow-hidden overflow-x-auto"
-        >
-          <li
-            @click="
-              productStore.getAllProducts();
-              $router.push('/');
-              productStore.state.sliderStep = 0;
-            "
-            :class="
-              !$router.currentRoute.value?.query?.page
-                ? 'text-[#5C0099] font-bold'
-                : ''
-            "
-            class="cursor-pointer hover:text-[#5C0099]"
-          >
-            {{ $t("navbar.all") }}
-          </li>
-          <li
-            @click="productStore.getOneProduct(i.id, index + 1)"
-            v-for="(i, index) in productStore.state.categories"
-            :key="i.id"
-            :class="
-              $router.currentRoute.value?.query?.page == index + 1
-                ? 'text-[#5C0099] font-bold'
-                : ''
-            "
-            class="cursor-pointer whitespace-nowrap hover:text-[#5C0099]"
-          >
-            <router-link v-if="$t('en') == 'In'" to="/">
-              {{ i.uz }}
-            </router-link>
-            <router-link v-else-if="$t('en') == 'Ан'" to="/">
-              {{ i.ru }}
-            </router-link>
-          </li>
-          <li
-            :class="
-              $router.currentRoute.value?.query?.categories == 'todays'
-                ? 'text-[#5C0099] font-bold'
-                : ''
-            "
-            @click="
-              productStore.getOneProduct(
-                'today',
-                productStore.state.categories?.length + 1
-              )
-            "
-            class="cursor-pointer whitespace-nowrap hover:text-[#5C0099]"
-          >
-            {{ $t("navbar.presents") }}
-          </li>
-          <li
-            :class="
-              $router.currentRoute.value?.name == 'history'
-                ? 'text-[#5C0099] font-bold'
-                : ''
-            "
-            @click="$router.push('/history')"
-            class="cursor-pointer flex items-center gap-1 whitespace-nowrap hover:text-[#5C0099]"
-          >
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M2 11.3C2 11.3 4.7 5 11 5C17.3 5 20 11.3 20 11.3C20 11.3 17.3 17.6 11 17.6C4.7 17.6 2 11.3 2 11.3Z"
-                :stroke="
-                  $router.currentRoute.value?.name == 'history'
-                    ? '#5C0099'
-                    : '#555555'
-                "
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M10.9998 14C12.491 14 13.6998 12.7912 13.6998 11.3C13.6998 9.80884 12.491 8.60001 10.9998 8.60001C9.50864 8.60001 8.2998 9.80884 8.2998 11.3C8.2998 12.7912 9.50864 14 10.9998 14Z"
-                :stroke="
-                  $router.currentRoute.value?.name == 'history'
-                    ? '#5C0099'
-                    : '#555555'
-                "
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-            {{ $t("navbar.watched") }}
-          </li>
-          <li @click="$router.push('/orders')" class="cursor-pointer whitespace-nowrap hover:text-[#5C0099]">
-            {{ $t("navbar.orders") }}
-          </li>
-          <li
-            :class="
-              $router.currentRoute.value?.name == 'favorites'
-                ? 'text-[#5C0099] font-bold'
-                : ''
-            "
-            @click="$router.push('/favorites')"
-            class="cursor-pointer whitespace-nowrap hover:text-[#5C0099]"
-          >
-            {{ $t("navbar.favorites") }}
-          </li>
-        </ul>
-      </div>
-    </nav> -->
-
     <el-dialog
       v-if="isMount"
       close-icon="false"
@@ -240,7 +19,7 @@
         <h1 class="leading-[21px]">Номер телефона *</h1>
         <input
           v-model="authStore.store.phone"
-          @input="(e)=>phoneNumber(e)"
+          @input="(e) => phoneNumber(e)"
           minlength="13"
           maxlength="13"
           :class="!authStore.store.isVerified ? 'border !border-[#EC3434]' : ''"
@@ -280,6 +59,7 @@
         <!-- <h1 class="font-semibold text-2xl leading-7">Tasdiqlash kodi</h1> -->
         <h1 class="leading-[21px]">Username *</h1>
         <input
+          :class="checkLocalStorage() ? 'pointer-events-none' : ''"
           v-model="authStore.store.name"
           class="h-14 mt-[6px] mb-[55px] rounded-[10px] w-full"
           type="text"
@@ -344,7 +124,7 @@
       :with-header="false"
     >
       <div class="flex py-2 items-center justify-between bg-white">
-        <h1 class="font-semibold text-2xl">Состав заказа</h1>
+        <h1 class="font-semibold text-2xl">{{ $t("order.order_list") }}</h1>
         <img
           @click="productStore.state.addToProductDrawer = false"
           class="h-6 w-6 rounded-lg object-cover cursor-pointer"
@@ -434,25 +214,24 @@
         <NotFoundCart v-else />
         <div v-if="useAddToCart.store.products?.length">
           <div class="flex justify-between items-center">
-            <p>Доставка</p>
-            <p class="font-semibold">Бесплатно</p>
+            <p>{{ $t("order.delivery") }}</p>
+            <p class="font-semibold">{{ $t("order.free") }}</p>
           </div>
           <hr class="sm:my-5 my-2" />
           <div class="flex justify-between py-2 items-center">
-            <p>Общая стоимость</p>
+            <p>{{ $t("order.total") }}</p>
             <p class="font-semibold">
-              {{ useAddToCart.store.total_price }} сум
+              {{ useAddToCart.store.total_price }} {{ $t("home.sum") }}
             </p>
           </div>
           <button
             @click="() => pushToOrder()"
             class="sm:h-16 h-10 sm:my-5 my-2 flex justify-center sm:text-md text-sm items-center w-full font-semibold text-white rounded-xl bg-[#5C0099]"
           >
-            Оформить заказ
+            {{ $t("get_order") }}
           </button>
           <h1 class="sm:text-md text-sm">
-            Нажимая на кнопку, вы соглашаетесь с условиями оказания услуг и
-            политикой обработки персональных данных
+            {{ $t("order_description") }}
           </h1>
         </div>
       </div>
@@ -648,13 +427,13 @@ function searchAddress() {
 
 function phoneNumber(e) {
   if (e.target.value?.length < 4) {
-    authStore.store.phone = '+998'
+    authStore.store.phone = "+998";
   }
   const val = e.target.value?.slice(-1);
   if (isNaN(val)) {
     authStore.store.phone = authStore.store.phone.slice(0, -1);
   }
-  authStore.store.phone = authStore.store.phone.slice(0, 13)
+  authStore.store.phone = authStore.store.phone.slice(0, 13);
 }
 
 function focused(search_type) {
@@ -695,6 +474,14 @@ function pushToOrder() {
 function showSearchRes() {
   productStore.search.pagination.currentPage += 1;
   productStore.searchProduct("show_more");
+}
+
+function checkLocalStorage() {
+  const isEmpty = localStorage.getItem("name");
+  if (isEmpty) {
+    return true;
+  }
+  return false;
 }
 
 function increment() {
@@ -779,6 +566,8 @@ watch(
 onMounted(() => {
   isMount.value = true;
   productStore.getAllProducts();
+
+  authStore.store.name = localStorage.getItem("name");
 
   document.addEventListener("keydown", function (event) {
     if (event.key === "Backspace") {

@@ -4,7 +4,9 @@
   >
     <Tabs />
     <section>
-      <h1 class="font-semibold text-2xl leading-7 mb-6">Личные данные</h1>
+      <h1 class="font-semibold text-2xl leading-7 mb-6">
+        {{ $t("private_info") }}
+      </h1>
       <section
         class="2xl:grid grid-cols-3 border border-[#EDEDED] rounded-[2px]"
       >
@@ -14,7 +16,7 @@
               type="text"
               v-model="name"
               @input="changingName"
-              placeholder="Ваше имя"
+              :placeholder="$t('order.name')"
               class="flex items-center px-3 h-[50px] rounded-[2px] border bg-transparent text-[#242424] border-[#EDEDED]"
               required
             />
@@ -25,7 +27,11 @@
             </p>
           </div>
           <hr class="border border-[#EDEDED] my-6" />
-          <div :class="isLoading.isLoadingType('updateUser')?'pointer-events-none':''">
+          <div
+            :class="
+              isLoading.isLoadingType('updateUser') ? 'pointer-events-none' : ''
+            "
+          >
             <button
               v-loading="isLoading.isLoadingType('updateUser')"
               :class="
@@ -35,7 +41,7 @@
               "
               class="font-semibold rounded-[10px] text-white h-[50px] w-full"
             >
-              Готово
+              {{ $t("save") }}
             </button>
           </div>
           <div class="flex justify-center mt-10">
@@ -44,18 +50,26 @@
               @click="isLogout = true"
               class="text-[#929292] border-b border-[#929292] font-semibold"
             >
-              Выйти из аккаунта
+              {{ $t("logout") }}
             </button>
           </div>
         </form>
         <div class="border border-[#EDEDED] rounded-[4px] p-5 m-5 ml-2">
-          <h1 class="text-lg font-semibold">Скачать приложение Florify</h1>
+          <h1 class="text-lg font-semibold">{{ $t("download_app") }}</h1>
           <p class="text-sm text-[#929292] mt-2 mb-4">
-            Больше бонусов, удобнее и проще.
+            {{ $t("bonus_app") }}
           </p>
           <div class="flex gap-3 mb-5">
-            <img class="w-[100px] h-[30px]" src="@/assets/svg/appstore.svg" alt="app_store" />
-            <img class="w-[100px] h-[30px]" src="@/assets/svg/googleplay.svg" alt="play_market" />
+            <img
+              class="w-[100px] h-[30px]"
+              src="@/assets/svg/appstore.svg"
+              alt="app_store"
+            />
+            <img
+              class="w-[100px] h-[30px]"
+              src="@/assets/svg/googleplay.svg"
+              alt="play_market"
+            />
           </div>
           <img src="@/assets/svg/scaner.svg" alt="play_market" />
         </div>

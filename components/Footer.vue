@@ -9,7 +9,7 @@
         </router-link>
       </div>
       <ul>
-        <li>{{$t('services')}}</li>
+        <li>{{ $t("services") }}</li>
         <li>
           <router-link to="/about"> {{ $t("about") }} </router-link>
         </li>
@@ -38,20 +38,20 @@
         </li>
       </ul>
       <ul>
-        <li>{{$t('questions')}}</li>
+        <li>{{ $t("questions") }}</li>
         <li>Вопросы и ответы</li>
         <li>Доставка</li>
         <li>Оплата</li>
         <li>Скидки</li>
       </ul>
       <ul>
-        <li>{{$t('cooperation_page')}}</li>
+        <li>{{ $t("cooperation_page") }}</li>
         <li>Партнёрство</li>
         <li>Корпоративным клиентам</li>
       </ul>
       <div class="lg:block hidden"></div>
       <ul class="text-end contact">
-        <li>{{$t('contact_us')}}</li>
+        <li>{{ $t("contact_us") }}</li>
         <li>
           <a :href="`tel:${store.contacts.phone}`">{{
             store.contacts.phone

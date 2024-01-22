@@ -22,6 +22,7 @@ export const useAuthStore = defineStore("isLogged", () => {
     logOutModal: false,
     isUpdate: false,
     user: "",
+    error: "",
   });
 
   function handleSubmit() {
@@ -89,10 +90,13 @@ export const useAuthStore = defineStore("isLogged", () => {
           store.isVerified = true;
           store.isLoading = false;
           console.log("object");
-          // localStorage.setItem("phone", res.data.data.client.phone);
+          localStorage.setItem("name", isLoading.store.name);
           localStorage.setItem("token", res.data.token);
           store.registerModal = true;
+          store.isVerified = true;
           return;
+        } else {
+          store.isVerified = false;
         }
         store.isVerified = false;
         store.isLoading = false;
@@ -100,6 +104,7 @@ export const useAuthStore = defineStore("isLogged", () => {
       .catch((err) => {
         console.log(err);
         store.isLoading = false;
+        store.isVerified = false;
       });
   }
 
@@ -122,7 +127,7 @@ export const useAuthStore = defineStore("isLogged", () => {
       .then((res) => {
         isLoading.removeLoading("updateUser");
         console.log(res.data);
-        isLoading.store.name = res.data?.data?.client?.name;  
+        isLoading.store.name = res.data?.data?.client?.name;
       })
       .catch((err) => {
         console.log(err);

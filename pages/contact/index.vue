@@ -61,16 +61,26 @@
               <li
                 class="sm:min-h-[4rem] min-h-[3.5rem] 2xl:mb-7 lg:mb-5 sm:mb-1"
               >
-                123376, г. Ташкент, ул. Каримова, 1
+                123376, г. Ташкент, ул. Каримова, 1 Florify M.CH.J
               </li>
               <li
                 class="sm:min-h-[4rem] min-h-[3.5rem] 2xl:mb-7 lg:mb-5 sm:mb-1"
               >
-                <p>+998 (88) 111 02 11</p>
-                <p>+998 (95) 888 58 58</p>
+                <p>
+                  <a :href="`tel:${store.contacts.phone}`">{{
+                    store.contacts.phone
+                  }}</a>
+                </p>
+                <p>
+                  <a :href="`tel:${store.contacts.additional_phone}`">{{
+                    store.contacts.additional_phone
+                  }}</a>
+                </p>
               </li>
               <li class="sm:h-16 h-14 2xl:mb-7 lg:mb-5 sm:mb-1">
-                customercare@florify.com
+                <a :href="`mailto:${store.contacts.email}`">{{
+                  store.contacts.email
+                }}</a>
               </li>
             </ul>
           </div>
@@ -85,6 +95,31 @@ useHead({
   title: "Contact us",
   meta: [{ name: "florify", content: "contact us" }],
 });
+
+import axios from "axios";
+
+const runtimeconfig = useRuntimeConfig();
+const baseUrl = runtimeconfig.public.baseURL;
+
+const store = reactive({
+  contacts: {},
+});
+
+axios
+  .get(baseUrl + "/socialNetwork")
+  .then((res) => {
+    console.log(res);
+    if (res.data.statusCode == 200) {
+      const contact_data = res.data?.data?.social_networks;
+      console.log(contact_data);
+      for (let i of contact_data) {
+        store.contacts[i.name] = i.link;
+      }
+    }
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 </script>
 
 <style lang="scss" scoped></style>

@@ -33,6 +33,24 @@
   "questions": "Savollar",
   "cooperation_page": "Hamkorlik",
   "contact_us": "Biz bilan bog'lanish",
+  "get_order": "Buyurtma berish",
+  "order_description": "Tugmani bosish orqali siz xizmat ko'rsatish shartlari va shaxsiy ma'lumotlarni qayta ishlash siyosatiga rozilik bildirasiz",
+  "popular": "Mashhurlari",
+  "show_all": "Barcha natijalarni ko'rsatish",
+  "city": "Shahar",
+  "private_info": "Shaxsiy ma'lumotlar",
+  "get_help": "Qo'llab-quvvatlash xizmati",
+  "save": "Saqlash",
+  "logout": "Hisobdan chiqish",
+  "download_app": "Florify ilovasini yuklab oling",
+  "bonus_app": "Ko'proq bonuslar, qulayroq va osonroq.",
+  "status_done": "Xaridorga berilgan",
+  "refuse": "Rad etilgan",
+  "my_comment": "Mening sharhim",
+  "all_rate": "Umumiy reyting",
+  "comment_product": "Izoh",
+  "set_comment": "Sharh yozing",
+  "send": "Jo'natish",
   "navbar": {
     "address": "Manzilni kiriting",
     "show": "Ko'rsatish",
@@ -46,7 +64,8 @@
     "presents": "Bugungilar",
     "watched": "Ko'rilganlar",
     "orders": "Buyurtmalar",
-    "favorites": "Sevimlilar"
+    "favorites": "Sevimlilar",
+    "all_orders": "Barcha buyurtmalar"
   },
   "home": {
     "whom": "Kimga",
@@ -102,7 +121,13 @@
     "total": "Umumiy qiymati",
     "warning": "Tugmani bosish orqali siz xizmat ko'rsatish shartlari va shaxsiy ma'lumotlarni qayta ishlash siyosatiga rozilik bildirasiz",
     "convert_text": "Otkritka matni",
-    "convert_placeholder": "Do'stim ..."
+    "convert_placeholder": "Do'stim ...",
+    "price": "Buyurtma narxi",
+    "date": "Buyurtma sanasi",
+    "delivery_date": "Yetkazib berish",
+    "check": "Elektron chek",
+    "product": "mahsulot",
+    "comment_product": "Fikr qoldiring"
   },
   "_about": {
     "title1": "Kompaniya haqida",

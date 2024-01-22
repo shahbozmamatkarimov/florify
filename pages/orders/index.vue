@@ -4,24 +4,30 @@
   >
     <Tabs />
     <section class="w-full">
-      <h1 class="text-2xl font-medium leading-7">Мои заказы</h1>
+      <h1 class="text-2xl font-medium leading-7">{{ $t("navbar.orders") }}</h1>
       <nav>
         <ul class="border-b">
           <li
             class="text-[#5C0099] font-medium text-lg leading-[50px] mt-2 max-w-min whitespace-nowrap border-b-2 border-[#5C0099]"
           >
-            Все заказы
+            {{ $t("navbar.all_orders") }}
           </li>
         </ul>
       </nav>
 
-      <div class="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-2 sm:space-y-0 space-y-5 mt-6 gap-5">
+      <div
+        class="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-2 sm:space-y-0 space-y-5 mt-6 gap-5"
+      >
         <div
           v-if="store.isLoading"
           v-for="i in 6"
           class="h-[300px] rounded-[4px] animate-pulse bg-gray-200"
         ></div>
-        <div v-else-if="store.orders?.length" class="sm:border-none border" v-for="i in store.orders">
+        <div
+          v-else-if="store.orders?.length"
+          class="sm:border-none border"
+          v-for="i in store.orders"
+        >
           <div class="bg-white rounded-[4px]">
             <ul
               class="flex items-center justify-between border-b border-[#E6E6E6] p-5"
@@ -32,7 +38,7 @@
                   v-if="i.status == 'PAID'"
                   class="bg-[#0881781A] px-3 rounded-[4px] py-[6px] text-[#088178]"
                 >
-                  Выдан покупателю
+                  {{ $t("status_done") }}
                 </button>
                 <button
                   v-else-if="i.status == 'CANCELLED'"
@@ -43,7 +49,7 @@
                   "
                   class="bg-[#FF61611A] px-3 rounded-[4px] py-[6px] text-[#FF6161]"
                 >
-                  Отказано
+                  {{ $t("refuse") }}
                 </button>
                 <button
                   v-else
@@ -60,20 +66,20 @@
             </ul>
             <ul class="p-5 space-y-5 border-b border-[#E6E6E6]">
               <li class="flex items-center justify-between">
-                <p>Сумма заказа:</p>
-                <p>{{ i.totalAmount }} сум</p>
+                <p>{{ $t("order.price") }}:</p>
+                <p>{{ i.totalAmount }} {{ $t("home.sum") }}</p>
               </li>
               <li class="flex items-center justify-between">
-                <p>Дата заказа:</p>
+                <p>{{ $t("order.date") }}:</p>
                 <p>{{ i.createdAt.slice(0, 10) }}</p>
               </li>
               <li class="flex items-center justify-between">
-                <p>Дата доставки:</p>
+                <p>{{ $t("order.delivery_date") }}:</p>
                 <p>{{ getOrderData(i.delivery_time) }}</p>
               </li>
               <li class="flex items-center justify-between">
                 <p class="border-b border-[#000000] leading-4 text-sm">
-                  Электронный чек
+                  {{ $t("order.check") }}
                 </p>
               </li>
             </ul>
@@ -93,7 +99,7 @@
                     @click="sendCommentModal(i.product?.id)"
                     class="border-b whitespace-nowrap border-[#5C0099] right-5 absolute leading-[19px] text-[#5C0099]"
                   >
-                    Оставить отзыв
+                    {{ $t("order.comment_product") }}
                   </button>
                 </div>
               </div>
@@ -102,7 +108,7 @@
               @click="showMore(i)"
               class="flex items-center justify-between cursor-pointer text-sm p-5"
             >
-              <p>{{ i.items.length }} товар</p>
+              <p>{{ i.items.length }} {{ $t("order.product") }}</p>
               <svg
                 :class="store.show_more == i ? 'rotate-180' : ''"
                 width="16"
@@ -134,7 +140,7 @@
       <div
         class="flex items-center justify-between h-[58px] px-6 -mx-[30px] -mt-[30px] rounded-t bg-[#F5F5F5]"
       >
-        <h1>Мой отзыв</h1>
+        <h1>{{$t('my_comment')}}</h1>
         <img
           @click="store.comment_modal = false"
           class="cursor-pointer"
@@ -143,7 +149,7 @@
         />
       </div>
       <form @submit.prevent="sendComment">
-        <h1 class="mt-[30px]">Общая оценка</h1>
+        <h1 class="mt-[30px]">{{$t('all_rate')}}</h1>
         <div class="flex items-center sm:justify-center mt-10 mb-8 gap-5">
           <div class="flex items-center justify-center gap-5">
             <div v-for="i in 5">
@@ -164,20 +170,20 @@
             </div>
           </div>
         </div>
-        <h1>Комментария</h1>
+        <h1>{{$t('comment_product')}}</h1>
         <el-input
           v-model="store.comment"
           :autosize="{ minRows: 4, maxRows: 8 }"
           type="textarea"
           resize="none"
           class="placeholder-[#565656] mt-3 mb-8"
-          placeholder="Напишите отзыв"
+          :placeholder="$t('set_comment')"
           required
         />
         <button
           class="bg-[#F2F4F7] py-4 mt-10 w-full text-center rounded-[10px]"
         >
-          Готово
+          {{$t('send')}}
         </button>
         <div class="bg-white h-6 rounded-b -mx-[30px] -mb-[30px]"></div>
       </form>
@@ -191,7 +197,7 @@ useHead({
   meta: [{ name: "florify", content: "orders" }],
 });
 
-import {useLoadingStore}  from "@/store"
+import { useLoadingStore } from "@/store";
 import axios from "axios";
 const router = useRouter();
 const runtimeConfig = useRuntimeConfig();
