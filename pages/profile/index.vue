@@ -2,16 +2,14 @@
   <main class="sm:hidden block px-5 pb-8">
     <div v-if="!isLoading.store.isLogin" class="mb-5">
       <h1 class="font-semibold text-center mb-3 text-2xl leading-9">
-        Xush kelibsiz!
+        {{ $t("welcome") }}
       </h1>
       <p class="text-sm text-[#555555] text-center">
-        Mening buyurtmalarim, bildirishnomalar, qoldirilgan sharhlar va profil
-        ko'rish uchun tizimga kiring. Bu odatda bir necha daqiqa vaqt oladi
-        halos.
+        {{ $t("title_login") }}
       </p>
     </div>
     <div v-else>
-      <div class="flex items-center gap-3 border-y py-6">
+      <div @click="$router.push('/private_info')" class="flex cursor-pointer items-center gap-3 border-y py-6">
         <img src="@/assets/svg/user_profile.svg" alt="" />
         <h1 class="max-w-fit truncate">
           {{ isLoading.store.name }}
@@ -24,16 +22,16 @@
           class="flex items-center justify-between leading-[20px]"
           to="/orders"
         >
-          Mening buyurtmalarim
+          {{ $t("navbar.orders") }}
           <img src="@/assets/svg/profile_arrow.svg" alt="" />
         </router-link>
       </li>
-      <li>
+      <li class="cursor-pointer">
         <div
           @click="lang = !lang"
           class="flex items-center justify-between leading-[20px] py-6 border-b"
         >
-          Til <img src="@/assets/svg/profile_arrow.svg" alt="" />
+          {{ $t("lang") }} <img src="@/assets/svg/profile_arrow.svg" alt="" />
         </div>
         <div v-if="lang" class="mt-3 pb-3 space-y-2 border-b">
           <div @click="$i18n.locale = 'uz'" class="flex items-center gap-2">
@@ -132,17 +130,17 @@
         </div>
       </li>
       <li
-        class="flex items-center justify-between leading-[20px] py-6 border-b"
+        class="cursor-pointer flex items-center justify-between leading-[20px] py-6 border-b"
       >
-        Ma'lumot
+        {{ $t("info") }}
         <img src="@/assets/svg/profile_arrow.svg" alt="" />
       </li>
       <li class="py-6 border-b">
         <router-link
           class="flex items-center justify-between leading-[20px]"
-          to="/privacy_police"
+          to="/privacy_policy"
         >
-          Maxfiylik siyosati
+          {{ $t("privacy_policy") }}
           <img src="@/assets/svg/profile_arrow.svg" alt="" />
         </router-link>
       </li>
@@ -151,16 +149,16 @@
           class="flex items-center justify-between leading-[20px]"
           to="/contact"
         >
-          Biz bilan bog'lanish
+          {{ $t("contact_with_us") }}
           <img src="@/assets/svg/profile_arrow.svg" alt="" />
         </router-link>
       </li>
       <li
         v-if="isLoading.store.isLogin"
         @click="useAuth.store.logOutModal = true"
-        class="py-6 border-b text-[#5C0099]"
+        class="py-6 cursor-pointer border-b text-[#5C0099]"
       >
-        Hisobdan chiqish
+        {{ $t("logout") }}
       </li>
     </ul>
     <button

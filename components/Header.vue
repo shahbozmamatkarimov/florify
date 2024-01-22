@@ -20,11 +20,11 @@
               />
               <div>
                 <h1>Florify</h1>
-                <p class="text-xs">Ilovadan oson foydalaning</p>
+                <p class="text-xs">{{$t("easy_use_app")}}</p>
               </div>
             </div>
             <button class="px-[14px] h-9 bg-[#5C0099] text-white rounded-lg">
-              Yuklab olish
+              {{ $t("download") }}
             </button>
           </div>
         </nav>

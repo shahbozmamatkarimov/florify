@@ -18,7 +18,7 @@
             src="/logo_mobile.svg"
             alt=""
           />
-          <p class="text-[10px] leading-3">Asosiy</p>
+          <p class="text-[10px] leading-3">{{ $t("main") }}</p>
         </router-link>
       </li>
       <li class="w-[75px] relative">
@@ -38,7 +38,7 @@
             src="@/assets/footer/_cart.svg"
             alt=""
           />
-          <p class="text-[10px] leading-3">Savatcha</p>
+          <p class="text-[10px] leading-3">{{ $t("basket") }}</p>
         </router-link>
       </li>
       <li class="cursor-pointer w-[75px]">
@@ -61,7 +61,7 @@
             "
             class="text-[10px] leading-3"
           >
-            Tanlanganlar
+            {{ $t("navbar.favorites") }}
           </p>
         </div>
       </li>
@@ -76,7 +76,7 @@
             src="@/assets/footer/_profile.svg"
             alt=""
           />
-          <p class="text-[10px] leading-3">Profil</p>
+          <p class="text-[10px] leading-3">{{ $t("profile") }}</p>
         </router-link>
       </li>
     </ul>
