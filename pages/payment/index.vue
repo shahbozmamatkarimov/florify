@@ -3,12 +3,14 @@
 </template>
 
 <script setup>
+// import cp from 'cloudpayments';
+import { usePaymentStore } from "@/store";
+
 useHead({
   title: "Payment",
   meta: [{ name: "florify", content: "private info" }],
 });
 
-import { usePaymentStore } from "@/store";
 definePageMeta({
   layout: false,
 });
@@ -18,9 +20,9 @@ const usePayment = usePaymentStore();
 const router = useRouter();
 
 const paymentStatus = ref(null);
-const initiatePayment = async (orderDetails) => {
+const initiatePayment = async () => {
   // Call your backend API to get payment details
-  try {
+  // try {
     const widget = new cp.CloudPayments();
     console.log(router.currentRoute.value.query.amount);
     usePayment.payment.amount = +router.currentRoute.value.query.amount;
@@ -74,21 +76,14 @@ const initiatePayment = async (orderDetails) => {
         },
       }
     );
-  } catch (error) {
-    console.error("Error initiating payment:", error);
-    paymentStatus.value = "error";
-  }
+  // } catch (error) {
+  //   console.error("Error initiating payment:", error);
+  //   paymentStatus.value = "error";
+  // }
 };
 
 function pay() {
-  const orderDetails = {
-    amount: "data.amount",
-    currency: "USD", // Change as per your requirement
-    accountId: "data.accountId",
-    invoiceId: "data.invoiceId",
-  };
-
-  initiatePayment(orderDetails);
+  initiatePayment();
 }
 
 onMounted(() => {

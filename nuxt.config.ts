@@ -13,6 +13,15 @@ export default defineNuxtConfig({
           href: "/main_logo.svg",
         },
       ],
+      script: [
+        {
+          src: "https://checkout.cloudpayments.uz/checkout.js",
+          defer: true,
+        },
+        {
+          src: "https://widget.cloudpayments.uz/bundles/cloudpayments.js",
+        },
+      ],
       // script: [{ src: "https://code.jquery.com/jquery-3.6.0.min.js" }],
       meta: [
         {
@@ -29,7 +38,7 @@ export default defineNuxtConfig({
     },
   },
   css: ["~/assets/main.scss"],
-  plugins: [{ src: "~/plugins/cloudpayments.js", mode: "client" }],
+  // plugins: [{ src: "~/plugins/cloudpayments.js" }],
   postcss: {
     plugins: {
       tailwindcss: {},
