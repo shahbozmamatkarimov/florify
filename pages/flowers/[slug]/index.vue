@@ -37,6 +37,7 @@
           id="carouselMain"
         >
           <img
+          loading="lazy"
             v-for="i in useProduct.state.getById?.images"
             :key="i"
             class="carouselImg 2xl:min-w-[522px] xl:min-w-[508px] lg:min-w-[452px] md:min-w-[324px] sm:min-w-[450px] min-w-[calc(100vw_-_40px)] lg:h-[524px] md:h-[424px] bg-white object-contain rounded-xl border border-gray-200 object-center"
@@ -51,6 +52,7 @@
         >
           <img
             id="img"
+            loading="lazy"
             v-for="(i, index) in useProduct.state.getById?.images"
             @click="store.slideStep = index + 1"
             :key="index"
@@ -79,6 +81,7 @@
             </h2>
             <p v-if="true" class="flex items-center gap-3 cupoi">
               <img
+              loading="lazy"
                 v-if="useProduct.state.getById?.likes !== true"
                 :id="useProduct.state.getById?.id"
                 @click="
@@ -95,6 +98,7 @@
                 alt=""
               />
               <img
+              loading="lazy"
                 v-else
                 @click="
                   () =>
@@ -323,6 +327,7 @@
           class="card 2xl:min-w-[310px] xl:min-w-[247px] lg:min-w-[220px] md:min-w-[212px] sm:min-w-[185px] min-w-[150px] my-5 hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
         >
           <img
+          loading="lazy"
             @click="
               $router.push(`/flowers/${product.id}?flower=${product.name}`)
             "
@@ -436,6 +441,7 @@
           class="card 2xl:min-w-[310px] xl:min-w-[247px] lg:min-w-[220px] md:min-w-[212px] sm:min-w-[185px] min-w-[150px] my-5 hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
         >
           <img
+          loading="lazy"
             @click="$router.push(`/flowers/${product.product.id}`)"
             class="img md:rounded-b-none rounded-b-lg rounded-t-lg 2xl:h-80 xl:h-64 cursor-pointer md:h-52 sm:h-36 h-44 w-full object-cover"
             :src="`${baseUrlImage}${product.product?.images[0]?.image}`"

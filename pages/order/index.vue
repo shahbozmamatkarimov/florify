@@ -371,6 +371,7 @@
                   class="tableImg flex w-full text-start"
                 >
                   <img
+                  loading="lazy"
                     v-if="i.images[0]?.image"
                     class="img sm:w-40 w-20 min-w-[5rem] sm:min-w-[10rem] mr-2 sm:h-32 h-16 object-cover object-top rounded-md"
                     :src="baseUrlImage + i.images[0]?.image"

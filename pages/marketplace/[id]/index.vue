@@ -10,6 +10,7 @@
         />
         <img
           v-else
+          loading="lazy"
           class="md:h-24 md:w-24 h-16 w-16 rounded-full object-cover"
           :src="baseUrlImage + useSalesman.store.salesman.image"
           alt="img"
@@ -106,7 +107,10 @@
         </ul>
       </nav>
       <!-- flowers -->
-      <div v-if="isLoading.isLoadingType('getSalesmanProCategory')" class="col-span-full w-full">
+      <div
+        v-if="isLoading.isLoadingType('getSalesmanProCategory')"
+        class="col-span-full w-full"
+      >
         <PlaceHolderSalesmanProfile />
       </div>
       <div
@@ -123,6 +127,7 @@
             class="relative card bg-[#FFFFFF] max-w-sm md:w-full w-[160px] md:p-0 p-[6px] hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] border-gray-200 rounded-lg"
           >
             <img
+            loading="lazy"
               @click="
                 $router.push(`/flowers/${product.id}?flower=${product.name}`)
               "

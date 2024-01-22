@@ -43,6 +43,7 @@
                 class="relative w-full carousel 2xl:xl:h-[360px] xl:h-[300px] lg:h-[260px] md:h-[200px] sm:h-[180px] h-[160px] min-h-[120px] overflow-hidden md:rounded-[20px] rounded-[10px]"
               >
                 <img
+                loading="lazy"
                   :src="baseUrlImage + slide.image"
                   class="absolute w-full bg-transparent -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
                   alt="..."
@@ -97,6 +98,7 @@
             {{ i.uz }}
           </h1>
           <img
+          loading="lazy"
             class="h-full w-full object-cover"
             :src="baseUrlImage + i.image"
             alt=""
@@ -150,6 +152,7 @@
               class="relative card max-w-sm md:w-full w-[160px] md:p-0 p-[6px] hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
             >
               <img
+              loading="lazy"
                 @click="
                   $router.push(`/flowers/${product.id}?flower=${product.name}`)
                 "

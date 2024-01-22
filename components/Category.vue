@@ -22,6 +22,7 @@
           {{ i.uz }}
         </h1>
         <img
+        loading="lazy"
           class="h-full w-full object-cover"
           :src="baseUrlImage + i.image"
           alt=""
@@ -81,6 +82,7 @@
             class="relative card max-w-sm md:w-full w-[160px] md:p-0 p-[6px] hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
           >
             <img
+            loading="lazy"
               @click="$router.push(`/flowers/${product.id}?flower=${product.name}`)"
               class="img md:rounded-b-none rounded-b-lg rounded-t-lg 2xl:h-80 xl:h-64 cursor-pointer md:h-52 sm:h-36 h-44 w-full object-cover"
               :src="`${baseUrlImage}${product?.images[0]?.image}`"
@@ -177,6 +179,7 @@
           class="card max-w-sm hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
         >
           <img
+          loading="lazy"
             @click="$router.push(`/flowers/${product.id}?flower=${product.name}`)"
             class="img rounded-t-lg 2xl:h-80 xl:h-64 cursor-pointer md:h-52 sm:h-44 h-44 w-full object-cover"
             :src="`${baseUrlImage}${product.images[0]?.image}`"
@@ -196,6 +199,7 @@
               </p>
               <div class="flex items-center sm:gap-3 gap-1">
                 <img
+                loading="lazy"
                   v-if="product.likes !== true"
                   :id="product.id"
                   @click="
@@ -207,6 +211,7 @@
                   alt=""
                 />
                 <img
+                loading="lazy"
                   v-else
                   @click="
                     () =>

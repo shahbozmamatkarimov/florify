@@ -86,6 +86,7 @@
             <div v-if="store.show_more == i">
               <div v-for="i in i.items" class="flex gap-4 p-5 relative">
                 <img
+                loading="lazy"
                   class="h-[100px] w-[100px] rounded-[4px] object-cover"
                   :src="baseUrlImage + i.product?.images[0]?.image"
                   alt=""
