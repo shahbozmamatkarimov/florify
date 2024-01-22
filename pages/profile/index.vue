@@ -9,7 +9,10 @@
       </p>
     </div>
     <div v-else>
-      <div @click="$router.push('/private_info')" class="flex cursor-pointer items-center gap-3 border-y py-6">
+      <div
+        @click="$router.push('/private_info')"
+        class="flex cursor-pointer items-center gap-3 border-y py-6"
+      >
         <img src="@/assets/svg/user_profile.svg" alt="" />
         <h1 class="max-w-fit truncate">
           {{ isLoading.store.name }}
@@ -132,8 +135,13 @@
       <li
         class="cursor-pointer flex items-center justify-between leading-[20px] py-6 border-b"
       >
-        {{ $t("info") }}
-        <img src="@/assets/svg/profile_arrow.svg" alt="" />
+        <router-link
+          class="flex items-center justify-between w-full leading-[20px]"
+          to="/about"
+        >
+          {{ $t("info") }}
+          <img src="@/assets/svg/profile_arrow.svg" alt="" />
+        </router-link>
       </li>
       <li class="py-6 border-b">
         <router-link
