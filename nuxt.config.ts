@@ -15,17 +15,12 @@ export default defineNuxtConfig({
       ],
       script: [
         {
-          src: "https://checkout.cloudpayments.uz/checkout.js",
+          src: "https://widget.cloudpayments.ru/bundles/cloudpayments",
           defer: true,
         },
-        {
-          src: "https://widget.cloudpayments.uz/bundles/cloudpayments.js",
-        },
       ],
-      // script: [{ src: "https://code.jquery.com/jquery-3.6.0.min.js" }],
       meta: [
         {
-          // Content Security Policy (CSP) meta tag
           "http-equiv": "Content-Security-Policy",
           content: "frame-ancestors https: https://widget.cloudpayments.ru/",
         },

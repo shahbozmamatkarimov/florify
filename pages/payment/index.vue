@@ -3,7 +3,6 @@
 </template>
 
 <script setup>
-// import cp from 'cloudpayments';
 import { usePaymentStore } from "@/store";
 
 useHead({
@@ -22,7 +21,7 @@ const router = useRouter();
 const paymentStatus = ref(null);
 const initiatePayment = async () => {
   // Call your backend API to get payment details
-  // try {
+  try {
     const widget = new cp.CloudPayments();
     console.log(router.currentRoute.value.query.amount);
     usePayment.payment.amount = +router.currentRoute.value.query.amount;
@@ -37,7 +36,6 @@ const initiatePayment = async () => {
       "auth", // или 'charge'
       {
         //options 
-        // 9860030321826932 06/26
         publicId: "test_api_00000000000000000000001", //id из личного кабинета
         description: "Оплата товаров в florify.uz", //назначение
         amount: +router.currentRoute.value.query.amount, //сумма
@@ -71,15 +69,13 @@ const initiatePayment = async () => {
             ? "SUCCESS"
             : "FAIL";
           usePayment.sendPaymentData();
-          //Вызывается как только виджет получает от api.cloudpayments ответ с результатом транзакции.
-          //например вызов вашей аналитики Facebook Pixel
         },
       }
     );
-  // } catch (error) {
-  //   console.error("Error initiating payment:", error);
-  //   paymentStatus.value = "error";
-  // }
+  } catch (error) {
+    console.error("Error initiating payment:", error);
+    paymentStatus.value = "error";
+  }
 };
 
 function pay() {
