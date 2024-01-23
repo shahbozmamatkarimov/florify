@@ -87,13 +87,13 @@
         >
           <h1
             v-if="$t('uz') == 'Уз'"
-            class="absolute break-words top-5 left-5 md:text-lg text-sm leading-[21px]"
+            class="absolute break-words p-5 line-clamp-4 md:text-lg text-sm leading-[21px]"
           >
             {{ i.ru }}
           </h1>
           <h1
             v-else
-            class="absolute break-words top-5 left-5 md:text-lg text-sm leading-[21px]"
+            class="absolute break-words p-5 line-clamp-4 md:text-lg text-sm leading-[21px]"
           >
             {{ i.uz }}
           </h1>
