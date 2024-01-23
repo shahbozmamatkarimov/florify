@@ -11,12 +11,13 @@
         v-loading="authStore.store.isLoading"
         @submit.prevent="authStore.handleSubmit()"
       >
-        <h1 class="font-semibold text-2xl leading-7">Введите номер телефона</h1>
+        <h1 class="font-semibold text-2xl leading-7">
+          {{ $t("register.enter_phone") }}
+        </h1>
         <p class="leading-6 mt-[14px] mb-5">
-          Напишите номер своего мобильного телефона и вам придет СМС с кодом для
-          входа
+          {{ $t("register.get_your_code") }}
         </p>
-        <h1 class="leading-[21px]">Номер телефона *</h1>
+        <h1 class="leading-[21px]">{{ $t("register.phone_number") }} *</h1>
         <input
           v-model="authStore.store.phone"
           @input="(e) => phoneNumber(e)"
@@ -32,15 +33,11 @@
           <button
             class="h-14 bg-[#5C0099] rounded-xl w-full text-white text-semibold leading-5"
           >
-            Получить СМС с кодом
+            {{ $t("register.get_code") }}
           </button>
         </label>
         <p class="text-sm leading-5 mt-[30px]">
-          Avtotizatsiyadan o'tish orqali siz
-          <span class="underline"
-            >shaxsiy ma'lumotlarni qayta ishlash siyosatiga rozilik
-            bildirasiz</span
-          >
+          {{ $t("register.agreement") }}
         </p>
       </form>
     </el-dialog>
@@ -66,8 +63,12 @@
           placeholder="John Doe"
           required
         />
-        <p class="leading-6 -mt-5 mb-5">
-          Tasdiqlash kodi {{ authStore.store.phone }} raqamiga yuborilgan
+        <p v-if="$t('uz') == 'Uz'" class="leading-6 -mt-5 mb-5">
+          {{ $t("register.sent_code[0]") }} {{ authStore.store.phone }}
+          {{ $t("register.sent_code[1]") }}
+        </p>
+        <p v-else class="leading-6 -mt-5 mb-5">
+          {{ $t("register.sent_code[0]") }} {{ authStore.store.phone }}
         </p>
         <div class="flex items-center justify-start text-2xl gap-[10px]">
           <input
@@ -110,7 +111,7 @@
         <button
           class="h-14 bg-[#5C0099] rounded-xl w-full text-white text-semibold leading-5"
         >
-          Kodni tasdiqlash
+          {{ $t("register.verify_code") }}
         </button>
       </form>
     </el-dialog>

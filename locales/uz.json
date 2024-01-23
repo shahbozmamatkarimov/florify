@@ -59,6 +59,15 @@
   "lang": "Til",
   "info": "Ma'lumot",
   "contact_with_us": "Biz bilan bog'lanish",
+  "register": {
+    "enter_phone": "Telefon raqamingizni kiriting",
+    "get_your_code": "Mobil telefon raqamingizni kiriting va siz kiritish uchun kod bilan SMS olasiz",
+    "phone_number": "Telefon raqami",
+    "get_code": "Kod bilan SMS oling",
+    "agreement": "Avtotizatsiyadan o'tish orqali siz shaxsiy ma'lumotlarni qayta ishlash siyosatiga rozilik bildirasiz",
+    "sent_code": ["Tasdiqlash kodi", "raqamiga yuborilgan"],
+    "verify_code": "Kodni tasdiqlash"
+  },
   "navbar": {
     "address": "Manzilni kiriting",
     "show": "Ko'rsatish",

@@ -334,7 +334,7 @@
             />
             <img v-else src="@/assets/svg/radio_icon1.svg" alt="" />
           </div>
-          <div
+          <!-- <div
             @click="store.payment_type = 'OFFLINE'"
             :class="
               store.payment_type == 'OFFLINE'
@@ -353,7 +353,7 @@
               alt=""
             />
             <img v-else src="@/assets/svg/radio_icon.svg" alt="" />
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="xl:mt-16">
