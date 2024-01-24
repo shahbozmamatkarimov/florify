@@ -64,29 +64,42 @@
         v-if="productStore.state.categories?.length"
         class="flex items-center overflow-hidden overflow-x-auto mb-10 md:mt-0 mt-6 gap-4"
       >
-        <div
-          v-for="(i, index) in productStore.state.categories"
-          @click="productStore.getOneProduct(i.id, index + 1)"
-          class="relative cursor-pointer md:rounded-2xl rounded-lg overflow-hidden xl:h-[200px] xl:min-w-[200px] xl:w-[200px] lg:h-[180px] lg:min-w-[180px] lg:w-[180px] md:h-[160px] md:min-w-[160px] md:w-[160px] sm:h-[140px] sm:min-w-[140px] sm:w-[140px] h-[100px] min-w-[100px] w-[100px]"
-        >
+        <div v-for="(i, index) in productStore.state.categories">
+          <div
+            @click="productStore.getOneProduct(i.id, index + 1)"
+            class="relative cursor-pointer md:rounded-2xl rounded-lg overflow-hidden xl:h-[200px] xl:min-w-[200px] xl:w-[200px] lg:h-[180px] lg:min-w-[180px] lg:w-[180px] md:h-[160px] md:min-w-[160px] md:w-[160px] sm:h-[140px] sm:min-w-[140px] sm:w-[140px] h-[100px] min-w-[100px] w-[100px]"
+          >
+            <h1
+              v-if="$t('uz') == 'Уз'"
+              class="sm:block hidden absolute break-words p-5 line-clamp-4 md:text-lg text-sm leading-[21px]"
+            >
+              {{ i.ru }}
+            </h1>
+            <h1
+              v-else
+              class="sm:block hidden absolute break-words p-5 line-clamp-4 md:text-lg text-sm leading-[21px]"
+            >
+              {{ i.uz }}
+            </h1>
+            <img
+              loading="lazy"
+              class="h-full w-full object-cover"
+              :src="baseUrlImage + i.image"
+              alt=""
+            />
+          </div>
           <h1
             v-if="$t('uz') == 'Уз'"
-            class="absolute break-words p-5 line-clamp-4 md:text-lg text-sm leading-[21px]"
+            class="sm:hidden block h-[42px] break-words line-clamp-2 md:text-lg text-sm leading-[21px]"
           >
             {{ i.ru }}
           </h1>
           <h1
             v-else
-            class="absolute break-words p-5 line-clamp-4 md:text-lg text-sm leading-[21px]"
+            class="sm:hidden block h-[42px] break-words line-clamp-2 md:text-lg text-sm leading-[21px]"
           >
             {{ i.uz }}
           </h1>
-          <img
-            loading="lazy"
-            class="h-full w-full object-cover"
-            :src="baseUrlImage + i.image"
-            alt=""
-          />
         </div>
       </section>
       <section
