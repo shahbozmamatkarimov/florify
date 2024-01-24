@@ -19,6 +19,12 @@
             }"
             :navigation="true"
             :modules="modules"
+            :effect="'creative'"
+            :centeredSlides="true"
+            :autoplay="{
+              delay: 4000,
+              disableOnInteraction: false,
+            }"
             class="md:rounded-[20px] rounded-[10px] overflow-hidden"
           >
             <SwiperSlide
@@ -368,7 +374,7 @@ const runtimeConfig = useRuntimeConfig();
 const baseUrl = runtimeConfig.public.baseURL;
 const baseUrlImage = ref(runtimeConfig.public.baseURL?.slice(0, -3));
 const router = useRouter();
-const modules = ref([Pagination, Navigation]);
+const modules = ref([Pagination, Navigation, SwiperAutoplay]);
 const modules_advertising = ref([FreeMode, Pagination]);
 isLoading.addLoading("getAllProducts");
 isLoading.addLoading("getAdvertising");
