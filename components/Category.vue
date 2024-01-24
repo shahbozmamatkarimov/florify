@@ -7,22 +7,22 @@
       <div
         v-for="(i, index) in productStore.state.categories"
         @click="productStore.getOneProduct(i.id, index + 1)"
-        class="relative cursor-pointer md:rounded-2xl rounded-lg overflow-hidden md:h-[200px] md:min-w-[200px] md:w-[200px] h-[100px] min-w-[100px] w-[100px]"
+        class="relative cursor-pointer md:rounded-2xl rounded-lg overflow-hidden xl:h-[200px] xl:min-w-[200px] xl:w-[200px] lg:h-[180px] lg:min-w-[180px] lg:w-[180px] md:h-[160px] md:min-w-[160px] md:w-[160px] sm:h-[140px] sm:min-w-[140px] sm:w-[140px] h-[100px] min-w-[100px] w-[100px]"
       >
         <h1
           v-if="$t('uz') == 'Уз'"
-          class="w-1/2 absolute break-words top-5 left-5 md:text-lg text-sm leading-[21px]"
+          class="absolute break-words p-5 line-clamp-4 md:text-lg text-sm leading-[21px]"
         >
           {{ i.ru }}
         </h1>
         <h1
           v-else
-          class="w-1/2 absolute break-words top-5 left-5 md:text-lg text-sm leading-[21px]"
+          class="absolute break-words p-5 line-clamp-4 md:text-lg text-sm leading-[21px]"
         >
           {{ i.uz }}
         </h1>
         <img
-        loading="lazy"
+          loading="lazy"
           class="h-full w-full object-cover"
           :src="baseUrlImage + i.image"
           alt=""
@@ -35,7 +35,7 @@
     >
       <div
         v-for="i in 10"
-        class="relative bg-gray-200 animate-pulse cursor-pointer md:rounded-2xl rounded-lg overflow-hidden md:h-[200px] md:min-w-[200px] md:w-[200px] h-[100px] min-w-[100px] w-[100px]"
+        class="relative bg-gray-200 animate-pulse cursor-pointer md:rounded-2xl rounded-lg overflow-hidden xl:h-[200px] xl:min-w-[200px] xl:w-[200px] lg:h-[180px] lg:min-w-[180px] lg:w-[180px] md:h-[160px] md:min-w-[160px] md:w-[160px] sm:h-[140px] sm:min-w-[140px] sm:w-[140px] h-[100px] min-w-[100px] w-[100px]"
       ></div>
     </section>
     <placeholderMain
@@ -82,8 +82,10 @@
             class="relative card max-w-sm md:w-full w-[160px] md:p-0 p-[6px] hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
           >
             <img
-            loading="lazy"
-              @click="$router.push(`/flowers/${product.id}?flower=${product.name}`)"
+              loading="lazy"
+              @click="
+                $router.push(`/flowers/${product.id}?flower=${product.name}`)
+              "
               class="img md:rounded-b-none rounded-b-lg rounded-t-lg 2xl:h-80 xl:h-64 cursor-pointer md:h-52 sm:h-36 h-44 w-full object-cover"
               :src="`${baseUrlImage}${product?.images[0]?.image}`"
               alt=""
@@ -179,8 +181,10 @@
           class="card max-w-sm hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
         >
           <img
-          loading="lazy"
-            @click="$router.push(`/flowers/${product.id}?flower=${product.name}`)"
+            loading="lazy"
+            @click="
+              $router.push(`/flowers/${product.id}?flower=${product.name}`)
+            "
             class="img rounded-t-lg 2xl:h-80 xl:h-64 cursor-pointer md:h-52 sm:h-44 h-44 w-full object-cover"
             :src="`${baseUrlImage}${product.images[0]?.image}`"
             alt=""
@@ -199,7 +203,7 @@
               </p>
               <div class="flex items-center sm:gap-3 gap-1">
                 <img
-                loading="lazy"
+                  loading="lazy"
                   v-if="product.likes !== true"
                   :id="product.id"
                   @click="
@@ -211,7 +215,7 @@
                   alt=""
                 />
                 <img
-                loading="lazy"
+                  loading="lazy"
                   v-else
                   @click="
                     () =>

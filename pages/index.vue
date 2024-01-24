@@ -8,30 +8,17 @@
     >
       <section class="flex md:gap-7 gap-5">
         <div
-          class="w-full bg-transparent h-full"
+          class="w-full bg-transparent h-full md:mb-11 mb-0 main_swiper_carousel"
           v-if="!isLoading.isLoadingType('getAdvertising')"
         >
           <Swiper
-            @slide-change-transition-end="slidechange"
-            :modules="[SwiperAutoplay, SwiperEffectCreative]"
-            :slides-per-view="1"
+            :slidesPerView="1"
             :loop="true"
-            :effect="'creative'"
-            spaceBetween="30"
-            :centeredSlides="true"
-            :autoplay="{
-              delay: 4000,
-              disableOnInteraction: false,
+            :pagination="{
+              clickable: true,
             }"
-            :creative-effect="{
-              prev: {
-                shadow: false,
-                translate: ['-50%', 0, -1],
-              },
-              next: {
-                translate: ['100%', 0, 0],
-              },
-            }"
+            :navigation="true"
+            :modules="modules"
             class="md:rounded-[20px] rounded-[10px] overflow-hidden"
           >
             <SwiperSlide
@@ -43,7 +30,7 @@
                 class="relative w-full carousel 2xl:xl:h-[360px] xl:h-[300px] lg:h-[260px] md:h-[200px] sm:h-[180px] h-[160px] min-h-[120px] overflow-hidden md:rounded-[20px] rounded-[10px]"
               >
                 <img
-                loading="lazy"
+                  loading="lazy"
                   :src="baseUrlImage + slide.image"
                   class="absolute w-full bg-transparent -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
                   alt="..."
@@ -51,15 +38,6 @@
               </div>
             </SwiperSlide>
           </Swiper>
-          <div
-            class="md:flex hidden justify-center items-center mt-4 mb-11 gap-[10px]"
-          >
-            <p
-              :class="store.slideStep == i ? 'bg-[#323232]' : 'bg-[#D9D9D9]'"
-              class="h-[10px] w-[10px] rounded-full"
-              v-for="i in productStore.state.addvertising?.length"
-            ></p>
-          </div>
         </div>
         <div class="w-full" v-else>
           <div
@@ -98,7 +76,7 @@
             {{ i.uz }}
           </h1>
           <img
-          loading="lazy"
+            loading="lazy"
             class="h-full w-full object-cover"
             :src="baseUrlImage + i.image"
             alt=""
@@ -116,6 +94,45 @@
       </section>
 
       <placeholderMain v-if="isLoading.isLoadingType('getAllProducts')" />
+
+      <!-- <section v-if="productStore.state.categories?.length">
+        <swiper
+          :slidesPerView="store.slideCount"
+          :spaceBetween="16"
+          :freeMode="true"
+          :pagination="{
+            clickable: true,
+          }"
+          :modules="modules_advertising"
+          class="mySwiper"
+        >
+          <swiper-slide
+            v-for="(i, index) in productStore.state.categories"
+            :key="i.id"
+            @click="productStore.getOneProduct(i.id, index + 1)"
+            class="relative cursor-pointer md:rounded-2xl rounded-lg overflow-hidden xl:h-[200px] xl:min-w-[200px] xl:w-[200px] lg:h-[180px] lg:min-w-[180px] lg:w-[180px] md:h-[160px] md:min-w-[160px] md:w-[160px] sm:h-[140px] sm:min-w-[140px] sm:w-[140px] h-[100px] min-w-[100px] w-[100px]"
+          >
+            <h1
+              v-if="$t('uz') == 'Уз'"
+              class="absolute !text-start !bg-transparent break-words p-5 line-clamp-4 md:text-lg text-sm leading-[21px]"
+            >
+              {{ i.ru }}
+            </h1>
+            <h1
+              v-else
+              class="absolute !text-start !bg-transparent break-words p-5 line-clamp-4 md:text-lg text-sm leading-[21px]"
+            >
+              {{ i.uz }}
+            </h1>
+            <img
+              loading="lazy"
+              class="h-full w-full object-cover"
+              :src="baseUrlImage + i.image"
+              alt=""
+            />
+          </swiper-slide>
+        </swiper>
+      </section> -->
 
       <section>
         <div
@@ -152,7 +169,7 @@
               class="relative card max-w-sm md:w-full w-[160px] md:p-0 p-[6px] hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-[#FFFFFF] border-gray-200 rounded-lg"
             >
               <img
-              loading="lazy"
+                loading="lazy"
                 @click="
                   $router.push(`/flowers/${product.id}?flower=${product.name}`)
                 "
@@ -326,17 +343,13 @@ useSeoMeta({
 });
 
 import { Swiper, SwiperSlide } from "swiper/vue";
-
-// Import Swiper styles
 import "swiper/css";
-
+import "swiper/css/free-mode";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
-// import './style.css';
-
 // import required modules
-import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import { Autoplay, Pagination, FreeMode, Navigation } from "swiper/modules";
 import axios from "axios";
 import {
   useProductsStore,
@@ -355,11 +368,13 @@ const runtimeConfig = useRuntimeConfig();
 const baseUrl = runtimeConfig.public.baseURL;
 const baseUrlImage = ref(runtimeConfig.public.baseURL?.slice(0, -3));
 const router = useRouter();
+const modules = ref([Pagination, Navigation]);
+const modules_advertising = ref([FreeMode, Pagination]);
 isLoading.addLoading("getAllProducts");
 isLoading.addLoading("getAdvertising");
 
 const store = reactive({
-  slideStep: 1,
+  slideCount: 6,
   mouseX: 0,
   mouseY: 0,
 });
@@ -508,6 +523,36 @@ onMounted(() => {
       (productStore.state.categories?.length + 1) * 100
     }%)`;
   }
+
+  let width = window.innerWidth;
+
+  // if (width < 1536) {
+  //   store.slideCount = 5;
+  // } else if (width < 1024) {
+  //   store.slideCount = 3;
+  // } else if (width < 640) {
+  //   store.slideCount = 5;
+  // } else if (width < 590) {
+  //   store.slideCount = 4;
+  // } else if (width < 450) {
+  //   store.slideCount = 3;
+  // }
+
+  // window.addEventListener("resize", () => {
+  //   let width = window.innerWidth;
+
+  //   if (width < 1536) {
+  //     store.slideCount = 5;
+  //   } else if (width < 1024) {
+  //     store.slideCount = 4;
+  //   } else if (width < 640) {
+  //     store.slideCount = 5;
+  //   } else if (width < 590) {
+  //     store.slideCount = 4;
+  //   } else if (width < 450) {
+  //     store.slideCount = 3;
+  //   }
+  // });
 });
 </script>
 
