@@ -63,6 +63,13 @@ onBeforeMount(() => {
         event.preventDefault();
       }
     }
+
+    if (event.metaKey) {
+      if (event.key === "+" || event.key === "-") {
+        // Prevent the default behavior
+        event.preventDefault();
+      }
+    }
   });
 });
 </script>
