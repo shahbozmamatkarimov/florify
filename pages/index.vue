@@ -33,12 +33,12 @@
               class="md:rounded-[20px] rounded-[10px] overflow-hidden"
             >
               <div
-                class="relative w-full carousel 2xl:xl:h-[360px] xl:h-[300px] lg:h-[260px] md:h-[200px] sm:h-[180px] h-[160px] min-h-[120px] overflow-hidden md:rounded-[20px] rounded-[10px]"
+                class="relative w-full carousel 2xl:xl:h-[360px] xl:h-[280px] lg:h-[250px] md:h-[180px] sm:h-[160px] h-[140px] min-h-[120px] overflow-hidden md:rounded-[20px] rounded-[10px]"
               >
                 <img
                   loading="lazy"
                   :src="baseUrlImage + slide.image"
-                  class="absolute w-full bg-transparent -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                  class="absolute w-full bg-transparent slide_object -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
                   alt="..."
                 />
               </div>

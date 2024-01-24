@@ -153,6 +153,12 @@ select {
   z-index: 999;
 }
 
+@media (min-width: 550px) {
+  .slide_object {
+    object-fit: cover;
+  }
+}
+
 @media (max-width: 768px) {
   .card {
     background: #fbfbfb;
