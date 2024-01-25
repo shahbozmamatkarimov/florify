@@ -142,6 +142,7 @@ export const useAuthStore = defineStore("isLogged", () => {
         console.log(res.data.data.client, "--------------------------------");
         store.user = res.data.data.client?.phone;
         isLoading.store.name = res.data.data.client?.name;
+        isLoading.store.isLogin = true;
       })
       .catch((err) => {
         console.log(err);
