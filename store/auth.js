@@ -146,6 +146,7 @@ export const useAuthStore = defineStore("isLogged", () => {
       })
       .catch((err) => {
         console.log(err);
+        isLoading.store.isLogin = false;
         isLoading.removeLoading("updateUser");
       });
   }
